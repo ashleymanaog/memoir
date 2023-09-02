@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+@font-face {
+    font-family: 'A-OTF Shin Go Pro B';
+    font-style: normal;
+    font-weight: normal;
+    src: local('A-OTF Shin Go Pro B'), url('/resources/webfont/AOTFShinGoProBold.woff') format('woff');
+}
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    height: 100%;
+    width: 100%;
+    background: white;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin:0px;
+    overflow-x: hidden;
+    color:#363636;
+}
+
+
+button{
+   
+    border-style:solid;
+    width: 100px;
+    height:35px;
+    right:500px;
+    
+}
+button:hover{
+    border-color:#8d8d8d;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+.logo{
+    cursor: pointer;
+    width:300px;
+}
+.nav_links{
+    list-style:none;
+    font-family: 'A-OTF Shin Go Pro B';
+}
+
+.nav_links li{
+    display:inline-block;
+    margin-left: 50px;
+    margin-right: 50px;
+    width:150px;
+}
+.nav_links li a {
+    transition: all 0.3s ease 0s;
+}
+.nav_links li a:hover{
+    color: #0088a9
+}
+
+.main-content {
+    height:100vh;
+}
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+/* TOP SECTION */
+.top-section{
+  padding-top:110px;
+  position:relative;
+  
+  
+}
+.cover-photo{
+  height:303px;
+  position:absolute;
+  
+}
+.cover-pic{
+  height: 300px;
+  margin-left:auto;
+  margin-right:auto;
+  
+}
+.profile-photo{
+    width:230px;
+    height:230px;
+    position:relative;
+    margin-top:150px;
+    margin-left:330px;
+    z-index:1;
+    float:left;
+    
+}
+.profile-pic{
+    border-radius:100%;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border: 3px solid #D9D9D9;
+}
+.profile-container{
+    display:flex;
+    flex-direction:row;
+    margin-top:300px;
+}
+.user-container{
+    width:908px;
+}.name{
+    font-family:Montserrat;
+    font-weight:bold;
+    font-size:30px;
+    color:#222222;
+    height:5px;
+    margin-top:5px;
+    
+}
+.about{
+    font-family:Montserrat;
+    font-weight:normal;
+    font-size:20px;
+    padding-top:10px;
+    margin-bottom:25px;
+    
+}
+.edit-container{
+    margin-top:20px;
+}
+.edit-profile{
+    position:relative;
+    margin-top:0px;
+    
+}
+.top-section-divider{
+    border-bottom:3px solid #D9D9D9;
+    margin:auto;
+    width:65%;
+    position:relative;
+}
+/*LEFT SECTION*/
+.left-section{
+    width:40%;
+    height:100%;
+    float:left;
+}
+.bio{
+    height:150px;
+    width:400px;
+    margin-top:50px;
+    margin-left:333px;
+    margin-bottom:150px;
+    margin-right:0px;
+    border:3px solid #D9D9D9;
+    border-radius:25px;
+    background-color:#f0b81a;
+    padding:0px 25px 25px 25px;
+    
+}
+h4{
+    font-family:Montserrat;
+    font-weight:normal;
+    font-size:18px;
+}
+/*RIGHT SECTION*/
+.right-section{
+    width:60%;
+    height:100%;
+    float:left;
+}
+.content{
+    height:150px;
+    width:768px;
+    margin-top:50px;
+    margin-left:50px;
+    margin-bottom:150px;
+    margin-right:0px;
+    border:3px solid #D9D9D9;
+    border-radius:25px;
+
+}
+.top-part-content{
+    height:50px;
+    width:100%;
+    background-color:#f0b81a;
+    border-top-right-radius:22px;
+    border-top-left-radius:22px;
+    margin-bottom:20px;
+    z-index:-1;
+}
+
+.text-box{
+    margin:auto;
+    height:50px;
+    width:80%;
+    border:3px solid #D9D9D9;
+    
+}
