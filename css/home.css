@@ -111,3 +111,12 @@
     margin:auto;
     margin-top: 35px;
 }
+/*FOOTER*/
+.footerContent {
+    width: 70%;
+    display: inline-block;
+    font-size: 13px;
+}
+.bannerdiv {
+    display: flex;
+}

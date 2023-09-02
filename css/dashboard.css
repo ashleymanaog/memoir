@@ -174,3 +174,12 @@ body{
   .floating-button button:hover {
     background-color: #f0b81a;
   }
+  /*FOOTER*/
+.footerContent {
+  width: 70%;
+  display: inline-block;
+  font-size: 13px;
+}
+.bannerdiv {
+  display: flex;
+}
