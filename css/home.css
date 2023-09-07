@@ -120,3 +120,43 @@
 .bannerdiv {
     display: flex;
 }
+.btn {
+    border-radius: 50px;
+    border-color: none !important;
+    color: #272218;
+}
+.btnForm {
+    width: 100px;
+}
+.blueButton:hover{
+    background-color: #0db9cf;
+    border: var(--bs-btn-border-width) solid #0db9cf;
+}
+.blueButton:not(:disabled):not(:disabled):active { /*when clicked*/
+    background-color: #0099ad;
+    border: var(--bs-btn-border-width) solid #0099ad;
+ } 
+.blueButton {
+    border-radius: 50px;
+    width: 250px;
+    background-color: #81e1ee;
+    border-color: none;
+    color: #272218;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
+    border: var(--bs-btn-border-width) solid #81e1ee;
+}
+.btnGroupBanner, .btnGroupProfile {
+    width: 70%;
+    padding-top: 0.3rem;
+}
+.btnGroupButton {
+    --bs-btn-border-color: #0db9cf;
+    --bs-btn-active-bg: #0db9cf;
+    --bs-btn-active-border-color: #0db9cf;
+    color: #0db9cf;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
+}
+.btnGroupButton:hover, .btnGroupButton:active, .btnGroupButton:focus {
+    color: #004768 !important;
+    border-color: #004768 !important;
+}
