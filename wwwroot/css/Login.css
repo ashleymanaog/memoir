@@ -1,0 +1,74 @@
+﻿/*BG IMAGE*/
+.section1 {
+    min-height: 100vh;
+    background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url(../img/BG/BG_Login.png);
+}
+
+/*FORM*/
+.details {
+    padding-top: 100px;
+    margin: auto;
+    width: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -65%);
+}
+
+.loginForm {
+    display: flex;
+    justify-content: center;
+}
+
+.errorSpan {
+    color: #c5181e;
+    padding-left: 50px;
+    display: block;
+    padding: 0;
+    font-size: 15px;
+    height: 0;
+}
+
+.form-label {
+    margin-right: 10px;
+}
+
+.card {
+    margin-top: 250px;
+}
+
+/*FOR RESPONSIVENESS*/
+@media screen and (max-width: 1700px) {
+    .card {
+        width: 80%;
+    }
+}
+@media screen and (max-width: 1285px) {
+    .card {
+        width: 85%;
+    }
+}
+@media screen and (max-width: 992px) {
+    .details {
+        width: 80%;
+    }
+
+    .form-label {
+        display: inline-block;
+        margin-right: 20px;
+    }
+
+    .errorSpan {
+        display: inline-block;
+    }
+
+    .cardInfo {
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 10px;
+    }
+
+    .card {
+        width: 100%;
+    }
+}

@@ -1,5 +1,310 @@
 ﻿@{
     ViewData["Title"] = "Edit Profile";
+    ViewData["CSSFile"] = "~/css/EditProfile.css";
+    ViewData["JSFile"] = "~/js/ChooseProfileAndBanner.js";
 }
-<h1>@ViewData["Title"]</h1>
-<p>This is the Edit Profile Page.</p>
+<!--Banner-->
+<div>
+    <div class="banner">
+        <img src="~/img/Banners/Banner1.png" id="uploadBannerPhoto-previewImg">
+    </div>
+    <form action="">
+        <div class="container">
+            <div class="main">
+                <label class="uploadPhoto fa-regular fa-pen-to-square" for="changeBanner" data-toggle="modal" data-target="#changeBannerModal"></label>
+            </div>
+        </div>
+        <!--<input type="file" id="uploadBannerPhoto" name="uploadBannerPhoto" onClick="reply_click(this.id)">-->
+    </form>
+</div>
+<!--Profile-->
+<div class="profileParent">
+    <div class="profileChild">
+    <div class="profilePic">
+        <img src="~/img/Avatars/Avatar1.png" class="profileImage" id="uploadProfilePicture-previewImg">
+    </div>
+    <form action="">
+        <div class="container2">
+            <div class="main">
+                <label class="uploadPhoto fa-regular fa-pen-to-square" for="changeProfile"  data-toggle="modal" data-target="#changeProfileModal"></label>
+            </div>
+        </div>
+        <!--<input type="file" id="uploadProfilePhoto" name="uploadProfilePhoto" onClick="reply_click(this.id)">-->
+    </form>
+    </div>
+</div>
+
+<div class="details">
+<!--Personal Information-->
+<form name="editPersonalInfo" id="editPersonalInfo" method="POST">
+    <div class="card">
+    <h3 class="card-header" style="padding-top: 16px;">Personal Information</h3>
+    <div class="row cardInfo" style="margin-top:20px;">
+        <div class="col-md-5">
+            <label for="firstname" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">First Name</label>
+            <span class="editProfileSpan">Error Message Here</span>
+        </div>
+        <div class="col-md-7">
+            <input type="text" class="form-control textbox" style="margin-top:8px;" id="firstname" name="firstname" value="First Name" required>
+        </div>
+        <div class="col-md-5">
+            <label for="lastname" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Last Name</label>
+            <span class="editProfileSpan">Error Message Here</span>
+        </div>
+        <div class="col-md-7">
+            <input type="text" class="form-control textbox" style="margin-top:8px;" id="lastname" name="lastname" value="Last Name" required>
+        </div>
+        <div class="col-md-5">
+            <label for="username" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Username</label>
+            <span class="editProfileSpan">Error Message Here</span>
+        </div>
+        <div class="col-md-7">
+            <input type="text" class="form-control textbox" style="margin-top:8px;" id="username" name="username" value="Username" required>
+        </div>
+        <div class="col-md-5">
+            <label for="email" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Email Address</label>
+            <span class="editProfileSpan">Error Message Here</span>
+        </div>
+        <div class="col-md-7">
+            <input type="email" class="form-control textbox" style="margin-top:8px;" id="email" name="email" value="EmailAddress@gmail.com" required>
+        </div>
+    </div>
+    <div style="padding-top:20px; padding-bottom:30px; text-align:center;">
+        <a href="#" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-info btn-md center blueButton btnForm" id="btnEditPersonalInfo" name="btnEditPersonalInfo" value="Save Changes"></a>
+    </div>
+    </div>
+</form>
+<!--Password-->
+<form name="changePassword" id="changePassword" method="POST">
+    <div class="card">
+    <h3 class="card-header" style="padding-top: 16px;">Password</h3>
+    <div class="row cardInfo" style="margin-top:20px;">
+        <div class="col-md-5">
+            <label for="oldpassword" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Old Password</label>
+            <span class="editProfileSpan">Error Message Here</span>
+        </div>
+        <div class="col-md-7">
+            <input type="password" class="form-control textbox" style="margin-top:8px;" id="oldpassword" name="oldpassword" placeholder="Old Password" required>
+        </div>
+        <div class="col-md-5">
+            <label for="newpassword" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">New Password</label>
+            <span class="editProfileSpan">Error Message Here</span>
+        </div>
+        <div class="col-md-7">
+            <input type="password" class="form-control textbox" style="margin-top:8px;" id="newpassword" name="newpassword" placeholder="New Password" required>
+        </div>
+        <div class="col-md-5">
+            <label for="confirmnewpassword" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Confirm New Password</label>
+            <span class="editProfileSpan">Error Message Here</span>
+        </div>
+        <div class="col-md-7">
+            <input type="password" class="form-control textbox" style="margin-top:8px;" id="confirmnewpassword" name="confirmnewpassword" placeholder="Confirm New Password" required>
+        </div>
+    </div>
+    <div style="padding-top:20px; padding-bottom:30px; text-align:center;">
+        <a href="#" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-info btn-md center blueButton btnForm" id="btnChangePassword" name="btnChangePassword" value="Change Password"></a>
+    </div>
+    </div>
+</form>
+<!--Profile Description-->
+<form name="editProfileDescription" id="editProfileDescription" method="POST">
+    <div class="card">
+    <h3 class="card-header" style="padding-top: 16px;">Profile Description</h3>
+    <div class="row cardInfo" style="margin-top:20px;">
+        <div class="col-md-5">
+            <label for="profileDescription" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Description</label>
+        </div>
+        <div class="col-md-12">
+            <textarea rows="4" cols="50" id="profileDescription" name="profileDescription" form="editProfileDescription" class="form-control textbox" style="margin-top:8px; color:black;"></textarea>
+        </div>
+    </div>
+    <div style="padding-top:20px; padding-bottom:30px; text-align:center;">
+        <a href="#" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-info btn-md center blueButton btnForm" id="btnEditProfileDescription" name="btnEditProfileDescription" value="Update Description"></a>
+    </div>
+    </div>
+</form>
+</div>
+
+<!--MODALS-->
+<!--Change Banner Modal-->
+<div class="modal fade" id="changeBannerModal" tabindex="-1" aria-labelledby="changeBannerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changeBannerModalLabel">Change Banner</h5>
+                <button type="button" class="close fa-solid fa-xmark" data-dismiss="modal" aria-label="Close" style="font-size:1.5rem; padding-top:1.1rem;">
+                </button>
+            </div>
+            <div class="modal-body text-center" style="word-break:break-all; padding-bottom:0; padding-left:inherit; padding-right:0;">
+            <!--Button Group-->
+            <div class="btn-group btnGroupBanner" role="group" style="width:100%;">
+                <!--Choose Banner-->
+                <input type="radio" class="btn-check btnBannerRadio" name="btnBanner" id="btnChooseBanner" autocomplete="off" checked>
+                <label class="btn btn-outline-primary btnGroupButton btnBannerLabel" for="btnChooseBanner" data-tab-target="#sampleBanners" style="border-top-left-radius:50px; border-bottom-left-radius:50px;">Choose a Banner</label>
+                <div class="row cardInfo btn-group btnBannerContent" role="group" id="sampleBanners" data-tab-content style="margin-top:20px; margin-bottom:0; overflow-y:auto; max-height:60vh;">
+                    <div class="bannerdiv">
+                        <div class="col-lg-6 px-2" style="padding-top:0.2rem; padding-bottom:0.5rem;">
+                            <button type="button" class="btnPhoto sampleBanner" id="yellowBanner"><img src="~/img/Banners/Banner1.png" id="yellowBannerImg" alt="Yellow Banner" class="sampleBanner"></button>
+                        </div>
+                        <div class="col-lg-6 p-2">
+                            <button type="button" class="btnPhoto sampleBanner" id="whiteBanner"><img src="~/img/Banners/Banner2.png" id="whiteBannerImg" alt="White Banner" class="sampleBanner"></button>
+                        </div>
+                    </div>
+                    <div class="bannerdiv">
+                        <div class="col-lg-6 p-2">
+                            <button type="button" class="btnPhoto sampleBanner" id="brownBanner"><img src="~/img/Banners/Banner3.png" id="brownBannerImg" alt="Brown Banner" class="sampleBanner"></button>
+                        </div>
+                        <div class="col-lg-6 px-2" style="padding-top:0.6rem; padding-bottom:1.2rem;">
+                            <button type="button" class="btnPhoto sampleBanner" id="blueBanner"><img src="~/img/Banners/Banner4.png" id="blueBannerImg" alt="Blue Banner" class="sampleBanner"></button>
+                        </div>
+                    </div>
+                </div>
+                <!--Upload Banner Photo-->
+                <input type="radio" class="btn-check btnBannerRadio" name="btnBanner" id="btnUploadBanner" autocomplete="off">
+                <label class="btn btn-outline-primary btnGroupButton btnBannerLabel" for="btnUploadBanner" data-tab-target="#uploadBanner" style="border-top-right-radius:50px; border-bottom-right-radius:50px;">Upload a Photo</label>
+                <div id="uploadBanner" data-tab-content style="text-align:center; margin:3rem;" class="btnBannerContent">
+                    <label class="btn blueButton btnUploadPhoto" for="uploadBannerPhoto"><i class="fa-solid fa-upload" style="margin-right:10px;"></i>Upload Photo</label>
+                    <input type="file" id="uploadBannerPhoto" name="uploadBannerPhoto" style="color:#00a4b9; display:none;">
+                    <span class="fileSelectedBanner" style="color:#00a4b9;"></span>
+                </div>
+            </div>
+            </div>
+            <div class="modal-footer">
+            <button type="submit" class="btn btn-warning btn-md yellowButton" data-dismiss="modal" id="btnSaveBanner">Save</button>
+            <button type="button" class="btn btn-light border border-dark btn-md whiteButton" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Change Profile Modal-->
+<div class="modal fade" id="changeProfileModal" tabindex="-1" aria-labelledby="changeProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modalDialogProfile">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changeProfileModalLabel">Change Profile Picture</h5>
+                <button type="button" class="close fa-solid fa-xmark" data-dismiss="modal" aria-label="Close" style="font-size:1.5rem; padding-top:1.1rem;">
+                </button>
+            </div>
+            <div class="modal-body text-center" style="word-break:break-all; padding-bottom:0; padding-left:inherit; padding-right:0;">
+            <!--Button Group-->
+            <div class="btn-group btnGroupProfile" role="group">
+                <!--Choose Avatar-->
+                <input type="radio" class="btn-check btnProfileRadio" name="btnProfile" id="btnChooseAvatar" autocomplete="off" checked>
+                <label class="btn btn-outline-primary btnGroupButton btnProfileLabel" for="btnChooseAvatar" data-tab-target="#sampleAvatars" style="border-top-left-radius:50px; border-bottom-left-radius:50px;">Choose an Avatar</label>
+                <div class="row cardInfo btn-group btnProfileContent" role="group" id="sampleAvatars" data-tab-content style="margin-top:20px; margin-bottom:0; overflow-y:auto; max-height:60vh;">
+                    <div class="row justify-content-center" style="margin-bottom:10px; margin-left:auto; margin-right:auto;">
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar1"><img src="~/img/Avatars/Avatar1.png" id="avatar1Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar2"><img src="~/img/Avatars/Avatar2.png" id="avatar2Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar3"><img src="~/img/Avatars/Avatar3.png" id="avatar3Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar4"><img src="~/img/Avatars/Avatar4.png" id="avatar4Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar5"><img src="~/img/Avatars/Avatar5.png" id="avatar5Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar6"><img src="~/img/Avatars/Avatar6.png" id="avatar6Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar7"><img src="~/img/Avatars/Avatar7.png" id="avatar7Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar8"><img src="~/img/Avatars/Avatar8.png" id="avatar8Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar9"><img src="~/img/Avatars/Avatar9.png" id="avatar9Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar10"><img src="~/img/Avatars/Avatar10.png" id="avatar10Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar11"><img src="~/img/Avatars/Avatar11.png" id="avatar11Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar12"><img src="~/img/Avatars/Avatar12.png" id="avatar12Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar13"><img src="~/img/Avatars/Avatar13.png" id="avatar13Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar14"><img src="~/img/Avatars/Avatar14.png" id="avatar14Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar15"><img src="~/img/Avatars/Avatar15.png" id="avatar15Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar16"><img src="~/img/Avatars/Avatar16.png" id="avatar16Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar17"><img src="~/img/Avatars/Avatar17.png" id="avatar17Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar18"><img src="~/img/Avatars/Avatar18.png" id="avatar18Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar19"><img src="~/img/Avatars/Avatar19.png" id="avatar19Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar20"><img src="~/img/Avatars/Avatar20.png" id="avatar20Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar21"><img src="~/img/Avatars/Avatar21.png" id="avatar21Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar22"><img src="~/img/Avatars/Avatar22.png" id="avatar22Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar23"><img src="~/img/Avatars/Avatar23.png" id="avatar23Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar24"><img src="~/img/Avatars/Avatar24.png" id="avatar24Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar25"><img src="~/img/Avatars/Avatar25.png" id="avatar25Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar26"><img src="~/img/Avatars/Avatar26.png" id="avatar26Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar27"><img src="~/img/Avatars/Avatar27.png" id="avatar27Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar28"><img src="~/img/Avatars/Avatar28.png" id="avatar28Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar29"><img src="~/img/Avatars/Avatar29.png" id="avatar29Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar30"><img src="~/img/Avatars/Avatar30.png" id="avatar30Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar31"><img src="~/img/Avatars/Avatar31.png" id="avatar31Img" ></button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 p-2">
+                        <button type="button" class="btnPhoto sampleAvatar" id="avatar32"><img src="~/img/Avatars/Avatar32.png" id="avatar32Img" ></button>
+                    </div>
+                    </div>
+                </div>
+                <!--Upload Profile Picture-->
+                <input type="radio" class="btn-check btnProfileRadio" name="btnProfile" id="btnUploadProfile" autocomplete="off">
+                <label class="btn btn-outline-primary btnGroupButton btnProfileLabel" for="btnUploadProfile" data-tab-target="#uploadProfile" style="border-top-right-radius:50px; border-bottom-right-radius:50px;">Upload a Photo</label>
+                <div id="uploadProfile" data-tab-content style="text-align:center; margin:3rem;" class="btnProfileContent">
+                    <label class="btn blueButton btnUploadPhoto" for="uploadProfilePicture"><i class="fa-solid fa-upload" style="margin-right:10px;"></i>Upload Photo</label>
+                    <input type="file" id="uploadProfilePicture" name="uploadProfilePicture" style="color:#00a4b9; display:none;">
+                        <span class="fileSelectedProfile" style="color:#00a4b9;"></span>
+                </div>
+            </div>
+            </div>
+            <div class="modal-footer">
+            <button type="submit" class="btn btn-warning btn-md yellowButton" data-dismiss="modal" id="btnSaveProfile">Save</button>
+            <button type="button" class="btn btn-light btn-md border border-dark whiteButton" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

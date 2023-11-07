@@ -1,0 +1,239 @@
+﻿/*POST*/
+.userPosts { /*whole right column*/
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 100px;
+    padding-bottom: 50px;
+}
+
+.userPostsCard { /*whole post itself*/
+    margin-bottom: 20px;
+}
+
+/*POST-HEADER*/
+.infoPost { /*div below card-header, infos & pic*/
+    margin-top: 5px;
+    width: 100%;
+}
+
+.profilePicPost { /*div above profile, adds outline*/
+    background-color: #808080;
+    border-radius: 50%;
+    outline-style: solid;
+    outline-color: white;
+    outline-width: 0.15rem;
+    width: 60px;
+    height: 60px;
+    margin-top: 8px;
+    margin-left: 10px;
+    position: absolute;
+}
+
+.userInfo { /*username and date*/
+    padding-left: 90px;
+    padding-right: 34px;
+    max-width: 98%;
+}
+
+.usernamePost { /*username only*/
+    font-size: 21px;
+    font-weight: 500;
+    word-break: break-all;
+    word-wrap: break-word;
+    left: 0;
+    display: block;
+    text-align: left;
+    line-height: 25px;
+    padding: 0;
+    pointer-events: none;
+    white-space: normal;
+}
+
+    .usernamePost:hover,
+    .usernamePost:focus,
+    .usernamePost:active {
+        outline: none;
+        box-shadow: none !important;
+        -webkit-appearance: none;
+    }
+
+a { /*for username link*/
+    color: black;
+    text-decoration: none;
+}
+
+    a:link, a:visited, a:hover, a:active {
+        color: black;
+        text-decoration: none;
+    }
+
+.datePost { /*date only*/
+    font-size: 15px;
+    display: block;
+    text-align: left;
+}
+
+.card-header-link {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 27px 27px 0px 0px;
+}
+
+
+/*POST-CAPTION*/
+.postCardInfo {
+    margin: 30px;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+/*POST-FOOTER*/
+.btnLike, .btnComment {
+    padding: 10px;
+    margin: 0;
+}
+
+    .btnLike:hover, .btnComment:hover {
+        color: #0e9bad;
+    }
+
+.card-footer {
+    text-align: center;
+    border-radius: 0px 0px 27px 27px !important;
+    margin: 0;
+    padding: 0;
+}
+
+.btnLike:hover,
+.btnLike:focus,
+.btnLike:active {
+    outline: none;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+}
+
+.btnComment:hover,
+.btnComment:focus,
+.btnComment:active {
+    outline: none;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+}
+
+/*POST IMAGES*/
+.carousel-indicators {
+    z-index: 1 !important;
+}
+
+.carousel-indicators .active { /*link to post*/
+    background-color: rgba(255, 255, 255, 0) !important;
+}
+
+.indicatorBG { /*current index/totalindex of images*/
+    background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8));
+    width: auto;
+    height: 20px;
+    color: #272218;
+    text-align: center;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    box-shadow: 0 0px 10px rgba(0,0,0,0.2);
+    margin-right: -16%;
+}
+
+/*FOR HIGHER HEIGHT*/
+.addHeight {
+    height: 600px;
+}
+
+.objectFitContain {
+    object-fit: contain !important;
+}
+
+.blurredBG {
+    height: 600px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    filter: blur(30px);
+    -webkit-filter: blur(10px);
+    background-image: url(../img/Sample_Banner2.jpg);
+    transform: scale(1.2);
+    background-position: 50% 50%;
+    display: none;
+}
+
+.displayed {
+    display: block;
+}
+
+/*COMMENT SECTIO*/
+.commentDiv {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.textareaCommentDiv {
+    display: flex;
+    padding-left: 70px;
+    padding-right: 5px;
+    /*align-items: center;*/
+}
+
+.textarea:hover {
+    background-color: #FFFFFF !important;
+    cursor: text !important;
+}
+
+.textarea {
+    flex: 1;
+    text-align: start;
+    padding-left: 30px;
+    color: black !important;
+    padding-top: 6px;
+    margin-right: 20px;
+    border: 1px solid #c7c7c7;
+}
+
+    .textarea:focus,
+    .textarea:active {
+        box-shadow: none !important;
+        outline: 0px !important;
+    }
+    
+    .textarea:hover,
+    .textarea:focus,
+    .textarea:active {
+        outline: none;
+        box-shadow: none !important;
+        -webkit-appearance: none;
+    }
+
+.profilePicComment {
+    background-color: #808080;
+    border-radius: 50%;
+    outline-style: solid;
+    outline-color: white;
+    outline-width: 0.15rem;
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    position: absolute;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.4);
+}
+
+.comment {
+    text-align: justify;
+    text-justify: inter-word;
+    margin-left: 70px;
+    margin-right: 15px;
+}

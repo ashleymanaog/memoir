@@ -5,12 +5,296 @@
       "PackagePath": "staticwebassets\\ThomasianMemoir.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\css\\CreatePost.css",
+      "PackagePath": "staticwebassets\\css\\CreatePost.css"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\css\\Dashboard.css",
+      "PackagePath": "staticwebassets\\css\\Dashboard.css"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\css\\EditProfile.css",
+      "PackagePath": "staticwebassets\\css\\EditProfile.css"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\css\\Homepage.css",
+      "PackagePath": "staticwebassets\\css\\Homepage.css"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\css\\Index.css",
+      "PackagePath": "staticwebassets\\css\\Index.css"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\css\\Login.css",
+      "PackagePath": "staticwebassets\\css\\Login.css"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\css\\Post.css",
+      "PackagePath": "staticwebassets\\css\\Post.css"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\css\\PostPictures.css",
+      "PackagePath": "staticwebassets\\css\\PostPictures.css"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\css\\Profile.css",
+      "PackagePath": "staticwebassets\\css\\Profile.css"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\css\\Registration.css",
+      "PackagePath": "staticwebassets\\css\\Registration.css"
+    },
+    {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar1.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar1.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar10.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar10.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar11.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar11.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar12.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar12.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar13.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar13.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar14.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar14.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar15.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar15.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar16.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar16.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar17.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar17.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar18.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar18.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar19.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar19.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar2.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar2.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar20.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar20.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar21.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar21.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar22.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar22.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar23.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar23.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar24.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar24.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar25.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar25.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar26.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar26.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar27.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar27.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar28.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar28.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar29.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar29.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar3.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar3.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar30.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar30.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar31.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar31.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar32.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar32.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar4.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar4.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar5.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar5.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar6.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar6.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar7.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar7.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar8.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar8.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Avatars\\Avatar9.png",
+      "PackagePath": "staticwebassets\\img\\Avatars\\Avatar9.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\BG\\BG_Index.jpg",
+      "PackagePath": "staticwebassets\\img\\BG\\BG_Index.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\BG\\BG_Login.png",
+      "PackagePath": "staticwebassets\\img\\BG\\BG_Login.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\BG\\BG_Registration.png",
+      "PackagePath": "staticwebassets\\img\\BG\\BG_Registration.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\BG\\Element1.png",
+      "PackagePath": "staticwebassets\\img\\BG\\Element1.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\BG\\Element2.png",
+      "PackagePath": "staticwebassets\\img\\BG\\Element2.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Banners\\Banner1.png",
+      "PackagePath": "staticwebassets\\img\\Banners\\Banner1.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Banners\\Banner2.png",
+      "PackagePath": "staticwebassets\\img\\Banners\\Banner2.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Banners\\Banner3.png",
+      "PackagePath": "staticwebassets\\img\\Banners\\Banner3.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Banners\\Banner4.png",
+      "PackagePath": "staticwebassets\\img\\Banners\\Banner4.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Covers\\Cover-Freshmen.png",
+      "PackagePath": "staticwebassets\\img\\Covers\\Cover-Freshmen.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Covers\\Cover-Home.png",
+      "PackagePath": "staticwebassets\\img\\Covers\\Cover-Home.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Covers\\Cover-Junior.png",
+      "PackagePath": "staticwebassets\\img\\Covers\\Cover-Junior.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Covers\\Cover-Senior.png",
+      "PackagePath": "staticwebassets\\img\\Covers\\Cover-Senior.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Covers\\Cover-Sophomore.png",
+      "PackagePath": "staticwebassets\\img\\Covers\\Cover-Sophomore.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Homepage_Pics\\Freshmen.jpg",
+      "PackagePath": "staticwebassets\\img\\Homepage_Pics\\Freshmen.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Homepage_Pics\\Junior.png",
+      "PackagePath": "staticwebassets\\img\\Homepage_Pics\\Junior.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Homepage_Pics\\Senior.jpg",
+      "PackagePath": "staticwebassets\\img\\Homepage_Pics\\Senior.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Homepage_Pics\\Sophomore.jpg",
+      "PackagePath": "staticwebassets\\img\\Homepage_Pics\\Sophomore.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Logo_with_Name.png",
+      "PackagePath": "staticwebassets\\img\\Logo_with_Name.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Sample_Banner.jpg",
+      "PackagePath": "staticwebassets\\img\\Sample_Banner.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Sample_Banner2.jpg",
+      "PackagePath": "staticwebassets\\img\\Sample_Banner2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Thomasian_Memoir_Logo.png",
+      "PackagePath": "staticwebassets\\img\\Thomasian_Memoir_Logo.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\img\\Thomasian_Memoir_Name.png",
+      "PackagePath": "staticwebassets\\img\\Thomasian_Memoir_Name.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\js\\ChooseProfileAndBanner.js",
+      "PackagePath": "staticwebassets\\js\\ChooseProfileAndBanner.js"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\js\\Dashboard.js",
+      "PackagePath": "staticwebassets\\js\\Dashboard.js"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\js\\EditPost.js",
+      "PackagePath": "staticwebassets\\js\\EditPost.js"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\js\\PostPictures.js",
+      "PackagePath": "staticwebassets\\js\\PostPictures.js"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\js\\SelectDropdown.js",
+      "PackagePath": "staticwebassets\\js\\SelectDropdown.js"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\js\\ViewPost.js",
+      "PackagePath": "staticwebassets\\js\\ViewPost.js"
     },
     {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\js\\site.js",

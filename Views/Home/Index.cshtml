@@ -1,8 +1,32 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Index Page";
+    ViewData["CSSFile"] = "~/css/Index.css";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    
+    <div class="col-lg-4 left">
+        <div class="text">
+            <h1 class="title">The place to
+                <span class="roar">ROAR</span>
+                your heart out.
+            </h1>
+            <p>
+                Thomasian Memoir is an online platform that can serve as a journal or diary for Thomasians. It aims to provide a safe place for all Thomasians to connect with and store memories.
+            </p>
+            <a asp-controller="Home" asp-action="Registration" target="_self" class="btn btn-info btn-md center blueButton btnReg">Register Now</a>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="coverImg" style="background-position:bottom;">
+            <div class="gradient"></div>
+        </div>
+    </div>
+    <div>
+        <div class="element1Div">
+            <img src="~/img/BG/Element1.png" class="element1Img" />
+        </div>
+        <div class="element2Div">
+            <img src="~/img/BG/Element2.png" class="element2Img" />
+        </div>
+    </div>
 </div>

@@ -1,0 +1,233 @@
+﻿/*BANNER & PROFILE*/
+.banner {
+    background-color: #808080;
+    height: 350px;
+    width: 100%;
+    border-bottom: 0.3rem solid white;
+    box-shadow: 0px 5px 20px rgba(0,0,0,0.2);
+}
+
+.profilePic {
+    background-color: #808080;
+    border-radius: 50%;
+    outline-style: solid;
+    outline-color: white;
+    outline-width: 0.3rem;
+    width: 230px;
+    height: 230px;
+}
+
+.profileImage {
+    border-radius: 50%;
+}
+
+.uploadPhoto {
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 13px;
+}
+
+#uploadBannerPhoto, #uploadProfilePicture {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.container {
+    top: 270px;
+    right: 2%;
+    position: absolute;
+    transform: translate(0%, 0%);
+}
+
+.container2 {
+    top: 165px;
+    right: 0%;
+    position: absolute;
+    transform: translate(0%, 0%);
+}
+
+.main {
+    cursor: pointer;
+    position: relative;
+    width: 50px;
+    min-height: 50px;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.main:before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    margin: auto;
+    z-index: -1;
+    background-color: #ffffff;
+    border-radius: 50%;
+    box-shadow: 1px 1px 10px rgba(0,0,0,0.2);
+}
+
+.profileParent {
+    position: absolute;
+    top: 280px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.profileChild {
+    position: relative;
+}
+
+/*FORM*/
+.details {
+    padding-top: 100px;
+    margin: auto;
+    width: 50%;
+}
+
+.editProfileSpan {
+    color: #c5181e;
+    padding-left: 50px;
+    display: block;
+    padding: 0;
+    font-size: 15px;
+    height: 0;
+}
+
+/*MODAL*/
+.btnUploadPhoto {
+    cursor: pointer;
+    font-size: 1.1rem;
+    width: 200px;
+    margin-bottom: 5px;
+}
+
+.sampleBanner {
+    border-radius: 20px;
+}
+
+.sampleAvatar {
+    border-radius: 50%;
+}
+
+.btnGroupBanner, .btnGroupProfile {
+    width: 70%;
+    padding-top: 0.3rem;
+}
+
+.btnGroupButton {
+    color: #0db9cf !important;
+}
+
+.btnGroupButton:hover, .btnGroupButton:active, .btnGroupButton:focus {
+    color: white !important;
+    border-color: #0db9cf !important;
+    background-color: #0db9cf !important;
+}
+
+.btnGroupButton input:checked {
+    color: white !important;
+    background-color: #0db9cf !important;
+}
+
+.avatarImg {
+    height: 150px !important;
+    object-fit: cover !important;
+}
+
+.btnGroupBanner, .btnGroupProfile {
+    flex-wrap: wrap;
+    width: 100% !important;
+    justify-content: center;
+}
+
+.btnBannerLabel, .btnProfileLabel {
+    max-width: 300px;
+    min-width: 100px;
+}
+
+.btnBannerContent, .btnProfileContent {
+    order: 1;
+    display: none;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100%;
+}
+
+.btnBannerRadio:checked + .btnBannerLabel + .btnBannerContent {
+    display: block;
+}
+
+.btnProfileRadio:checked + .btnProfileLabel + .btnProfileContent {
+    display: block;
+}
+
+.fileSelectedBanner, .fileSelectedProfile {
+    color: #272218;
+    padding-left: 50px;
+    display: block;
+    padding: 0;
+    font-size: 15px;
+    height: 0;
+}
+
+/*FOR RESPONSIVENESS*/
+@media screen and (max-width: 992px) {
+    .details {
+        width: 80%;
+    }
+
+    .form-label {
+        display: inline-block;
+        margin-right: 20px;
+    }
+
+    .editProfileSpan {
+        display: inline-block;
+    }
+
+    .cardInfo {
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 10px;
+    }
+
+    .btnGroupBanner, .btnGroupProfile {
+        width: 90%;
+    }
+
+    .footerContent {
+        width: 95%;
+    }
+
+    .bannerdiv {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .btnGroupProfile {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .modal-dialog {
+        max-width: 80%;
+    }
+
+    .modalDialogProfile {
+        max-width: 90% !important;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .modal-dialog {
+        max-width: 60%;
+    }
+
+    .modalDialogProfile {
+        max-width: 90% !important;
+    }
+}

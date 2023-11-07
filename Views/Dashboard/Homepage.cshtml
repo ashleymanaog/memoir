@@ -1,5 +1,55 @@
 ﻿@{
     ViewData["Title"] = "Homepage";
+    ViewData["CSSFile"] = "~/css/Homepage.css";
+    ViewData["JSFile"] = "~/js/Dashboard.js";
 }
-<h1>@ViewData["Title"]</h1>
-<p>This is the Homepage where you select year level dashboard</p>
+<!--BANNER-->
+<div class="banner">
+    <img src="~/img/Covers/Cover-Home.png" alt="Homepage Cover">
+</div>
+<!--TITLE SECTION-->
+<div class="row titleSection dashboard" id="dashboard" onclick="clickDashboard()">
+    <a href="#dashboard" style="color:white; padding-bottom:0px;" id="linkDashboard">
+        <div>
+            DASHBOARDS
+            <div class="fa-solid fa-chevron-down text-muted displayed" style="font-size:25px;" id="down-icon"></div>
+        </div>
+    </a>
+</div>
+<!--CARDS-->
+<div class="container" style="margin-top:20px; margin-bottom:20px;">
+    <div class="row justify-content-center">
+        <!--FRESHMEN-->
+        <div class="card col-md-5 m-3">
+            <a asp-controller="Dashboard" asp-action="Freshmen" target="_self">
+                <div class="cardFreshmenImg" style="background-position:bottom;">
+                    <div class="hoverYellowBG">FRESHMEN</div>
+                </div>
+            </a>
+        </div>
+        <!--SOPHOMORE-->
+        <div class="card col-md-5 m-3">
+            <a asp-controller="Dashboard" asp-action="Sophomore" target="_self">
+                <div class="cardSophomoreImg">
+                    <div class="hoverBlackBG">SOPHOMORE</div>
+                </div>
+            </a>
+        </div>
+        <!--JUNIOR-->
+        <div class="card col-md-5 m-3 btn">
+            <a asp-controller="Dashboard" asp-action="Junior" target="_self">
+                <div class="cardJuniorImg">
+                    <div class="hoverBlueBG">JUNIOR</div>
+                </div>
+            </a>
+        </div>
+        <!--SENIOR-->
+        <div class="card col-md-5 m-3">
+            <a asp-controller="Dashboard" asp-action="Senior" target="_self">
+                <div class="cardSeniorImg">
+                    <div class="hoverWhiteBG">SENIOR</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

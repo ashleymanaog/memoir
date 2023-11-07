@@ -1,0 +1,504 @@
+﻿html {
+    scroll-padding-top: 85px; /*for bookmark links*/
+}
+
+/*BANNER & BUTTON*/
+.banner {
+    background-color: #808080;
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+    position: relative;
+}
+
+.btnHome {
+    text-decoration: none;
+    width: auto;
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    font-size: 20px;
+    transition: all ease .5s;
+}
+
+/*TITLE SECTION*/
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard {
+    position: sticky;
+    top: 85px;
+    z-index: 2;
+}
+
+    .dashboard a {
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+
+.titleSection {
+    color: white;
+    font-size: 40px;
+    font-weight: 700;
+    height: 100px;
+    background-color: #272218;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.displayed {
+    display: block !important;
+}
+
+.noDisplay {
+    display: none !important;
+}
+
+/*SCROLL TO TOP*/
+.scrollToTopContainer {
+    position: absolute;
+    display: none;
+    padding: 0 !important;
+    padding-left: 15px !important;
+}
+
+.main {
+    cursor: pointer;
+    position: relative;
+    width: 50px;
+    min-height: 50px;
+    margin-left: 0;
+    margin-right: auto;
+}
+
+    .main:before {
+        content: '';
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        margin: auto;
+        z-index: -1;
+        background-color: #ffffff;
+        border-radius: 50%;
+        box-shadow: 1px 1px 10px rgba(0,0,0,0.2);
+    }
+
+.scrollToTop {
+    position: absolute;
+    top:2px;
+    color: black;
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 13px;
+}
+
+/*SUBTITLE*/
+.subtitle {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+    margin-top: 40px;
+}
+
+/*POST*/
+.userPosts { /*whole right column*/
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.userPostsCard { /*whole post itself*/
+    margin-bottom: 20px;
+}
+
+/*POST-HEADER*/
+.infoPost { /*div below card-header, infos & pic*/
+    margin-top: 5px;
+    width: 100%;
+}
+
+.profilePicPost { /*div above profile, adds outline*/
+    background-color: #808080;
+    border-radius: 50%;
+    outline-style: solid;
+    outline-color: white;
+    outline-width: 0.15rem;
+    width: 60px;
+    height: 60px;
+    margin-top: 8px;
+    margin-left: 10px;
+    position: absolute;
+}
+
+.userInfo { /*username and date*/
+    padding-left: 90px;
+    padding-right: 34px;
+    max-width: 98%;
+}
+
+.usernamePost { /*username only*/
+    font-size: 21px;
+    font-weight: 500;
+    word-break: break-all;
+    word-wrap: break-word;
+    left: 0;
+    display: block;
+    text-align: left;
+    line-height: 25px;
+    padding: 0;
+    pointer-events: none;
+    white-space: normal;
+}
+
+    .usernamePost:hover,
+    .usernamePost:focus,
+    .usernamePost:active {
+        outline: none;
+        box-shadow: none !important;
+        -webkit-appearance: none;
+    }
+
+a { /*for username link*/
+    color: black;
+    text-decoration: none;
+}
+
+    a:link, a:visited, a:hover, a:active {
+        color: black;
+        text-decoration: none;
+    }
+
+.datePost { /*date only*/
+    font-size: 15px;
+    display: block;
+    text-align: left;
+}
+
+.btnEditPost:hover {
+    color: #017887;
+}
+
+.card-header-link {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 27px 27px 0px 0px;
+}
+
+/*POST-CAPTION*/
+.postCardInfo {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 30px;
+    text-align: justify;
+    text-justify: inter-word;
+    max-height: 100px;
+}
+
+/*POST-FOOTER*/
+.btnLike, .btnComment {
+    padding: 10px;
+    margin-bottom: 0;
+}
+
+    .btnLike:hover, .btnComment:hover {
+        color: #0e9bad;
+    }
+
+.card-footer {
+    text-align: center;
+    border-radius: 0px 0px 27px 27px !important;
+    margin: 0;
+    padding: 0;
+}
+
+.btnLike:hover,
+.btnLike:focus,
+.btnLike:active {
+    outline: none;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+}
+
+.btnComment:hover,
+.btnComment:focus,
+.btnComment:active {
+    outline: none;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+}
+
+/*POST IMAGES*/
+.carousel-indicators {
+    z-index: 1 !important;
+}
+
+.carousel-indicators .active { /*link to post*/
+    background-color: rgba(255, 255, 255, 0) !important;
+}
+
+.indicatorBG { /*current index/totalindex of images*/
+    background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8));
+    width: auto;
+    height: 20px;
+    color: #272218;
+    text-align: center;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    box-shadow: 0 0px 10px rgba(0,0,0,0.2);
+    margin-right: -16%;
+}
+
+/*FOR HIGHER HEIGHT*/
+.addHeight {
+    height: 600px;
+}
+
+.objectFitContain {
+    object-fit: contain !important;
+}
+
+.blurredBG {
+    height: 600px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    filter: blur(30px);
+    -webkit-filter: blur(10px);
+    background-image: url(../img/Sample_Banner2.jpg);
+    transform: scale(1.2);
+    background-position: 50% 50%;
+    display: none;
+}
+
+.displayed {
+    display: block;
+}
+
+/*CREATE POST*/
+.createPost {
+    margin-top: 2px;
+    width: 100%;
+}
+
+.btnCreatePost {
+    display: flex;
+    padding-left: 90px;
+    padding-right: 10px;
+    align-items: center;
+}
+
+.btnCreatePostLink:hover {
+    background-color: #FFFFFF !important;
+    cursor: text !important;
+}
+
+.btnCreatePostLink {
+    flex: 1;
+    margin-top: 6px;
+    text-align: start;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+    .btnCreatePostLink:focus,
+    .btnCreatePostLink:active {
+        box-shadow: none !important;
+        outline: 0px !important;
+    }
+
+.createPostHeader {
+    height: 86px;
+    border-radius: 27px 27px 27px 27px !important;
+}
+
+.profilePicCreatePost {
+    background-color: #808080;
+    border-radius: 50%;
+    outline-style: solid;
+    outline-color: white;
+    outline-width: 0.15rem;
+    width: 60px;
+    height: 60px;
+    margin-left: 10px;
+    position: absolute;
+}
+
+/*FOR RESPONSIVENESS*/
+@media screen and (max-width: 992px) {
+    .details {
+        width: 80%;
+    }
+
+    .userPosts {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    .btnHome {
+        bottom: 20px;
+        left: 20px;
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .details {
+        width: 90%;
+    }
+
+    .btnHome {
+        bottom: 10px;
+        left: 10px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .details {
+        width: 100%;
+    }
+
+    .userPosts {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .userPostsCard {
+        border-radius: 0px;
+        border-left: 0px;
+        border-right: 0px;
+    }
+
+    .card-header, .createPostHeader {
+        border-radius: 0 !important;
+    }
+
+    .profileParent {
+        top: 320px;
+        left: 100px;
+    }
+
+    .subtitle {
+        padding-left: 15px;
+    }
+
+    .btnHome {
+        width: 200px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .titleSection {
+        font-size: 35px;
+    }
+}
+
+/*BOOKMARK RESPONSIVENESS*/
+@media screen and (max-width: 483px) {
+    html {
+        scroll-padding-top: 75px !important;
+    }
+
+    .titleSection {
+        font-size: 30px;
+    }
+
+    .dashboard {
+        top: 75px;
+    }
+}
+
+@media screen and (max-width: 412px) {
+    html {
+        scroll-padding-top: 70px !important;
+    }
+
+    .dashboard {
+        top: 70px;
+    }
+}
+
+@media screen and (max-width: 382px) {
+    html {
+        scroll-padding-top: 65px !important;
+    }
+
+    .dashboard {
+        top: 65px;
+    }
+}
+
+/*CREATE POST MODAL*/
+.modal-body {
+    padding: 0;
+}
+
+.createPostTextarea {
+    width: 100%;
+    border-radius: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border: none;
+    resize: none;
+}
+
+.createPostTextarea:focus {
+    outline-color: transparent;
+    outline-style: none;
+}
+
+.card-footer-createPost {
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 0px;
+    padding-top: 0;
+    padding-bottom: 0px;
+}
+
+.btnPic, .btnVid {
+    font-size: 20px;
+}
+
+.btnPic:hover, .btnVid:hover {
+    color: #0e9bad;
+}
+
+.btnPic:hover,
+.btnPic:focus,
+.btnPic:active {
+    outline: none;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+}
+
+.btnVid:hover,
+.btnVid:focus,
+.btnVid:active {
+    outline: none;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+}
+
+.btnPost {
+    width: auto;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 0;
+    float: right;
+    border-radius: 0px 0px 27px 0px !important;
+}

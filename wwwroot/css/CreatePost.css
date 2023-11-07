@@ -1,0 +1,133 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Lilita One', cursive;
+    font-family: 'Rubik', sans-serif;
+}
+
+.popup {
+    background: rgba(0, 0, 0, .5);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* display: none; */
+}
+
+    .popup .overlay {
+        display: flex;
+        gap: 22px;
+    }
+
+    .popup.active {
+        display: block;
+        transition: all ease-in-out;
+    }
+
+    .popup .window {
+        background: white;
+        width: 767px;
+        height: 540px;
+        border-radius: 20px;
+        box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+
+.close {
+    color: white;
+    font-size: 50px;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+.popup .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    background: #FEC00F;
+    border-radius: 20px 20px 0px 0px;
+    padding: 25px 25px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.popup strong {
+    font-size: 20px;
+    font-weight: 700;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.popup p {
+    color: #8E8E8E;
+    font-size: 13px;
+}
+
+.popup .form {
+    padding: 5px 70px 5px 35px;
+}
+
+.popup .textbox {
+    display: flex;
+    width: 100%;
+    min-height: 345px;
+    padding: 14px;
+    outline: none;
+    border: none;
+    resize: none;
+    overflow: hidden;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+    .popup .textbox::placeholder {
+        color: #C8C8C8;
+    }
+
+.popup .footer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 2px 28px 0px 35px;
+    border-top: 1px solid #00A1E4;
+}
+
+.popup .media {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    padding: 30px 0px 0px 0px;
+}
+
+.popup i {
+    cursor: pointer;
+}
+
+.popup .submit {
+    display: flex;
+    align-items: center;
+    padding: 11px;
+}
+
+.popup .next {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #00A1E4;
+    width: 57px;
+    height: 38px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 550;
+    font-size: 15px;
+    color: white;
+    border: none;
+    box-shadow: 3px 3px 7px 0px rgba(0, 0, 0, 0.25);
+}
+
+.popup .next:active {
+    box-shadow: 3px 3px 7px 0px rgba(0, 0, 0, 0.25) inset;
+}

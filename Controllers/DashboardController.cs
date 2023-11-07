@@ -19,12 +19,21 @@ namespace ThomasianMemoir.Controllers
             return View();
         }
 
+        public IActionResult Junior()
+        {
+            return View();
+        }
+
         public IActionResult Senior()
         {
             return View();
         }
 
-        public IActionResult Junior()
+        public IActionResult Post()
+        {
+            return View();
+        }
+        public IActionResult PostPictures()
         {
             return View();
         }

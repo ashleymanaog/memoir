@@ -1,3 +1,20 @@
 ﻿@{
-    Layout = "_Layout";
+    var routeUrl = ViewContext.RouteData.Values["controller"].ToString();
+    System.Diagnostics.Debug.WriteLine(routeUrl);
+    switch (routeUrl)
+        {
+            case "Home":
+            Layout = "~/Views/Shared/_Layout.cshtml";
+        break;
+            case "Dashboard":
+            Layout = "~/Views/Shared/_LoggedInLayout.cshtml";
+        break;
+            case "Profile":
+            Layout = "~/Views/Shared/_LoggedInLayout.cshtml";
+        break;
+            default:
+            Layout = "~/Views/Shared/_Layout.cshtml";
+    break;
+    }
+    
 }

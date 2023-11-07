@@ -1,0 +1,477 @@
+﻿/*BANNER & PROFILE*/
+.banner {
+    background-color: #808080;
+    height: 350px;
+    width: 100%;
+    border-bottom: 0.3rem solid white;
+    box-shadow: 0px 5px 20px rgba(0,0,0,0.2);
+}
+
+.profilePic {
+    background-color: #808080;
+    border-radius: 50%;
+    outline-style: solid;
+    outline-color: white;
+    outline-width: 0.3rem;
+    width: 230px;
+    height: 230px;
+}
+
+.profileImage {
+    border-radius: 50%;
+}
+
+.uploadPhoto {
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 13px;
+}
+
+#uploadBannerPhoto, #uploadProfilePicture {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.container2 {
+    top: 120px;
+    right: 0%;
+    position: absolute;
+    transform: translate(0%, 0%);
+}
+
+.main {
+    cursor: pointer;
+    position: relative;
+    width: 50px;
+    min-height: 50px;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.main:before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    margin: auto;
+    z-index: -1;
+    background-color: #ffffff;
+    border-radius: 50%;
+    box-shadow: 1px 1px 10px rgba(0,0,0,0.2);
+}
+
+.profileParent {
+    position: absolute;
+    top: 280px; /*230px*/
+    left: 21%;
+    transform: translate(-50%, -50%);
+}
+
+.profileChild {
+    position: relative;
+}
+
+.details { /*whole content below banner & profile*/
+    padding-top: 70px;
+    margin: auto;
+    width: 80%;
+}
+
+.cardInfo { /*card paragraph*/
+    min-height: 100px;
+}
+
+/*LEFT COLUMN*/
+.userDescription { /*whole left column*/
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*POST*/
+.userPosts { /*whole right column*/
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.userPostsCard { /*whole post itself*/
+    margin-bottom: 20px;
+}
+
+/*POST-HEADER*/
+.infoPost { /*div below card-header, infos & pic*/
+    margin-top: 5px;
+    width: 100%;
+}
+
+.profilePicPost { /*div above profile, adds outline*/
+    background-color: #808080;
+    border-radius: 50%;
+    outline-style: solid;
+    outline-color: white;
+    outline-width: 0.15rem;
+    width: 60px;
+    height: 60px;
+    margin-top: 8px;
+    margin-left: 10px;
+    position: absolute;
+}
+
+.userInfo { /*username and date*/
+    padding-left: 90px;
+    padding-right: 34px;
+    max-width: 98%;
+}
+
+.usernamePost { /*username only*/
+    font-size: 21px;
+    font-weight: 500;
+    word-break: break-all;
+    word-wrap: break-word;
+    left: 0;
+    display: block;
+    text-align: left;
+    line-height: 25px;
+    padding: 0;
+    pointer-events: none;
+    white-space: normal;
+}
+
+    .usernamePost:hover,
+    .usernamePost:focus,
+    .usernamePost:active {
+        outline: none;
+        box-shadow: none !important;
+        -webkit-appearance: none;
+    }
+
+a { /*for username link*/
+    color: black;
+    text-decoration: none;
+}
+
+    a:link, a:visited, a:hover, a:active {
+        color: black;
+        text-decoration: none;
+    }
+
+.datePost { /*date only*/
+    font-size: 15px;
+    display: block;
+    text-align: left;
+}
+
+.btnEditPost:hover {
+    color: #017887;
+}
+
+
+.card-header-link {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 27px 27px 0px 0px;
+}
+
+/*POST-CAPTION*/
+.postCardInfo {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 30px;
+    text-align: justify;
+    text-justify: inter-word;
+    max-height: 100px;
+}
+
+/*POST-FOOTER*/
+.btnLike, .btnComment {
+    padding: 10px;
+    margin-bottom: 0;
+}
+
+.btnLike:hover, .btnComment:hover {
+    color: #0e9bad;
+}
+
+.card-footer {
+    text-align: center;
+    border-radius: 0px 0px 27px 27px !important;
+    margin: 0;
+    padding: 0;
+}
+
+.btnLike:hover,
+.btnLike:focus,
+.btnLike:active {
+    outline: none;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+}
+
+.btnComment:hover,
+.btnComment:focus,
+.btnComment:active {
+    outline: none;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+}
+
+/*POST IMAGES*/
+.carousel-indicators {
+    z-index: 1 !important;
+}
+
+.carousel-indicators .active { /*link to post*/
+    background-color: rgba(255, 255, 255, 0) !important;
+}
+
+.indicatorBG { /*current index/totalindex of images*/
+    background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8));
+    width: auto;
+    height: 20px;
+    color: #272218;
+    text-align: center;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    box-shadow: 0 0px 10px rgba(0,0,0,0.2);
+    margin-right: -16%;
+}
+
+/*FOR HIGHER HEIGHT*/
+.addHeight {
+    height: 600px;
+}
+
+.objectFitContain {
+    object-fit: contain !important;
+}
+
+.blurredBG {
+    height: 600px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    filter: blur(30px);
+    -webkit-filter: blur(10px);
+    background-image: url(../img/Sample_Banner2.jpg);
+    transform: scale(1.2);
+    background-position: 50% 50%;
+    display: none;
+}
+
+.displayed {
+    display: block;
+}
+
+/*FOR RESPONSIVENESS*/
+@media screen and (max-width: 992px) {
+    .details {
+        width: 80%;
+    }
+    .profilePic {
+        width: 200px;
+        height: 200px;
+    }
+    .profileParent {
+        top: 295px;
+        left: 220px;
+    }
+    .indicatorBG {
+        font-size: 13px;
+        padding: 13px;
+    }
+}
+@media screen and (max-width: 768px) {
+    .details {
+        width: 90%;
+    }
+    .profilePic {
+        width: 170px;
+        height: 170px;
+    }
+    .profileParent {
+        top: 310px;
+        left: 125px;
+    }
+}
+@media screen and (max-width: 576px) {
+    .details {
+        width: 100%;
+    }
+    .userDescription {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    .userPosts {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .userPostsCard {
+        border-radius: 0px;
+        border-left: 0px;
+        border-right: 0px;
+    }
+    .card-header {
+        border-radius: 0 !important;
+    }
+    .profilePic {
+        width: 150px;
+        height: 150px;
+    }
+    .profileParent {
+        top: 320px;
+        left: 100px;
+    }
+    .indicatorBG {
+        font-size:12px;
+        padding: 10px;
+    }
+}
+
+/*EDIT POST MODAL*/
+.modal-body {
+    padding: 0;
+}
+
+.editPostTextarea {
+    width: 100%;
+    border-radius: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border: none;
+    resize: none;
+    margin-bottom: 10px;
+}
+
+    .editPostTextarea:focus {
+        outline-color: transparent;
+        outline-style: none;
+    }
+
+.btnPic, .btnVid {
+    font-size: 20px;
+}
+
+    .btnPic:hover, .btnVid:hover {
+        color: #0e9bad;
+    }
+
+    .btnPic:hover,
+    .btnPic:focus,
+    .btnPic:active {
+        outline: none;
+        box-shadow: none !important;
+        -webkit-appearance: none;
+    }
+
+    .btnVid:hover,
+    .btnVid:focus,
+    .btnVid:active {
+        outline: none;
+        box-shadow: none !important;
+        -webkit-appearance: none;
+    }
+
+.card-footer-editPost {
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 0px;
+    padding-top: 0;
+    padding-bottom: 0px;
+}
+
+.btnPost {
+    width: auto;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 0;
+    float: right;
+    border-radius: 0px 0px 27px 0px !important;
+}
+
+.postImagesDiv { /*all images div*/
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.postImgDiv { /*1 image div*/
+    margin-top: 10px;
+    height: 350px;
+    width: 100%;
+}
+
+.hoverImg { /*black hover*/
+    height: 350px;
+    width: 100%;
+    position: relative;
+}
+
+    .hoverImg::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.45);
+        display: none;
+    }
+
+.postImgDiv:hover .hoverImg::before { /*hover on one image, show transparent black*/
+    display: block;
+}
+
+.btnEditPicDiv label {
+    display: none;
+}
+
+.btnEditPic {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-top: 165px;
+    display: block;
+    color: white !important;
+    font-size: 25px;
+}
+
+.btnRemovePic {
+    content: "";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: block;
+    color: white !important;
+    font-size: 25px;
+}
+
+.postImgDiv:hover .btnEditPicDiv label { /*hover on one image, show icons*/
+    display: block;
+}
+
+.btnRemovePic:hover,
+.btnRemovePic:focus,
+.btnRemovePic:active {
+    outline: none;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+}
+
+.noDisplay { /*for removeign pic*/
+    display: none;
+}

@@ -1,0 +1,91 @@
+﻿/*POST IMAGES*/
+.carousel-item {
+    height: 100vh;
+}
+
+.carousel-indicators {
+    z-index: 1 !important;
+}
+
+    .carousel-indicators .active { /*link to post*/
+        background-color: rgba(255, 255, 255, 0) !important;
+    }
+
+.indicatorBG { /*current index/totalindex of images*/
+    background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8));
+    width: auto;
+    color: #272218;
+    text-align: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 20px;
+    box-shadow: 0 0px 10px rgba(0,0,0,0.2);
+    height: 45px;
+}
+
+.btnExit {
+    font-size: 40px;
+    color: rgba(255, 255, 255, 0.5);
+    height: 50px;
+    margin-right: -18%;
+    position: absolute;
+    display: inline-block;
+    -webkit-text-stroke: 2px #8a8a8a;
+    paint-order: stroke fill;
+    filter: drop-shadow(0px 0px 10px rgba(0,0,0,0.5));
+}
+
+.btnExit:hover {
+    color: rgba(255, 255, 255, 1);
+}
+
+    .btnExit:hover,
+    .btnExit:focus,
+    .btnExit:active {
+        outline: none;
+        box-shadow: none !important;
+        -webkit-appearance: none;
+    }
+
+.carousel-control-next {
+    -webkit-text-stroke: 3px #8a8a8a;
+    paint-order: stroke fill;
+    filter: drop-shadow(0px 0px 10px rgba(0,0,0,0.5));
+    font-size: 40px;
+    justify-content: end;
+    padding-right: 2.5rem;
+    padding-top: 60px;
+    margin-bottom: 60px;
+}
+.carousel-control-prev {
+    -webkit-text-stroke: 3px #8a8a8a;
+    paint-order: stroke fill;
+    filter: drop-shadow(0px 0px 10px rgba(0,0,0,0.5));
+    font-size: 40px;
+    justify-content: start;
+    padding-left: 2.5rem;
+    padding-top: 60px;
+    margin-bottom: 60px;
+}
+
+/*FOR HIGHER HEIGHT*/
+.blurredBG {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    display: block;
+    filter: blur(50px);
+    -webkit-filter: blur(50px);
+    background-image: url(../img/Sample_Banner2.jpg);
+    transform: scale(1.2);
+    background-position: 50% 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.carousel-item img {
+    object-fit: contain !important;
+}

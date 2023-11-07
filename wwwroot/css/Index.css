@@ -1,0 +1,241 @@
+﻿/*LEFT OR TOP (TEXT & BUTTON)*/
+.left {
+    margin: auto;
+    padding-left: 13%;
+}
+.text {
+    position: absolute;
+    width: 100%;
+    transform: translateY(-50%);
+    z-index:1;
+}
+
+.title {
+    font-family: 'Lilita One', cursive;
+    font-size: 80px;
+    line-height: 88px;
+    margin-bottom: 20px;
+}
+
+.roar {
+    font-family: 'Lilita One', cursive;
+    font-size: 80px;
+    color: #f0b81a;
+}
+
+p {
+    text-align: justify;
+    text-justify: inter-word;
+    font-size: 17px;
+    margin-bottom: 40px;
+}
+
+.btnReg {
+    text-decoration: none;
+    width: auto;
+    padding-left: 40px;
+    padding-right: 40px;
+    font-size: 20px;
+}
+
+/*COVER IMAGE*/
+.coverImg {
+    width: 100%;
+    height: 100vh;
+    background-image: url(../img/BG/BG_Index.jpg);
+    background-size: cover;
+}
+
+.gradient {
+    background-image: linear-gradient(to right, rgba(243, 239, 227, 1), rgba(243, 239, 227, 0.8), rgba(243, 239, 227, 0));
+    width: 40%;
+    height: 100%;
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 300px;
+    text-shadow: 0px 0px 30px #000000;
+}
+
+/*ELEMENTS IMAGE*/
+.element1Img {
+    height: 750px !important;
+    width: auto !important;
+    object-fit: cover;
+}
+
+.element2Img {
+    height: 840px !important;
+    width: auto !important;
+    object-fit: cover;
+}
+
+.element1Div {
+    position: absolute;
+    bottom: -90px;
+    left: -120px;
+}
+
+.element2Div {
+    position: absolute;
+    top: -65px;
+    right: -110px;
+}
+
+footer {
+    position: absolute;
+    bottom: -90px;
+}
+
+/*FOR RESPONSIVENESS*/
+@media screen and (max-width: 1417px) {
+    .element1Img {
+        height: 600px !important;
+    }
+
+    .element2Img {
+        height: 678px !important;
+    }
+
+    .element1Div {
+        bottom: -80px;
+        left: -100px;
+    }
+
+    .element2Div {
+        top: -55px;
+        right: -90px;
+    }
+}
+@media screen and (max-width: 1304px) {
+    footer {
+        bottom: -115px;
+    }
+}
+@media screen and (max-width: 992px) {
+    .gradient {
+        background-image: linear-gradient(to bottom, rgba(243, 239, 227, 1), rgba(243, 239, 227, 0));
+        width: 100%;
+        height: 50%;
+    }
+
+    .coverImg {
+        height: 70vh;
+        margin-top: 450px;
+    }
+
+    .text {
+        width: 75%;
+        transform: translateY(50%);
+    }
+
+    .element1Img {
+        height: 440px !important;
+    }
+
+    .element2Img {
+        height: 500px !important;
+    }
+
+    .element1Div {
+        bottom: -225px;
+        left: -70px;
+    }
+
+    .element2Div {
+        top: -40px;
+        right: -63px;
+    }
+
+    footer {
+        bottom: -280px;
+    }
+}
+@media screen and (max-width: 828px) {
+    .text {
+        transform: translateY(40%);
+    }
+
+    .title {
+        font-size: 70px;
+        line-height: 80px;
+    }
+
+    .roar {
+        font-size: 70px;
+    }
+}
+@media screen and (max-width: 720px) {
+    .text {
+        transform: translateY(30%);
+    }
+
+    .coverImg {
+        margin-top: 550px;
+    }
+
+    .element1Img {
+        height: 300px !important;
+    }
+
+    .element2Img {
+        height: 350px !important;
+    }
+
+    .element1Div {
+        bottom: -310px;
+        left: -50px;
+    }
+
+    .element2Div {
+        top: -20px;
+        right: -40px;
+    }
+
+    footer {
+        bottom: -380px;
+    }
+}
+@media screen and (max-width: 657px) {
+    footer {
+        bottom: -405px;
+    }
+}
+@media screen and (max-width: 577px) {
+    footer {
+        bottom: -429px;
+    }
+}
+@media screen and (max-width: 452px) {
+    .title {
+        font-size: 60px;
+        line-height: 65px;
+    }
+
+    .roar {
+        font-size: 60px;
+    }
+
+    footer {
+        bottom: -453px;
+    }
+}
+@media screen and (max-width: 394px) {
+    .text {
+        transform: translateY(20%);
+    }
+
+    .coverImg {
+        margin-top: 570px;
+    }
+
+    .element1Div {
+        bottom: -325px;
+        left: -50px;
+    }
+
+    footer {
+        bottom: -470px;
+    }
+}
