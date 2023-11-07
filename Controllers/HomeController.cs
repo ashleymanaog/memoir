@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using ThomasianMemoir.Data;
 using ThomasianMemoir.Models;
 
 namespace ThomasianMemoir.Controllers
@@ -8,9 +10,22 @@ namespace ThomasianMemoir.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly AppDbContext _dbContext;
+        private DbSet<Users> Users;
+        private DbSet<UserPost> UserPost;
+        private DbSet<UserPostLikes> UserPostLikes;
+        private DbSet<UserPostComments> UserPostComments;
+        private DbSet<UserPostMedia> UserPostMedia;
+                
+        public HomeController(ILogger<HomeController> logger, AppDbContext dbContext)
         {
             _logger = logger;
+            _dbContext = dbContext;
+            Users = _dbContext.Users;
+            UserPost = _dbContext.UserPost;
+            UserPostLikes = _dbContext.UserPostLikes;
+            UserPostComments = _dbContext.UserPostComments;
+            UserPostMedia = _dbContext.UserPostMedia;
         }
 
         public IActionResult Index()

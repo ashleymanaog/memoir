@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Verification Code</title>
+
+    <!--Google Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!--Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <!--Favicon-->
+    <link rel="icon" href="https://i.ibb.co/bR1vjCT/Thomasian-Memoir-Logo.png" type="image/gif" sizes="16x16">
+    <!--https://i.ibb.co/8Mqr5zv/Logo-with-Name.png-->
+
+    <style>
+        body {
+            margin: auto;
+            width: 100%;
+            table-layout: fixed;
+            background-color: #cccccc;
+        }
+
+        table {
+            border-spacing: 0;
+            margin: auto;
+        }
+
+        td {
+            padding: 0;
+        }
+
+        img {
+            border: 0;
+        }
+
+        .main {
+            background-color: #f3efe3;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 600px;
+            border-spacing: 0;
+            font-family: 'Lilita One', cursive;
+            font-family: 'Rubik', sans-serif;
+            color: #272218;
+        }
+
+        .headerBG {
+            background-image: linear-gradient(90deg, #FF8C06, #F7B504, #81e1ee);
+        }
+
+        .footer {
+            background-color: #dfdcd2;
+            color: #7b7770;
+            font-size: 12px;
+        }
+
+        @media screen and (max-width: 500px) {
+            .headertd {
+                padding-left: 35px !important;
+                padding-right: 35px !important;
+            }
+            .title {
+                font-size: 32px !important;
+                padding: 10px !important;
+            }
+            .titleGreeting {
+                font-size: 23px !important;
+            }
+            .paragraph {
+                font-size: 17px !important;
+            }
+            .code {
+                font-size: 55px !important;
+            }
+            .codePlaceholder {
+                padding-left: 15px !important;
+                padding-right: 15px !important;
+            }
+        }
+
+        @media screen and (max-width: 340px) {
+            .headertd {
+                padding-left: 20px !important;
+                padding-right: 20px !important;
+            }
+
+            .title {
+                font-size: 28px !important;
+                padding: 10px !important;
+            }
+
+            .titleGreeting {
+                font-size: 22px !important;
+            }
+
+            .paragraph {
+                font-size: 15px !important;
+            }
+
+            .code {
+                font-size: 45px !important;
+            }
+
+            .codePlaceholder {
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <table class="main" width="100%">
+            <!--HEADER-->
+            <tr class="headerBG">
+                <td>
+                    <table style="margin:auto;">
+                        <tr>
+                            <td style="padding-top:20px; padding-bottom:20px; padding-left:50px; padding-right:50px;" class="headertd">
+                                <img src="https://i.ibb.co/8Mqr5zv/Logo-with-Name.png" style="height:100%; width:100%; object-fit: scale-down;" alt="SubLogger Logo" title="SubLogger Logo" class="logo">
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <!--TITLE-->
+            <tr style="background-color:#272218;">
+                <td>
+                    <table>
+                        <tr>
+                            <td><h1 style="font-size:35px; color:white; font-weight:700; padding:20px; margin:0; text-align:center;" class="title">VERIFICATION CODE</h1></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <!--BODY-->
+            <tr style="text-align:center;">
+                <td>
+                    <table style="padding-top:20px; padding-bottom:20px; display:inline-block; width:80%;">
+                        <tr>
+                            <td style="padding-top:10px; padding-bottom:10px; margin: 0; text-align: center;">
+                                <h1 style="font-size:25px; font-weight:700; padding-bottom:15px; margin:0; text-align:center;" class="titleGreeting">Hi {NAME}!</h1>
+                                <p style="margin:0; font-size:19px; font-weight:400;" class="paragraph">
+                                    Your verification code is:
+                                </p>
+                                <table style="background-color: white; padding-left: 20px; padding-right: 20px; margin-top: 20px; margin-bottom: 20px; margin-left:auto; margin-right:auto; border-radius: 27px; border: #C7C7C7 3px solid;" class="codePlaceholder">
+                                    <tr>
+                                        <td>
+                                            <h1 style="font-size:60px; font-weight:700; padding:10px; margin:0; text-align:center;" class="code">{CODE}</h1>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <p style="margin:0; font-size:19px; font-weight:400;" class="paragraph">
+                                    Please enter this code to verify your identity. The code will expire in 15 minutes.
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <!--FOOTER-->
+            <tr class="footer">
+                <td>
+                    <table style="text-align:center; padding-top:10px; padding-bottom:10px;">
+                        <tr>
+                            <td><p style="padding:5px; margin:0;">Email brought to you by</p></td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://i.ibb.co/YfNMHDY/Thomasian-Memoir-Name.png" alt="THOMASIAN MEMOIR" style="height:18px; margin-top:5px; margin-bottom:2px;"></td>
+                        </tr>
+                        <tr>
+                            <td><p style="padding:5px; margin:0;">If you have received this email in error, no further action is required.</p></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </center>
+</body>
+</html>

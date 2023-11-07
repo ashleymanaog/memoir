@@ -171,6 +171,30 @@ section {
     box-shadow: 0 0 0 0.2rem rgba(129, 225, 238, 0.5);
 }
 
+/*TEXT*/
+.boldtext {
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+}
+
+.italicizedtext {
+    font-style: italic;
+    margin: 0;
+    padding: 0;
+}
+
+.underlinedtext {
+    text-decoration: underline;
+    margin: 0;
+    padding: 0;
+}
+
+inline {
+    display: inline !important;
+    width: auto !important;
+}
+
 /*TEXTBOX*/
 .textbox {
     border-radius: 20px;

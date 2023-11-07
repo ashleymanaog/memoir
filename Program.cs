@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using ThomasianMemoir.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+// Database Connection Service
+builder.Services.AddDbContext<AppDbContext>(
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnectionString"))
+);
 
 var app = builder.Build();
 
@@ -14,6 +21,10 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<AppDbContext>();
+context.Database.EnsureCreated(); //create database if not exists
+
 app.UseStaticFiles();
 
 app.UseRouting();
