@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "WoZivqintS5Kky3Bj4eL7LSjYM3h/irnv33UtaAP80c=",
+  "Hash": "vaJw9e1SvoQSeYvKoGB9rrP1yqdf4arsmoGcs8+xQVY=",
   "Source": "ThomasianMemoir",
   "BasePath": "_content/ThomasianMemoir",
   "Mode": "Default",
@@ -1258,23 +1258,6 @@
       "OriginalItemSpec": "wwwroot\\js\\PostPictures.js"
     },
     {
-      "Identity": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\js\\SelectDropdown.js",
-      "SourceId": "ThomasianMemoir",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\",
-      "BasePath": "_content/ThomasianMemoir",
-      "RelativePath": "js/SelectDropdown.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\SelectDropdown.js"
-    },
-    {
       "Identity": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\js\\site.js",
       "SourceId": "ThomasianMemoir",
       "SourceType": "Discovered",
@@ -1290,6 +1273,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
+    },
+    {
+      "Identity": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\js\\UserDetailsValidation.js",
+      "SourceId": "ThomasianMemoir",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\",
+      "BasePath": "_content/ThomasianMemoir",
+      "RelativePath": "js/UserDetailsValidation.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\UserDetailsValidation.js"
     },
     {
       "Identity": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\js\\ViewPost.js",

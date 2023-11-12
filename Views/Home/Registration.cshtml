@@ -2,59 +2,60 @@
     ViewData["Title"] = "Registration";
     ViewData["CSSFile"] = "~/css/Registration.css";
     ViewData["JSFile"] = "~/js/ChooseProfileAndBanner.js";
-    ViewData["JSFile2"] = "~/js/SelectDropdown.js";
+    ViewData["JSFile2"] = "~/js/UserDetailsValidation.js";
+    @model Users;
 }
 <section class="section1">
 <div class="details">
   <!--Registration-->
-  <form name="regForm" id="regForm" class="regForm" method="POST">
+  <form name="regForm" id="regForm" class="regForm" method="POST" enctype="multipart/form-data">
     <div class="card">
         <h3 class="card-header" style="padding-top: 16px;">
         Register an Account</h3>
         <div class="row cardInfo" style="margin-top:20px;">
             <div class="col-md-5">
-                <label for="firstname" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">First Name</label>
-                <span class="errorSpan">Error Message Here</span>
+                <label asp-for="FirstName" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">First Name</label>
+                <span class="errorSpan" id="firstnameError"></span>
             </div>
             <div class="col-md-7">
-                <input type="text" class="form-control textbox" style="margin-top:8px;" id="firstname" name="firstname" placeholder="First Name" required>
+                <input asp-for="FirstName" type="text" class="form-control textbox" style="margin-top:8px;" id="firstname" name="firstname" placeholder="First Name">
             </div>
             <div class="col-md-5">
-                <label for="lastname" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Last Name</label>
-                <span class="errorSpan">Error Message Here</span>
+                <label asp-for="LastName" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Last Name</label>
+                <span class="errorSpan" id="lastnameError"></span>
             </div>
             <div class="col-md-7">
-                <input type="text" class="form-control textbox" style="margin-top:8px;" id="lastname" name="lastname" placeholder="Last Name" required>
+                <input asp-for="LastName" type="text" class="form-control textbox" style="margin-top:8px;" id="lastname" name="lastname" placeholder="Last Name">
             </div>
             <div class="col-md-5">
-                <label for="username" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Username</label>
-                <span class="errorSpan">Error Message Here</span>
+                <label asp-for="Username" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Username</label>
+                <span class="errorSpan" id="usernameError"></span>
             </div>
             <div class="col-md-7">
-                <input type="text" class="form-control textbox" style="margin-top:8px;" id="username" name="username" placeholder="Username" required>
+                <input asp-for="Username" type="text" class="form-control textbox" style="margin-top:8px;" id="username" name="username" placeholder="Username">
             </div>
             <div class="col-md-5">
-                <label for="email" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Email Address</label>
-                <span class="errorSpan">Error Message Here</span>
+                <label asp-for="Email" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Email Address</label>
+                <span class="errorSpan" id="emailError"></span>
             </div>
             <div class="col-md-7">
-                <input type="email" class="form-control textbox" style="margin-top:8px;" id="email" name="email" placeholder="Email Address" required>
+                <input asp-for="Email" type="text" class="form-control textbox" style="margin-top:8px;" id="email" name="email" placeholder="Email Address">
             </div>
             <div class="col-md-5">
-                <label for="password" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Password</label>
-                <span class="errorSpan">Error Message Here</span>
+                <label asp-for="Password" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Password</label>
+                <span class="errorSpan" id="passwordError"></span>
             </div>
             <div class="col-md-7">
-                <input type="password" class="form-control textbox" style="margin-top:8px;" id="password" name="password" placeholder="Password" required>
+                <input asp-for="Password" type="password" class="form-control textbox" style="margin-top:8px;" id="password" name="password" placeholder="Password">
             </div>
 
             <div class="col-md-5">
-                <label for="yearlevel" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Year Level</label>
-                <span class="errorSpan">Error Message Here</span>
+                <label asp-for="YearLevel" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Year Level</label>
+                <span vel" class="errorSpan" id="yearLevelError"></span>
             </div>
 
             <div class="col-md-7">
-                <select name="yearLevel" id="yearLevel" class="form-select form-control dropdown option-placeholder">
+                <select asp-for="YearLevel" id="yearLevel" class="form-select form-control dropdown option-placeholder">
                     <option value="placeholder" disabled selected hidden>Select a year level</option>
                     <option value="FirstYear">1st Year</option>
                     <option value="SecondYear">2nd Year</option>
@@ -85,7 +86,7 @@
             </div>
         </div>
         <div style="padding-top:30px; padding-bottom:30px; text-align:center;">
-            <a href="#" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-info btn-md center blueButton btnForm" id="btnEditPersonalInfo" name="btnEditPersonalInfo" value="Create Account"></a>
+            <a href="#" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="button" class="btn btn-info btn-md center blueButton btnForm" id="btnRegister" name="btnEditPersonalInfo" value="Create Account"></a>
             <a asp-controller="Home" asp-action="Login" target="_self" class="btn-link" style="display:block; text-decoration:none; color:#0ba2b5; margin-top:10px;">Log in to an account</a>
         </div>
     </div>
@@ -276,3 +277,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    //Dropdown option with placeholder text color
+    const select = document.querySelector('select');
+    function changeOptionColor() {
+        if (document.getElementById('yearLevel').value != "placeholder") {
+            select.classList.remove('option-placeholder');
+            select.classList.add('option-color');
+        }
+    }
+
+    select.addEventListener("click", function () {
+        changeOptionColor();
+    });
+
+    select.addEventListener("change", function () {
+        changeOptionColor();
+    });
+</script>

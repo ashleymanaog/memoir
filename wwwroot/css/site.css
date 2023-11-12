@@ -201,7 +201,7 @@ inline {
     font-size: 18px;
     padding-left: 20px;
     padding-right: 20px;
-    color: black;
+    color: black !important;
 }
 
 textarea {

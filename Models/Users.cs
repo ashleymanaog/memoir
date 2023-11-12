@@ -14,13 +14,16 @@ namespace ThomasianMemoir.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Username { get; set; }
-        public string EmailAddress { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
         public string Password { get; set; }
         public YearLevel YearLevel { get; set; }
-        public string ProfilePic { get; set; }
-        public string BannerPic { get; set; }
+        [NotMapped]
+        public IFormFile? ProfilePic { get; set; }
+        [NotMapped]
+        public IFormFile? BannerPic { get; set; }
         public string? ProfileDescription { get; set; }
         [ForeignKey("UserId")]
-        public ICollection<UserPost> Posts { get; set; }
+        public ICollection<UserPost>? Posts { get; set; }
     }
 }

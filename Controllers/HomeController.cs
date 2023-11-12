@@ -12,20 +12,20 @@ namespace ThomasianMemoir.Controllers
 
         private readonly AppDbContext _dbContext;
         private DbSet<Users> Users;
-        private DbSet<UserPost> UserPost;
-        private DbSet<UserPostLikes> UserPostLikes;
-        private DbSet<UserPostComments> UserPostComments;
-        private DbSet<UserPostMedia> UserPostMedia;
+        //private DbSet<UserPost> UserPost;
+        //private DbSet<UserPostLikes> UserPostLikes;
+        //private DbSet<UserPostComments> UserPostComments;
+        //private DbSet<UserPostMedia> UserPostMedia;
                 
         public HomeController(ILogger<HomeController> logger, AppDbContext dbContext)
         {
             _logger = logger;
             _dbContext = dbContext;
             Users = _dbContext.Users;
-            UserPost = _dbContext.UserPost;
-            UserPostLikes = _dbContext.UserPostLikes;
-            UserPostComments = _dbContext.UserPostComments;
-            UserPostMedia = _dbContext.UserPostMedia;
+            //UserPost = _dbContext.UserPost;
+            //UserPostLikes = _dbContext.UserPostLikes;
+            //UserPostComments = _dbContext.UserPostComments;
+            //UserPostMedia = _dbContext.UserPostMedia;
         }
 
         public IActionResult Index()
@@ -38,9 +38,22 @@ namespace ThomasianMemoir.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Registration()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Registration(Users newUser)
+        {
+            if (ModelState.IsValid)
+            {
+                Users.Add(newUser);
+                _dbContext.SaveChangesAsync();
+                return RedirectToAction("Login");
+            }
+            return RedirectToAction("Registration");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
