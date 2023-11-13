@@ -3,6 +3,20 @@
     ViewData["CSSFile"] = "~/css/Profile.css";
     ViewData["JSFile"] = "~/js/ViewPost.js";
     ViewData["JSFile2"] = "~/js/EditPost.js";
+    @model ThomasianMemoir.Models.ProfileViewModel;
+    var studentClassification = "";
+    
+    @*if (Model.User.YearLevel == "1st Year") {
+        studentClassification = "Freshmen";
+    } else if (Model.User.YearLevel == "2nd Year") {
+        studentClassification = "Sophomore";
+    } else if (Model.User.YearLevel == "3rd Year") {
+        studentClassification = "Junior";
+    } else if (Model.User.YearLevel == "4th Year") {
+        studentClassification = "Senior";
+    } else if (Model.User.YearLevel == "5th Year") {
+        studentClassification = "Senior";
+    }*@
 }
 <!--Banner-->
 <div class="banner">
@@ -30,10 +44,10 @@
                 <span class="boldtext" style="margin-right:12px;">Email Address:</span><span class="">{Email Address}</span><br />
             </div>
             <div style="margin-bottom:10px;">
-                <span class="boldtext" style="margin-right:12px;">Year Level:</span><span class="">1st year</span><br />
+                <span class="boldtext" style="margin-right:12px;">Year Level:</span><span class="">{Year Level}</span><br />
             </div>
             <div style="margin-bottom:10px;">
-                <span class="boldtext" style="margin-right:12px;">Student Classification:</span><span class="">Freshmen</span><br />
+                <span class="boldtext" style="margin-right:12px;">Student Classification:</span><span class="">{Student Classification}</span><br />
             </div>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </div>

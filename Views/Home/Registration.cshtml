@@ -2,48 +2,48 @@
     ViewData["Title"] = "Registration";
     ViewData["CSSFile"] = "~/css/Registration.css";
     ViewData["JSFile"] = "~/js/ChooseProfileAndBanner.js";
-    ViewData["JSFile2"] = "~/js/UserDetailsValidation.js";
     @model Users;
 }
 <section class="section1">
 <div class="details">
   <!--Registration-->
-  <form name="regForm" id="regForm" class="regForm" method="POST" enctype="multipart/form-data">
+  <form name="regForm" id="regForm" class="regForm" asp-action="Registration" method="POST" enctype="multipart/form-data">
     <div class="card">
         <h3 class="card-header" style="padding-top: 16px;">
         Register an Account</h3>
         <div class="row cardInfo" style="margin-top:20px;">
+            <span class="text-danger" style="text-align:center;" id="spanErr">@Html.ValidationMessage("regErr")</span>
             <div class="col-md-5">
-                <label asp-for="FirstName" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">First Name</label>
-                <span class="errorSpan" id="firstnameError"></span>
+                <label asp-for="FirstName" class="form-label" style="padding:0; margin-bottom:0; margin-top:15px;">First Name</label>
+                <span asp-validation-for="FirstName" class="errorSpan" id="firstnameError"></span>
             </div>
             <div class="col-md-7">
                 <input asp-for="FirstName" type="text" class="form-control textbox" style="margin-top:8px;" id="firstname" name="firstname" placeholder="First Name">
             </div>
             <div class="col-md-5">
                 <label asp-for="LastName" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Last Name</label>
-                <span class="errorSpan" id="lastnameError"></span>
+                <span asp-validation-for="LastName" class="errorSpan" id="lastnameError"></span>
             </div>
             <div class="col-md-7">
                 <input asp-for="LastName" type="text" class="form-control textbox" style="margin-top:8px;" id="lastname" name="lastname" placeholder="Last Name">
             </div>
             <div class="col-md-5">
                 <label asp-for="Username" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Username</label>
-                <span class="errorSpan" id="usernameError"></span>
+                <span asp-validation-for="Username" class="errorSpan" id="usernameError"></span>
             </div>
             <div class="col-md-7">
                 <input asp-for="Username" type="text" class="form-control textbox" style="margin-top:8px;" id="username" name="username" placeholder="Username">
             </div>
             <div class="col-md-5">
                 <label asp-for="Email" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Email Address</label>
-                <span class="errorSpan" id="emailError"></span>
+                <span asp-validation-for="Email" class="errorSpan" id="emailError"></span>
             </div>
             <div class="col-md-7">
                 <input asp-for="Email" type="text" class="form-control textbox" style="margin-top:8px;" id="email" name="email" placeholder="Email Address">
             </div>
             <div class="col-md-5">
                 <label asp-for="Password" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Password</label>
-                <span class="errorSpan" id="passwordError"></span>
+                <span asp-validation-for="Password" class="errorSpan" id="passwordError"></span>
             </div>
             <div class="col-md-7">
                 <input asp-for="Password" type="password" class="form-control textbox" style="margin-top:8px;" id="password" name="password" placeholder="Password">
@@ -51,18 +51,19 @@
 
             <div class="col-md-5">
                 <label asp-for="YearLevel" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Year Level</label>
-                <span vel" class="errorSpan" id="yearLevelError"></span>
+                <span asp-validation-for="YearLevel" vel" class="errorSpan" id="yearLevelError"></span>
             </div>
 
             <div class="col-md-7">
-                <select asp-for="YearLevel" id="yearLevel" class="form-select form-control dropdown option-placeholder">
+                <select id="yearLevel" class="form-select form-control dropdown option-placeholder">
                     <option value="placeholder" disabled selected hidden>Select a year level</option>
-                    <option value="FirstYear">1st Year</option>
-                    <option value="SecondYear">2nd Year</option>
-                    <option value="ThirdYear">3rd Year</option>
-                    <option value="FourthYear">4th Year</option>
-                    <option value="FifthYear">5th Year</option>
+                    <option value="1st Year">1st Year</option>
+                    <option value="2nd Year">2nd Year</option>
+                    <option value="3rd Year">3rd Year</option>
+                    <option value="4th Year">4th Year</option>
+                    <option value="5th Year">5th Year</option>
                 </select>
+                <input asp-for="YearLevel" type="text" class="form-control textbox" style="margin-top:8px; display:none;" id="yearLevelTxt">
             </div>
 
             <div class="col-md-5">
@@ -86,7 +87,7 @@
             </div>
         </div>
         <div style="padding-top:30px; padding-bottom:30px; text-align:center;">
-            <a href="#" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="button" class="btn btn-info btn-md center blueButton btnForm" id="btnRegister" name="btnEditPersonalInfo" value="Create Account"></a>
+            <a href="#" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-info btn-md center blueButton btnForm" id="btnRegister" name="btnEditPersonalInfo" value="Create Account"></a>
             <a asp-controller="Home" asp-action="Login" target="_self" class="btn-link" style="display:block; text-decoration:none; color:#0ba2b5; margin-top:10px;">Log in to an account</a>
         </div>
     </div>
@@ -281,6 +282,7 @@
 <script>
     //Dropdown option with placeholder text color
     const select = document.querySelector('select');
+    
     function changeOptionColor() {
         if (document.getElementById('yearLevel').value != "placeholder") {
             select.classList.remove('option-placeholder');
@@ -290,9 +292,32 @@
 
     select.addEventListener("click", function () {
         changeOptionColor();
+        const span = document.getElementById("yearLevelTxt");
+        const select = document.getElementById("yearLevel");
+        var yearLevelSelect = select.value;
+        //var studentClassification = select.options[select.selectedIndex].text;
+        if (yearLevelSelect == "1st Year") {
+            span.value = "1st Year";
+        } else if (yearLevelSelect == "2nd Year") {
+            span.value = "2nd Year";
+        } else if (yearLevelSelect == "3rd Year") {
+            span.value = "3rd Year";
+        } else if (yearLevelSelect == "4th Year") {
+            span.value = "4th Year";
+        } else if (yearLevelSelect == "5th Year") {
+            span.value = "5th Year";
+        }
     });
 
     select.addEventListener("change", function () {
         changeOptionColor();
     });
+
+    window.addEventListener("load", (event) => { 
+        const span = document.getElementById("yearLevelTxt").value;
+        if (span.length>0){
+            select.value = span;
+        }
+    });
+
 </script>

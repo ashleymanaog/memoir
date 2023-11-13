@@ -1,32 +1,37 @@
 ﻿@{
     ViewData["Title"] = "Login";
     ViewData["CSSFile"] = "~/css/Login.css";
+    @model LoginViewModel;
 }
 <section class="section1">
 <div class="details">
 <!--Login-->
-  <form name="loginForm" id="loginForm" class="loginForm" method="POST">
+  <form name="loginForm" id="loginForm" class="loginForm" asp-action="Login" method="POST">
     <div class="card col-xxl-7">
         <h3 class="card-header" style="padding-top: 16px;">Log In to Thomasian Memoir</h3>
         <div class="row cardInfo" style="margin-top:20px;">
+            <span class="text-danger" style="text-align:center;" id="spanErr">@Html.ValidationMessage("loginErr")</span>
             <div class="col-md-5">
-                <label for="email" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Email Address</label>
-                <span class="errorSpan">Error Message Here</span>
+                <label asp-for="Username" for="text" class="form-label" style="padding:0; margin-bottom:0; margin-top:15px;">Username</label>
+                <span asp-validation-for="Username" class="errorSpan"></span>
             </div>
             <div class="col-md-7">
-                <input type="email" class="form-control textbox" style="margin-top:8px;" id="email" name="email" placeholder="Email Address" required>
+                <input asp-for="Username" type="text" class="form-control textbox" style="margin-top:8px;" id="username" name="username" placeholder="Username">
             </div>
             <div class="col-md-5">
-                <label for="password" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Password</label>
-                <span class="errorSpan">Error Message Here</span>
+                <label asp-for="Password" for="password" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Password</label>
+                <span asp-validation-for="Password" class="errorSpan"></span>
             </div>
             <div class="col-md-7">
-                <input type="password" class="form-control textbox" style="margin-top:8px;" id="password" name="password" placeholder="Password" required>
+                <input asp-for="Password" type="password" class="form-control textbox" style="margin-top:8px;" id="password" name="password" placeholder="Password">
+            </div>
+            <div class="form-check" style="margin-top:5px; margin-left:auto; margin-right:auto; width:200px; padding-left:50px; padding-right:0;">
+                <input asp-for="RememberMe" type="checkbox" class="form-check-input" style="margin-top:8px;">
+                <label asp-for="RememberMe" class="form-label form-check-label" style="font-size:18px; padding-top:3px;"></label>
             </div>
         </div>
-        <div style="padding-top:20px; padding-bottom:30px; text-align:center;">
-            <!--!!!NOTE: Change input type to submit if login is implemented-->
-            <a asp-controller="Dashboard" asp-action="Homepage" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="button" class="btn btn-info btn-md center blueButton btnForm" id="btnLogin" name="btnEditPersonalInfo" value="Log In"></a>
+        <div style="padding-top:15px; padding-bottom:30px; text-align:center;">
+            <a asp-controller="Dashboard" asp-action="Homepage" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-info btn-md center blueButton btnForm" id="btnLogin" name="btnEditPersonalInfo" value="Log In"></a>
             <a href="#" data-toggle="modal" data-target="#forgotPasswordModal" target="_self" class="btn-link" style="display:block; text-decoration:none; color:#0ba2b5; margin-top:10px;">Forgot Password</a>
         </div>
     </div>
@@ -49,7 +54,7 @@
                     <span class="errorSpan">Error Message Here</span>
                 </div>
                 <div class="col-md-7">
-                    <input type="email" class="form-control textbox" style="margin-top:8px;" id="email" name="email" placeholder="Email Address" required>
+                    <input type="email" class="form-control textbox" style="margin-top:8px;" id="email" name="email" placeholder="Email Address">
                 </div>
                 <div class="col-md-5">
                     <label for="verificationCode" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Verification Code</label>
@@ -66,14 +71,14 @@
                     <span class="errorSpan">Error Message Here</span>
                 </div>
                 <div class="col-md-7">
-                    <input type="password" class="form-control textbox" style="margin-top:8px;" id="newpassword" name="newpassword" placeholder="New Password" required>
+                    <input type="password" class="form-control textbox" style="margin-top:8px;" id="newpassword" name="newpassword" placeholder="New Password">
                 </div>
                 <div class="col-md-5">
                     <label for="confirmnewpassword" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Confirm New Password</label>
                     <span class="errorSpan">Error Message Here</span>
                 </div>
                 <div class="col-md-7">
-                    <input type="password" class="form-control textbox" style="margin-top:8px;" id="confirmnewpassword" placeholder="Confirm New Password" required>
+                    <input type="password" class="form-control textbox" style="margin-top:8px;" id="confirmnewpassword" placeholder="Confirm New Password">
                 </div>
             </div>
             <div class="modal-footer">

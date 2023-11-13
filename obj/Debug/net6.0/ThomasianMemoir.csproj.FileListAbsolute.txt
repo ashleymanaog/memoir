@@ -294,3 +294,11 @@ C:\Users\Ira\Documents\CodingProjects\Visual Studio 2022\ThomasianMemoir\obj\Deb
 C:\Users\Ira\Documents\CodingProjects\Visual Studio 2022\ThomasianMemoir\obj\Debug\net6.0\ThomasianMemoir.pdb
 C:\Users\Ira\Documents\CodingProjects\Visual Studio 2022\ThomasianMemoir\obj\Debug\net6.0\ThomasianMemoir.genruntimeconfig.cache
 C:\Users\Ira\Documents\CodingProjects\Visual Studio 2022\ThomasianMemoir\obj\Debug\net6.0\ref\ThomasianMemoir.dll
+C:\Users\Ira\Documents\CodingProjects\Visual Studio 2022\ThomasianMemoir\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\Ira\Documents\CodingProjects\Visual Studio 2022\ThomasianMemoir\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\Ira\Documents\CodingProjects\Visual Studio 2022\ThomasianMemoir\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Ira\Documents\CodingProjects\Visual Studio 2022\ThomasianMemoir\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.UI.dll
+C:\Users\Ira\Documents\CodingProjects\Visual Studio 2022\ThomasianMemoir\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Embedded.dll
+C:\Users\Ira\Documents\CodingProjects\Visual Studio 2022\ThomasianMemoir\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\Ira\Documents\CodingProjects\Visual Studio 2022\ThomasianMemoir\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\Ira\Documents\CodingProjects\Visual Studio 2022\ThomasianMemoir\obj\Debug\net6.0\ThomasianMemoir.MvcApplicationPartsAssemblyInfo.cs

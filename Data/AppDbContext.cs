@@ -1,9 +1,10 @@
 ﻿using ThomasianMemoir.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ThomasianMemoir.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<User>//: DbContext
     {
         public AppDbContext(DbContextOptions options) : base(options) { }
         public DbSet<Users> Users { get; set; }
