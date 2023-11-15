@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using ThomasianMemoir.Data;
 using ThomasianMemoir.Models;
+using ThomasianMemoir.ViewModels;
 
 namespace ThomasianMemoir.Controllers
 {
@@ -12,7 +13,7 @@ namespace ThomasianMemoir.Controllers
         private readonly ILogger<HomeController> _logger;
 
         private readonly AppDbContext _dbContext;
-        private DbSet<Users> Users;
+        private DbSet<UserInfo> UserInfo;
         //private DbSet<UserPost> UserPost;
         //private DbSet<UserPostLikes> UserPostLikes;
         //private DbSet<UserPostComments> UserPostComments;
@@ -25,7 +26,7 @@ namespace ThomasianMemoir.Controllers
         {
             _logger = logger;
             _dbContext = dbContext;
-            Users = _dbContext.Users;
+            UserInfo = _dbContext.UserInfo;
             //UserPost = _dbContext.UserPost;
             //UserPostLikes = _dbContext.UserPostLikes;
             //UserPostComments = _dbContext.UserPostComments;
@@ -72,24 +73,30 @@ namespace ThomasianMemoir.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Registration(Users userEnteredData)
+        public async Task<IActionResult> Registration(RegisterViewModel userEnteredData)
         {
             if (ModelState.IsValid)
             {
                 /*Users.Add(userEnteredData);
                 _dbContext.SaveChangesAsync();
                 return RedirectToAction("Login");*/
-
+                
                 User newUser = new User();
                 newUser.UserName = userEnteredData.Username;
-                newUser.FirstName = userEnteredData.FirstName;
-                newUser.LastName = userEnteredData.LastName;
                 newUser.Email = userEnteredData.Email;
-
+                
                 var result = await _userManager.CreateAsync(newUser, userEnteredData.Password);
 
                 if (result.Succeeded)
                 {
+                    UserInfo newUserInfo = new UserInfo();
+                    newUserInfo.UserId = newUser.Id;
+                    newUserInfo.FirstName = userEnteredData.FirstName;
+                    newUserInfo.LastName = userEnteredData.LastName;
+                    newUserInfo.YearLevel = userEnteredData.YearLevel;
+                    _dbContext.UserInfo.Add(newUserInfo);
+                    await _dbContext.SaveChangesAsync();
+                    /*Profile and Banner Pic to add*/
                     return RedirectToAction("Login", "Home");
                 }
                 else

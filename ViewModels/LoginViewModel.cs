@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ThomasianMemoir.Models
+namespace ThomasianMemoir.ViewModels
 {
     public class LoginViewModel
     {

@@ -2,14 +2,70 @@
     ViewData["Title"] = "Edit Profile";
     ViewData["CSSFile"] = "~/css/EditProfile.css";
     ViewData["JSFile"] = "~/js/ChooseProfileAndBanner.js";
-    ViewData["JSFile2"] = "~/js/UserDetailsValidation.js";
+    @model ThomasianMemoir.ViewModels.EditProfileCompositeViewModel;
+
+    var studentClassification = "";
+
+    if (Model.PersonalInfo.YearLevel == "1st Year")
+    {
+        studentClassification = "Freshmen";
+    }
+    else if (Model.PersonalInfo.YearLevel == "2nd Year")
+    {
+        studentClassification = "Sophomore";
+    }
+    else if (Model.PersonalInfo.YearLevel == "3rd Year")
+    {
+        studentClassification = "Junior";
+    }
+    else if (Model.PersonalInfo.YearLevel == "4th Year")
+    {
+        studentClassification = "Senior";
+    }
+    else if (Model.PersonalInfo.YearLevel == "5th Year")
+    {
+        studentClassification = "Senior";
+    }
+
+    var firstname = TempData["TempFirstName"] as string;
+    var lastname = TempData["TempLastName"] as string;
+    var username = TempData["TempUsername"] as string;
+    var email = TempData["TempEmail"] as string;
+    var yearlevel = TempData["TempYearLevel"] as string;
+    var profileDescription = TempData["TempProfileDescription"] as string;
+    bool isPostOperation = TempData.ContainsKey("IsPostOperation") && (bool)TempData["IsPostOperation"];
+    
+    if (isPostOperation && TempData.ContainsKey("TempPersonalInfo"))
+    {
+        if (yearlevel == "1st Year")
+        {
+            studentClassification = "Freshmen";
+        }
+        else if (yearlevel == "2nd Year")
+        {
+            studentClassification = "Sophomore";
+        }
+        else if (yearlevel == "3rd Year")
+        {
+            studentClassification = "Junior";
+        }
+        else if (yearlevel == "4th Year")
+        {
+            studentClassification = "Senior";
+        }
+        else if (yearlevel == "5th Year")
+        {
+            studentClassification = "Senior";
+        }
+    }
 }
+
 <!--Banner-->
 <div>
     <div class="banner">
         <img src="~/img/Banners/Banner1.png" id="uploadBannerPhoto-previewImg">
     </div>
-    <form action="">
+    <form asp-action="UpdateBanner" method="POST">
         <div class="container">
             <div class="main">
                 <label class="uploadPhoto fa-regular fa-pen-to-square" for="changeBanner" data-toggle="modal" data-target="#changeBannerModal"></label>
@@ -24,7 +80,7 @@
     <div class="profilePic">
         <img src="~/img/Avatars/Avatar1.png" class="profileImage" id="uploadProfilePicture-previewImg">
     </div>
-    <form action="">
+    <form asp-action="UpdateProfile" method="POST">
         <div class="container2">
             <div class="main">
                 <label class="uploadPhoto fa-regular fa-pen-to-square" for="changeProfile"  data-toggle="modal" data-target="#changeProfileModal"></label>
@@ -37,56 +93,61 @@
 
 <div class="details">
 <!--Personal Information-->
-<form name="editPersonalInfo" id="editPersonalInfo" method="POST">
+<form name="editPersonalInfo" id="editPersonalInfo" asp-action="UpdatePersonalInfo" method="POST">
+    @Html.AntiForgeryToken()
     <div class="card">
     <h3 class="card-header" style="padding-top: 16px;">Personal Information</h3>
     <div class="row cardInfo" style="margin-top:20px;">
+        <span class="text-danger" style="text-align:center;" id="spanErr">@Html.ValidationMessage("updatePersonalInfoErr")</span>
         <div class="col-md-5">
             <label for="firstname" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">First Name</label>
-            <span class="editProfileSpan">Error Message Here</span>
+            <span asp-validation-for="PersonalInfo.FirstName" class="editProfileSpan"></span>
         </div>
         <div class="col-md-7">
-            <input type="text" class="form-control textbox" style="margin-top:8px;" id="firstname" name="firstname" value="First Name" required>
+            <input asp-for="PersonalInfo.FirstName" type="text" class="form-control textbox" style="margin-top:8px;" id="firstname" name="PersonalInfo.FirstName" value="@if (isPostOperation && TempData.ContainsKey("TempPersonalInfo")){@firstname}else{@Model.PersonalInfo.FirstName}">
         </div>
         <div class="col-md-5">
             <label for="lastname" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Last Name</label>
-            <span class="editProfileSpan">Error Message Here</span>
+            <span asp-validation-for="PersonalInfo.LastName" class="editProfileSpan"></span>
         </div>
         <div class="col-md-7">
-            <input type="text" class="form-control textbox" style="margin-top:8px;" id="lastname" name="lastname" value="Last Name" required>
+            <input asp-for="PersonalInfo.LastName" type="text" class="form-control textbox" style="margin-top:8px;" id="lastname" name="PersonalInfo.LastName" value="@if (isPostOperation && TempData.ContainsKey("TempPersonalInfo")){@lastname}else{@Model.PersonalInfo.LastName}">
         </div>
         <div class="col-md-5">
             <label for="username" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Username</label>
-            <span class="editProfileSpan">Error Message Here</span>
+            <span asp-validation-for="PersonalInfo.Username" class="editProfileSpan"></span>
         </div>
         <div class="col-md-7">
-            <input type="text" class="form-control textbox" style="margin-top:8px;" id="username" name="username" value="Username" required>
+            <input asp-for="PersonalInfo.Username" type="text" class="form-control textbox" style="margin-top:8px;" id="username" name="PersonalInfo.Username" value="@if (isPostOperation && TempData.ContainsKey("TempPersonalInfo")){@username}else{@Model.PersonalInfo.Username}">
         </div>
         <div class="col-md-5">
             <label for="email" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Email Address</label>
-            <span class="editProfileSpan">Error Message Here</span>
+            <span asp-validation-for="PersonalInfo.Email" class="editProfileSpan"></span>
         </div>
         <div class="col-md-7">
-            <input type="email" class="form-control textbox" style="margin-top:8px;" id="email" name="email" value="EmailAddress@gmail.com" required>
+            <input asp-for="PersonalInfo.Email" type="email" class="form-control textbox" style="margin-top:8px;" id="email" name="PersonalInfo.Email" value="@if (isPostOperation && TempData.ContainsKey("TempPersonalInfo")){@email}else{@Model.PersonalInfo.Email}">
         </div>
         <div class="col-md-5">
             <label for="yearlevel" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Year Level</label>
         </div>
         <div class="col-md-7">
-            <select name="yearLevel" id="yearLevel" class="form-select form-control dropdown" style="color:black !important;">
-                <option value="FirstYear">1st Year</option>
-                <option value="SecondYear">2nd Year</option>
-                <option value="ThirdYear">3rd Year</option>
-                <option value="FourthYear">4th Year</option>
-                <option value="FifthYear">5th Year</option>
+            <select id="yearLevel" class="form-select form-control dropdown" style="color:black !important;">
+                <option value="1st Year">1st Year</option>
+                <option value="2nd Year">2nd Year</option>
+                <option value="3rd Year">3rd Year</option>
+                <option value="4th Year">4th Year</option>
+                <option value="5th Year">5th Year</option>
             </select>
+            <input asp-for="PersonalInfo.YearLevel" type="text" class="form-control textbox" style="margin-top:8px; display:none;" id="yearLevelTxt">
         </div>
         <div class="col-md-5">
             <label class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Student Classification</label>
         </div>
         <div class="col-md-7">
-            <span type="text" class="form-control textbox" style="margin-top:8px;" id="studentClassification" disabled>Freshmen</span>
+            <span type="text" class="form-control textbox" style="margin-top:8px; height:41px;" id="studentClassfication" disabled>@studentClassification</span>
         </div>
+        <!--hidden fields-->
+        <input asp-for="ProfileDescription.ProfileDescription" type="hidden" name="ProfileDescription.ProfileDescription" value="@Model.ProfileDescription.ProfileDescription">
     </div>
     <div style="padding-top:20px; padding-bottom:30px; text-align:center;">
         <a href="#" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-info btn-md center blueButton btnForm" id="btnEditPersonalInfo" name="btnEditPersonalInfo" value="Save Changes"></a>
@@ -94,48 +155,67 @@
     </div>
 </form>
 <!--Password-->
-<form name="changePassword" id="changePassword" method="POST">
+<form name="changePassword" id="changePassword" asp-action="UpdatePassword" method="POST">
+    @Html.AntiForgeryToken()
     <div class="card">
-    <h3 class="card-header" style="padding-top: 16px;">Password</h3>
-    <div class="row cardInfo" style="margin-top:20px;">
-        <div class="col-md-5">
-            <label for="oldpassword" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Old Password</label>
-            <span class="editProfileSpan">Error Message Here</span>
+        <h3 class="card-header" style="padding-top: 16px;">Password</h3>
+        <div class="row cardInfo" style="margin-top:20px;">
+            <span class="text-danger" style="text-align:center;" id="spanErr">@Html.ValidationMessage("changePasswordErr")</span>
+            <div class="col-md-5">
+                <label for="oldpassword" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Old Password</label>
+                <span asp-validation-for="Password.OldPassword" class="editProfileSpan"></span>
+            </div>
+            <div class="col-md-7">
+                <input asp-for="Password.OldPassword" type="password" class="form-control textbox" style="margin-top:8px;" id="oldpassword" name="Password.OldPassword" placeholder="Old Password">
+            </div>
+            <div class="col-md-5">
+                <label for="newpassword" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">New Password</label>
+                <span asp-validation-for="Password.NewPassword" class="editProfileSpan"></span>
+            </div>
+            <div class="col-md-7">
+                <input asp-for="Password.NewPassword" type="password" class="form-control textbox" style="margin-top:8px;" id="newpassword" name="Password.NewPassword" placeholder="New Password">
+            </div>
+            <div class="col-md-5">
+                <label for="confirmnewpassword" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Confirm New Password</label>
+                <span asp-validation-for="Password.ConfirmNewPassword" class="editProfileSpan"></span>
+            </div>
+            <div class="col-md-7">
+                <input asp-for="Password.ConfirmNewPassword" type="password" class="form-control textbox" style="margin-top:8px;" id="confirmnewpassword" name="Password.ConfirmNewPassword" placeholder="Confirm New Password">
+            </div>
+            <!--hidden fields-->
+            <input asp-for="PersonalInfo.FirstName" type="hidden" name="PersonalInfo.FirstName" value="@Model.PersonalInfo.FirstName">
+            <input asp-for="PersonalInfo.LastName" type="hidden" name="PersonalInfo.LastName" value="@Model.PersonalInfo.LastName">
+            <input asp-for="PersonalInfo.Username" type="hidden" name="PersonalInfo.Username" value="@Model.PersonalInfo.Username">
+            <input asp-for="PersonalInfo.Email" type="hidden" name="PersonalInfo.Email" value="@Model.PersonalInfo.Email">
+            <input asp-for="PersonalInfo.YearLevel" type="hidden" name="PersonalInfo.YearLevel" value="@Model.PersonalInfo.YearLevel">
+            <input asp-for="ProfileDescription.ProfileDescription" type="hidden" name="ProfileDescription.ProfileDescription" value="@Model.ProfileDescription.ProfileDescription">
         </div>
-        <div class="col-md-7">
-            <input type="password" class="form-control textbox" style="margin-top:8px;" id="oldpassword" name="oldpassword" placeholder="Old Password" required>
+        <div style="padding-top:20px; padding-bottom:30px; text-align:center;">
+            <a href="#" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-info btn-md center blueButton btnForm" id="btnChangePassword" name="btnChangePassword" value="Change Password"></a>
         </div>
-        <div class="col-md-5">
-            <label for="newpassword" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">New Password</label>
-            <span class="editProfileSpan">Error Message Here</span>
-        </div>
-        <div class="col-md-7">
-            <input type="password" class="form-control textbox" style="margin-top:8px;" id="newpassword" name="newpassword" placeholder="New Password" required>
-        </div>
-        <div class="col-md-5">
-            <label for="confirmnewpassword" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Confirm New Password</label>
-            <span class="editProfileSpan">Error Message Here</span>
-        </div>
-        <div class="col-md-7">
-            <input type="password" class="form-control textbox" style="margin-top:8px;" id="confirmnewpassword" name="confirmnewpassword" placeholder="Confirm New Password" required>
-        </div>
-    </div>
-    <div style="padding-top:20px; padding-bottom:30px; text-align:center;">
-        <a href="#" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-info btn-md center blueButton btnForm" id="btnChangePassword" name="btnChangePassword" value="Change Password"></a>
-    </div>
     </div>
 </form>
+
 <!--Profile Description-->
-<form name="editProfileDescription" id="editProfileDescription" method="POST">
+<form name="editProfileDescription" id="editProfileDescription" asp-action="UpdateProfileDescription" method="POST">
+    @Html.AntiForgeryToken()
     <div class="card">
     <h3 class="card-header" style="padding-top: 16px;">Profile Description</h3>
     <div class="row cardInfo" style="margin-top:20px;">
+        <span class="text-danger" style="text-align:center;" id="spanErr">@Html.ValidationMessage("updateProfileDescriptionErr")</span>
         <div class="col-md-5">
-            <label for="profileDescription" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Description</label>
+            <label for="profileDescription" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0; margin-right:20px;">Description</label>
+            <span asp-validation-for="ProfileDescription.ProfileDescription" class="editProfileSpan" style="display:inline-block;"></span>
         </div>
         <div class="col-md-12">
-            <textarea rows="4" cols="50" id="profileDescription" name="profileDescription" form="editProfileDescription" class="form-control textbox" style="margin-top:8px; color:black;"></textarea>
+            <textarea asp-for="ProfileDescription.ProfileDescription" rows="4" cols="50" id="profileDescription" name="ProfileDescription.ProfileDescription" form="editProfileDescription" class="form-control textbox" style="margin-top:8px; color:black;">@if (isPostOperation && TempData.ContainsKey("TempProfileDescription")){@profileDescription}else{@Model.ProfileDescription.ProfileDescription}</textarea>
         </div>
+        <!--hidden fields-->
+        <input asp-for="PersonalInfo.FirstName" type="hidden" name="PersonalInfo.FirstName" value="@Model.PersonalInfo.FirstName">
+        <input asp-for="PersonalInfo.LastName" type="hidden" name="PersonalInfo.LastName" value="@Model.PersonalInfo.LastName">
+        <input asp-for="PersonalInfo.Username" type="hidden" name="PersonalInfo.Username" value="@Model.PersonalInfo.Username">
+        <input asp-for="PersonalInfo.Email" type="hidden" name="PersonalInfo.Email" value="@Model.PersonalInfo.Email">
+        <input asp-for="PersonalInfo.YearLevel" type="hidden" name="PersonalInfo.YearLevel" value="@Model.PersonalInfo.YearLevel">
     </div>
     <div style="padding-top:20px; padding-bottom:30px; text-align:center;">
         <a href="#" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-info btn-md center blueButton btnForm" id="btnEditProfileDescription" name="btnEditProfileDescription" value="Update Description"></a>
@@ -329,21 +409,36 @@
 </div>
 
 <script>
-    function yearLevelChange() {
+    const select = document.querySelector('select');
+
+    select.addEventListener("click", function () {
+        const yearLevelTxt = document.getElementById("yearLevelTxt");
+        const studentType = document.getElementById("studentClassfication");
         const select = document.getElementById("yearLevel");
-        const span = document.getElementById("studentClassification");
-        var yearLevel = select.value;
+        var yearLevelSelect = select.value;
         //var studentClassification = select.options[select.selectedIndex].text;
-        if (yearLevel == "FirstYear") {
-            span.innerHTML = "Freshmen"
-        } else if (yearLevel == "SecondYear") {
-            span.innerHTML = "Sophomore"
-        } else if (yearLevel == "ThirdYear") {
-            span.innerHTML = "Junior"
-        } else if (yearLevel == "FourthYear") {
-            span.innerHTML = "Senior"
-        } else if (yearLevel == "FifthYear") {
-            span.innerHTML = "Senior"
+        if (yearLevelSelect == "1st Year") {
+            yearLevelTxt.value = "1st Year";
+            studentType.textContent = "Freshmen";
+        } else if (yearLevelSelect == "2nd Year") {
+            yearLevelTxt.value = "2nd Year";
+            studentType.textContent = "Sophomore";
+        } else if (yearLevelSelect == "3rd Year") {
+            yearLevelTxt.value = "3rd Year";
+            studentType.textContent = "Junior";
+        } else if (yearLevelSelect == "4th Year") {
+            yearLevelTxt.value = "4th Year";
+            studentType.textContent = "Senior";
+        } else if (yearLevelSelect == "5th Year") {
+            yearLevelTxt.value = "5th Year";
+            studentType.textContent = "Senior";
         }
-    }
+    });
+    
+    window.addEventListener("load", (event) => {
+        const span = document.getElementById("yearLevelTxt").value;
+        if (span.length > 0) {
+            select.value = span;
+        }
+    });
 </script>

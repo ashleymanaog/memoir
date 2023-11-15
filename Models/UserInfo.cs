@@ -1,13 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ThomasianMemoir.Data;
 
 namespace ThomasianMemoir.Models
 {
-    public class Users
+    public class UserInfo
     {
         [Key]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
+        public User User { get; set; }
 
         [Required(ErrorMessage = "This field is required")]
         [RegularExpression(@"^\D*$", ErrorMessage = "Number is not allowed")] //any string except number
@@ -17,7 +19,7 @@ namespace ThomasianMemoir.Models
         [RegularExpression(@"^\D*$", ErrorMessage = "Number is not allowed")]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "This field is required")]
+        /*[Required(ErrorMessage = "This field is required")]
         public string Username { get; set; }
 
         [Required(ErrorMessage = "This field is required")]
@@ -25,7 +27,7 @@ namespace ThomasianMemoir.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "This field is required")]
-        public string Password { get; set; }
+        public string Password { get; set; }*/
 
         [Required(ErrorMessage = "This field is required")]
         public string YearLevel { get; set; }
@@ -39,6 +41,6 @@ namespace ThomasianMemoir.Models
         public string? ProfileDescription { get; set; }
 
         [ForeignKey("UserId")]
-        public ICollection<UserPost>? Posts { get; set; }
+        public List<UserPost>? Posts { get; set; }
     }
 }

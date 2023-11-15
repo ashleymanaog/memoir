@@ -1,4 +1,4 @@
-﻿@model ErrorViewModel
+﻿@model ThomasianMemoir.ViewModels.ErrorViewModel
 @{
     ViewData["Title"] = "Error";
 }
@@ -10,6 +10,13 @@
 {
     <p>
         <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </p>
+}
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <p>
+        <strong>Error Message:</strong> @Model.ErrorMessage
     </p>
 }
 

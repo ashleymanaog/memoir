@@ -237,3 +237,40 @@ a { /*for username link*/
     margin-left: 70px;
     margin-right: 15px;
 }
+
+/*FOR RESPONSIVENESS*/
+@media screen and (max-width: 992px) {
+    .indicatorBG {
+        font-size: 13px;
+        padding: 13px;
+    }
+
+    .userPosts {
+        padding-left: 100px !important;
+        padding-right: 100px !important;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .userPosts {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+
+    .userPostsCard {
+        border-radius: 0px;
+        border-left: 0px;
+        border-right: 0px;
+    }
+
+    .card-header {
+        border-radius: 0 !important;
+    }
+
+    .indicatorBG {
+        font-size: 12px;
+        padding: 10px;
+    }
+}

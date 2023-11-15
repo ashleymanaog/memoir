@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
+using ThomasianMemoir.Models;
 
 namespace ThomasianMemoir.Data
 {
     public class User : IdentityUser
     {
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
+        public UserInfo UserInfo { get; set; }
     }
 }

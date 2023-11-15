@@ -7,7 +7,8 @@ namespace ThomasianMemoir.Models
         [Key]
         public int CommentId { get; set; }
         public int PostId { get; set; }
-        public int UserId { get; set; }
+        public UserPost Post { get; set; }
+        public string UserId { get; set; }
         public string Comment { get; set; }
     }
 }

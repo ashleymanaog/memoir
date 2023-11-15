@@ -7,16 +7,17 @@ namespace ThomasianMemoir.Models
     {
         [Key]
         public int PostId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
+        public UserInfo User { get; set; }
         public DateTime PostDate { get; set; }
         public string Content { get; set; }
         public int LikesCount { get; set; }
         public int CommentsCount { get; set; }
         [ForeignKey("UserId")]
-        public ICollection<UserPostLikes> Likes { get; set; }
+        public List<UserPostLikes> Likes { get; set; }
         [ForeignKey("UserId")]
-        public ICollection<UserPostComments> Comments { get; set; }
+        public List<UserPostComments> Comments { get; set; }
         [ForeignKey("UserId")]
-        public ICollection<UserPostMedia> Media { get; set; }
+        public List<UserPostMedia> Media { get; set; }
     }
 }

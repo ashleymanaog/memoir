@@ -8,7 +8,7 @@ namespace ThomasianMemoir.Controllers
     public class DashboardController : Controller
     {
         private readonly AppDbContext _dbContext;
-        private DbSet<Users> Users;
+        private DbSet<UserInfo> Users;
         private DbSet<UserPost> UserPost;
         private DbSet<UserPostLikes> UserPostLikes;
         private DbSet<UserPostComments> UserPostComments;
@@ -17,7 +17,7 @@ namespace ThomasianMemoir.Controllers
         public DashboardController(AppDbContext dbContext)
         {
             _dbContext = dbContext;
-            Users = _dbContext.Users;
+            Users = _dbContext.UserInfo;
             UserPost = _dbContext.UserPost;
             UserPostLikes = _dbContext.UserPostLikes;
             UserPostComments = _dbContext.UserPostComments;
