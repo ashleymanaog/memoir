@@ -30,10 +30,14 @@ namespace ThomasianMemoir.ViewModels
         [Required(ErrorMessage = "This field is required")]
         public string YearLevel { get; set; }
 
-        [NotMapped]
+        [Required]
+        public string DefaultAvatar { get; set; }
+
         public IFormFile? ProfilePic { get; set; }
 
-        [NotMapped]
+        [Required]
+        public string DefaultBanner { get; set; }
+
         public IFormFile? BannerPic { get; set; }
     }
 }

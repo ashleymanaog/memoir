@@ -9,6 +9,7 @@ namespace ThomasianMemoir.Models
         public int PostId { get; set; }
         public UserPost Post { get; set; }
         public string UserId { get; set; }
+        public UserInfo Commentator { get; set; }
         public string Comment { get; set; }
     }
 }

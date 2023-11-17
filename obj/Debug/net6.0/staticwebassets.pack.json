@@ -273,6 +273,10 @@
       "PackagePath": "staticwebassets\\img\\Thomasian_Memoir_Name.png"
     },
     {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\js\\AddMedia.js",
+      "PackagePath": "staticwebassets\\js\\AddMedia.js"
+    },
+    {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\js\\ChooseProfileAndBanner.js",
       "PackagePath": "staticwebassets\\js\\ChooseProfileAndBanner.js"
     },

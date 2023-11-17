@@ -21,6 +21,8 @@ builder.Services.AddDefaultIdentity<User>(options =>
     options.User.RequireUniqueEmail = true;
 }).AddEntityFrameworkStores<AppDbContext>();
 
+builder.Services.AddLogging();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,10 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ThomasianMemoir.ViewModels
 {
     public class EditProfileProfilePicViewModel
     {
-        [Required(ErrorMessage = "You need to choose an image")]
-        public IFormFile? ProfilePic { get; set; }
+        [Required]
+        public string DefaultAvatar { get; set; }
+
+        public byte[]? ProfilePic { get; set; }
+        
+        public IFormFile? NewProfilePic { get; set; }
     }
 }

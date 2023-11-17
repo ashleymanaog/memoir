@@ -8,7 +8,7 @@ namespace ThomasianMemoir.Models
         public int MediaId { get; set; }
         public int PostId { get; set; }
         public UserPost Post { get; set; }
-        public string UserId { get; set; }
-        public string Media { get; set; }
+        public byte[] Media { get; set; }
+        public string MediaType { get; set; }
     }
 }

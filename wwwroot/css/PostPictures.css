@@ -4,7 +4,7 @@
 }
 
 .carousel-indicators {
-    z-index: 1 !important;
+    z-index: 5 !important;
 }
 
     .carousel-indicators .active { /*link to post*/
@@ -68,6 +68,15 @@
     padding-left: 2.5rem;
     padding-top: 60px;
     margin-bottom: 60px;
+}
+
+/*POST VIDESO*/
+.vidContent {
+    position: absolute;
+    display: inline-block;
+    bottom: 0;
+    height: 100%;
+    background-color: black;
 }
 
 /*FOR HIGHER HEIGHT*/

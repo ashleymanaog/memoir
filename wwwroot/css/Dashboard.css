@@ -238,6 +238,10 @@ a { /*for username link*/
     -webkit-appearance: none;
 }
 
+.liked {
+    color: #0e9bad;
+}
+
 /*POST IMAGES*/
 .carousel-indicators {
     z-index: 1 !important;
@@ -259,6 +263,17 @@ a { /*for username link*/
     border-radius: 20px;
     box-shadow: 0 0px 10px rgba(0,0,0,0.2);
     margin-right: -16%;
+}
+
+/*POST VIDEOS*/
+.prevMargin {
+    margin-bottom: 50px;
+    padding-top: 50px;
+}
+
+.nextMargin {
+    margin-bottom: 50px;
+    padding-top: 50px;
 }
 
 /*FOR HIGHER HEIGHT*/

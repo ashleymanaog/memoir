@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "2sRzqos7m3lId3mmlQjOqI4bSknMoZcIQnd/5JXio+g=",
+  "Hash": "IASxudz9I7ylmIVdajCmZRbs9Qf3uGTFuoUxTUfbKbs=",
   "Source": "ThomasianMemoir",
   "BasePath": "_content/ThomasianMemoir",
   "Mode": "Default",
@@ -2208,6 +2208,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\Thomasian_Memoir_Name.png"
+    },
+    {
+      "Identity": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\js\\AddMedia.js",
+      "SourceId": "ThomasianMemoir",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\",
+      "BasePath": "_content/ThomasianMemoir",
+      "RelativePath": "js/AddMedia.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\AddMedia.js"
     },
     {
       "Identity": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\js\\ChooseProfileAndBanner.js",

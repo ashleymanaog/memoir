@@ -76,11 +76,7 @@ namespace ThomasianMemoir.Controllers
         public async Task<IActionResult> Registration(RegisterViewModel userEnteredData)
         {
             if (ModelState.IsValid)
-            {
-                /*Users.Add(userEnteredData);
-                _dbContext.SaveChangesAsync();
-                return RedirectToAction("Login");*/
-                
+            {              
                 User newUser = new User();
                 newUser.UserName = userEnteredData.Username;
                 newUser.Email = userEnteredData.Email;
@@ -94,6 +90,10 @@ namespace ThomasianMemoir.Controllers
                     newUserInfo.FirstName = userEnteredData.FirstName;
                     newUserInfo.LastName = userEnteredData.LastName;
                     newUserInfo.YearLevel = userEnteredData.YearLevel;
+                    newUserInfo.DefaultAvatar = userEnteredData.DefaultAvatar;
+                    newUserInfo.DefaultBanner = userEnteredData.DefaultBanner;
+                    newUserInfo.ProfilePic = ConvertToByteArray(userEnteredData.ProfilePic);
+                    newUserInfo.BannerPic = ConvertToByteArray(userEnteredData.BannerPic);
                     _dbContext.UserInfo.Add(newUserInfo);
                     await _dbContext.SaveChangesAsync();
                     /*Profile and Banner Pic to add*/
@@ -109,7 +109,20 @@ namespace ThomasianMemoir.Controllers
             }
             return View(userEnteredData);
         }
-        
+
+        private byte[] ConvertToByteArray(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return null;
+            }
+            using (var stream = new MemoryStream())
+            {
+                file.CopyTo(stream);
+                return stream.ToArray();
+            }
+        }
+
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

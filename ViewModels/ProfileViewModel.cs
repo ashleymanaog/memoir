@@ -12,8 +12,10 @@ namespace ThomasianMemoir.ViewModels
         public string Password { get; set; }
         public string YearLevel { get; set; }
         public string? ProfileDescription { get; set; }
-        public IFormFile? ProfilePic { get; set; }
-        public IFormFile? BannerPic { get; set; }
+        public string DefaultAvatar { get; set; }
+        public byte[]? ProfilePic { get; set; }
+        public string DefaultBanner { get; set; }
+        public byte[]? BannerPic { get; set; }
         public ICollection<UserPost>? Posts { get; set; }
     }
 }

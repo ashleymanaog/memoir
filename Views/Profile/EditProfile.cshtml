@@ -33,6 +33,8 @@
     var email = TempData["TempEmail"] as string;
     var yearlevel = TempData["TempYearLevel"] as string;
     var profileDescription = TempData["TempProfileDescription"] as string;
+    var profilepic = TempData["TempProfilePic"] as byte[];
+    var bannerpic = TempData["TempBannerPic"] as byte[];
     bool isPostOperation = TempData.ContainsKey("IsPostOperation") && (bool)TempData["IsPostOperation"];
     
     if (isPostOperation && TempData.ContainsKey("TempPersonalInfo"))
@@ -63,37 +65,65 @@
 <!--Banner-->
 <div>
     <div class="banner">
-        <img src="~/img/Banners/Banner1.png" id="uploadBannerPhoto-previewImg">
+        @if (isPostOperation && TempData.ContainsKey("TempBannerPic")) {
+            <img src="data:image;base64,@Convert.ToBase64String(@bannerpic)">
+        } else {
+            @if (Model.BannerPic.BannerPic != null) {
+                <img src="data:image;base64,@Convert.ToBase64String(Model.BannerPic.BannerPic)">
+            } else {
+                <img src="~/img/Banners/@Model.BannerPic.DefaultBanner" id="uploadBannerPhoto-previewImg">
+            }
+        }
     </div>
-    <form asp-action="UpdateBanner" method="POST">
+    <form asp-action="UpdateBanner" method="POST" id="changeBannerForm" enctype="multipart/form-data">
         <div class="container">
             <div class="main">
                 <label class="uploadPhoto fa-regular fa-pen-to-square" for="changeBanner" data-toggle="modal" data-target="#changeBannerModal"></label>
             </div>
         </div>
         <!--<input type="file" id="uploadBannerPhoto" name="uploadBannerPhoto" onClick="reply_click(this.id)">-->
+        <div style="display:none;">
+            <input asp-for="BannerPic.DefaultBanner" type="text" id="defaultBanner" name="BannerPic.DefaultBanner" value="@Model.BannerPic.DefaultBanner">
+            <input asp-for="BannerPic.NewBannerPic" type="file" id="bannerPic" name="BannerPic.NewBannerPic">
+            <span asp-validation-for="BannerPic.NewBannerPic" class="editProfileSpan"></span>
+            <input type="submit" id="btnEditBannerPic" name="btnEditBannerPic">
+        </div>
     </form>
 </div>
 <!--Profile-->
 <div class="profileParent">
     <div class="profileChild">
     <div class="profilePic">
-        <img src="~/img/Avatars/Avatar1.png" class="profileImage" id="uploadProfilePicture-previewImg">
+        @if (isPostOperation && TempData.ContainsKey("TempProfilePic")) {
+            <img src="data:image;base64,@Convert.ToBase64String(@profilepic)" style="clip-path:circle(50%);">
+        } else {
+            @if (Model.ProfilePic.ProfilePic != null) {
+                <img src="data:image;base64,@Convert.ToBase64String(Model.ProfilePic.ProfilePic)" style="clip-path:circle(50%);">
+            } else {
+                <img src="~/img/Avatars/@Model.ProfilePic.DefaultAvatar" class="profileImage" id="uploadProfilePicture-previewImg" style="clip-path:circle(50%);">
+            }
+        }
     </div>
-    <form asp-action="UpdateProfile" method="POST">
+    <form asp-action="UpdateProfile" method="POST" id="changeProfileForm" enctype="multipart/form-data">
         <div class="container2">
             <div class="main">
                 <label class="uploadPhoto fa-regular fa-pen-to-square" for="changeProfile"  data-toggle="modal" data-target="#changeProfileModal"></label>
             </div>
         </div>
         <!--<input type="file" id="uploadProfilePhoto" name="uploadProfilePhoto" onClick="reply_click(this.id)">-->
+        <div style="display:none;">
+            <input asp-for="ProfilePic.DefaultAvatar" type="text" id="defaultAvatar" name="ProfilePic.DefaultAvatar" value="@Model.ProfilePic.DefaultAvatar">
+            <input asp-for="ProfilePic.NewProfilePic" type="file" id="profilePic" name="ProfilePic.NewProfilePic">
+            <span asp-validation-for="ProfilePic.NewProfilePic" class="editProfileSpan"></span>
+            <input type="submit" id="btnEditProfilePic" name="btnEditProfilePic">
+        </div>
     </form>
     </div>
 </div>
 
 <div class="details">
 <!--Personal Information-->
-<form name="editPersonalInfo" id="editPersonalInfo" asp-action="UpdatePersonalInfo" method="POST">
+<form name="editPersonalInfo" id="editPersonalInfo" asp-action="UpdatePersonalInfo" method="POST" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
     <div class="card">
     <h3 class="card-header" style="padding-top: 16px;">Personal Information</h3>
@@ -155,7 +185,7 @@
     </div>
 </form>
 <!--Password-->
-<form name="changePassword" id="changePassword" asp-action="UpdatePassword" method="POST">
+<form name="changePassword" id="changePassword" asp-action="UpdatePassword" method="POST" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
     <div class="card">
         <h3 class="card-header" style="padding-top: 16px;">Password</h3>
@@ -197,7 +227,7 @@
 </form>
 
 <!--Profile Description-->
-<form name="editProfileDescription" id="editProfileDescription" asp-action="UpdateProfileDescription" method="POST">
+<form name="editProfileDescription" id="editProfileDescription" asp-action="UpdateProfileDescription" method="POST" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
     <div class="card">
     <h3 class="card-header" style="padding-top: 16px;">Profile Description</h3>
@@ -263,7 +293,7 @@
                 <label class="btn btn-outline-primary btnGroupButton btnBannerLabel" for="btnUploadBanner" data-tab-target="#uploadBanner" style="border-top-right-radius:50px; border-bottom-right-radius:50px;">Upload a Photo</label>
                 <div id="uploadBanner" data-tab-content style="text-align:center; margin:3rem;" class="btnBannerContent">
                     <label class="btn blueButton btnUploadPhoto" for="uploadBannerPhoto"><i class="fa-solid fa-upload" style="margin-right:10px;"></i>Upload Photo</label>
-                    <input type="file" id="uploadBannerPhoto" name="uploadBannerPhoto" style="color:#00a4b9; display:none;">
+                    <input type="button" id="uploadBannerPhoto" name="uploadBannerPhoto" style="color:#00a4b9; display:none;">
                     <span class="fileSelectedBanner" style="color:#00a4b9;"></span>
                 </div>
             </div>
@@ -395,7 +425,7 @@
                 <label class="btn btn-outline-primary btnGroupButton btnProfileLabel" for="btnUploadProfile" data-tab-target="#uploadProfile" style="border-top-right-radius:50px; border-bottom-right-radius:50px;">Upload a Photo</label>
                 <div id="uploadProfile" data-tab-content style="text-align:center; margin:3rem;" class="btnProfileContent">
                     <label class="btn blueButton btnUploadPhoto" for="uploadProfilePicture"><i class="fa-solid fa-upload" style="margin-right:10px;"></i>Upload Photo</label>
-                    <input type="file" id="uploadProfilePicture" name="uploadProfilePicture" style="color:#00a4b9; display:none;">
+                    <input type="button" id="uploadProfilePicture" name="uploadProfilePicture" style="color:#00a4b9; display:none;">
                         <span class="fileSelectedProfile" style="color:#00a4b9;"></span>
                 </div>
             </div>

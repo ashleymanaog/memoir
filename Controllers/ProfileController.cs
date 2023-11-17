@@ -36,7 +36,7 @@ namespace ThomasianMemoir.Controllers
         {
             try
             {
-                var currentUser = _userManager.GetUserAsync(User).Result;
+                var currentUser = await _userManager.GetUserAsync(User);
                 if (currentUser == null)
                 {
                     return NotFound();
@@ -55,14 +55,56 @@ namespace ThomasianMemoir.Controllers
                     FirstName = userProfile.FirstName,
                     LastName = userProfile.LastName,
                     YearLevel = userProfile.YearLevel,
-                    ProfileDescription = userProfile.ProfileDescription
-                    /*Profile and Banner Pic and Posts to add*/
+                    ProfileDescription = userProfile.ProfileDescription,
+                    DefaultAvatar = userProfile.DefaultAvatar,
+                    DefaultBanner = userProfile.DefaultBanner,
+                    ProfilePic = userProfile.ProfilePic,
+                    BannerPic = userProfile.BannerPic
                 };
                 return View(viewModel);
             }
             catch (Exception e)
             {
                 return RedirectToAction("Error", new ErrorViewModel { ErrorMessage = "An unexpected error occurred." });
+            }
+        }
+
+
+        [HttpGet] /*wla pa posts*/
+        public async Task<IActionResult> PublicProfile(string userId)
+        {
+            try
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+                if (user == null)
+                {
+                    return RedirectToAction("Error");
+                }
+
+                var userProfile = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(user.Id));
+                if (userProfile == null)
+                {
+                    return NotFound();
+                }
+
+                var viewModel = new ProfileViewModel
+                {
+                    Email = user.Email,
+                    Username = user.UserName,
+                    FirstName = userProfile.FirstName,
+                    LastName = userProfile.LastName,
+                    YearLevel = userProfile.YearLevel,
+                    ProfileDescription = userProfile.ProfileDescription,
+                    DefaultAvatar = userProfile.DefaultAvatar,
+                    DefaultBanner = userProfile.DefaultBanner,
+                    ProfilePic = userProfile.ProfilePic,
+                    BannerPic = userProfile.BannerPic
+                };
+                return View(viewModel);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Error", new ErrorViewModel { ErrorMessage = "Cannot find Profile." });
             }
         }
 
@@ -97,10 +139,12 @@ namespace ThomasianMemoir.Controllers
                         ProfileDescription = userProfile.ProfileDescription
                     },
                     ProfilePic = new EditProfileProfilePicViewModel  {
-                        ProfilePic = userProfile.ProfilePic /*not sure how this works*/
+                        DefaultAvatar = userProfile.DefaultAvatar,
+                        ProfilePic = userProfile.ProfilePic
                     },
                     BannerPic = new EditProfileBannerPicViewModel  {
-                        BannerPic = userProfile.BannerPic /*not sure how this works*/
+                        DefaultBanner = userProfile.DefaultBanner,
+                        BannerPic = userProfile.BannerPic
                     }
                 };
                 return View(viewModel);
@@ -116,16 +160,26 @@ namespace ThomasianMemoir.Controllers
         [ActionName("UpdatePersonalInfo")]
         public async Task<IActionResult> UpdatePersonalInfo(EditProfileCompositeViewModel model) {
             TempData["TempProfileDescription"] = model.ProfileDescription.ProfileDescription;
+            var user = _userManager.GetUserAsync(User).Result;
+            var info = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(user.Id));
+            TempData["TempProfilePic"] = info.ProfilePic;
+            TempData["TempBannerPic"] = info.BannerPic;
             TempData["IsPostOperation"] = true;
             ModelState.Remove("Password.OldPassword");
             ModelState.Remove("Password.NewPassword");
             ModelState.Remove("Password.ConfirmNewPassword");
             ModelState.Remove("ProfileDescription.ProfileDescription");
+            ModelState.Remove("ProfilePic.DefaultAvatar");
             ModelState.Remove("ProfilePic.ProfilePic");
+            ModelState.Remove("ProfilePic.NewProfilePic");
+            ModelState.Remove("BannerPic.DefaultBanner");
             ModelState.Remove("BannerPic.BannerPic");
+            ModelState.Remove("BannerPic.NewBannerPic");
 
             if (ModelState.IsValid)
             {
+                TempData.Remove("TempProfilePic");
+                TempData.Remove("TempBannerPic");
                 var currentUser = await _userManager.GetUserAsync(User);
                 if (currentUser != null)
                 {
@@ -168,17 +222,33 @@ namespace ThomasianMemoir.Controllers
         [ActionName("UpdatePassword")]
         public async Task<IActionResult> UpdatePassword(EditProfileCompositeViewModel model)
         {
+            TempData["TempFirstName"] = model.PersonalInfo.FirstName;
+            TempData["TempLastName"] = model.PersonalInfo.LastName;
+            TempData["TempUsername"] = model.PersonalInfo.Username;
+            TempData["TempEmail"] = model.PersonalInfo.Email;
+            TempData["TempyearLevel"] = model.PersonalInfo.YearLevel;
+            var user = _userManager.GetUserAsync(User).Result;
+            var info = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(user.Id));
+            TempData["TempProfilePic"] = info.ProfilePic;
+            TempData["TempBannerPic"] = info.BannerPic;
+            TempData["IsPostOperation"] = true;
             ModelState.Remove("PersonalInfo.FirstName");
             ModelState.Remove("PersonalInfo.LastName");
             ModelState.Remove("PersonalInfo.Username");
             ModelState.Remove("PersonalInfo.Email");
             ModelState.Remove("PersonalInfo.YearLevel");
             ModelState.Remove("ProfileDescription.ProfileDescription");
+            ModelState.Remove("ProfilePic.DefaultAvatar");
             ModelState.Remove("ProfilePic.ProfilePic");
+            ModelState.Remove("ProfilePic.NewProfilePic");
+            ModelState.Remove("BannerPic.DefaultBanner");
             ModelState.Remove("BannerPic.BannerPic");
+            ModelState.Remove("BannerPic.NewBannerPic");
 
             if (ModelState.IsValid)
             {
+                TempData.Remove("TempProfilePic");
+                TempData.Remove("TempBannerPic");
                 var currentUser = await _userManager.GetUserAsync(User);
                 if (currentUser != null)
                 {
@@ -210,6 +280,10 @@ namespace ThomasianMemoir.Controllers
             TempData["TempUsername"] = model.PersonalInfo.Username;
             TempData["TempEmail"] = model.PersonalInfo.Email;
             TempData["TempyearLevel"] = model.PersonalInfo.YearLevel;
+            var user = _userManager.GetUserAsync(User).Result;
+            var info = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(user.Id));
+            TempData["TempProfilePic"] = info.ProfilePic;
+            TempData["TempBannerPic"] = info.BannerPic;
             TempData["IsPostOperation"] = true;
             ModelState.Remove("PersonalInfo.FirstName");
             ModelState.Remove("PersonalInfo.LastName");
@@ -219,11 +293,17 @@ namespace ThomasianMemoir.Controllers
             ModelState.Remove("Password.OldPassword");
             ModelState.Remove("Password.NewPassword");
             ModelState.Remove("Password.ConfirmNewPassword");
+            ModelState.Remove("ProfilePic.DefaultAvatar");
             ModelState.Remove("ProfilePic.ProfilePic");
+            ModelState.Remove("ProfilePic.NewProfilePic");
+            ModelState.Remove("BannerPic.DefaultBanner");
             ModelState.Remove("BannerPic.BannerPic");
+            ModelState.Remove("BannerPic.NewBannerPic");
 
             if (ModelState.IsValid)
             {
+                TempData.Remove("TempProfilePic");
+                TempData.Remove("TempBannerPic");
                 var currentUser = await _userManager.GetUserAsync(User);
                 if (currentUser != null)
                 {
@@ -261,8 +341,37 @@ namespace ThomasianMemoir.Controllers
             ModelState.Remove("Password.OldPassword");
             ModelState.Remove("Password.NewPassword");
             ModelState.Remove("Password.ConfirmNewPassword");
-            ModelState.Remove("ProfilePic.BannerPic");
-            return RedirectToAction("EditProfile");
+            ModelState.Remove("ProfilePic.ProfilePic");
+            ModelState.Remove("BannerPic.DefaultBanner");
+            ModelState.Remove("BannerPic.BannerPic");
+            ModelState.Remove("BannerPic.NewBannerPic");
+            ModelState.Remove("ProfileDescription.ProfileDescription");
+
+            if (ModelState.IsValid)
+            {
+                var currentUser = await _userManager.GetUserAsync(User);
+                if (currentUser != null)
+                {
+                    try
+                    {
+                        var userInfo = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(currentUser.Id));
+
+                        if (userInfo != null)
+                        {
+                            //Update Default Avatar & Profile Pic in UserInfo table
+                            userInfo.DefaultAvatar = model.ProfilePic.DefaultAvatar;
+                            userInfo.ProfilePic = ConvertToByteArray(model.ProfilePic.NewProfilePic);
+                            await _dbContext.SaveChangesAsync();
+                        }
+                        return RedirectToAction("EditProfile");
+                    }
+                    catch (Exception e)
+                    {
+                        ModelState.AddModelError("updateProfileDescriptionErr", e.Message);
+                    }
+                }
+            }
+            return View("EditProfile", model);
         }
 
         [HttpPost]
@@ -278,8 +387,49 @@ namespace ThomasianMemoir.Controllers
             ModelState.Remove("Password.OldPassword");
             ModelState.Remove("Password.NewPassword");
             ModelState.Remove("Password.ConfirmNewPassword");
+            ModelState.Remove("ProfilePic.DefaultAvatar");
             ModelState.Remove("ProfilePic.ProfilePic");
-            return RedirectToAction("EditProfile");
+            ModelState.Remove("ProfilePic.NewProfilePic");
+            ModelState.Remove("BannerPic.BannerPic");
+            ModelState.Remove("ProfileDescription.ProfileDescription");
+
+            if (ModelState.IsValid)
+            {
+                var currentUser = await _userManager.GetUserAsync(User);
+                if (currentUser != null)
+                {
+                    try
+                    {
+                        var userInfo = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(currentUser.Id));
+
+                        if (userInfo != null)
+                        {
+                            //Update Default Banner & Banner Pic in UserInfo table
+                            userInfo.DefaultBanner = model.BannerPic.DefaultBanner;
+                            userInfo.BannerPic = ConvertToByteArray(model.BannerPic.NewBannerPic);
+                            await _dbContext.SaveChangesAsync();
+                        }
+                        return RedirectToAction("EditProfile");
+                    }
+                    catch (Exception e)
+                    {
+                        ModelState.AddModelError("updateProfileDescriptionErr", e.Message);
+                    }
+                }
+            }
+            return View("EditProfile", model);
+        }
+        private byte[] ConvertToByteArray(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return null;
+            }
+            using (var stream = new MemoryStream())
+            {
+                file.CopyTo(stream);
+                return stream.ToArray();
+            }
         }
     }
 }

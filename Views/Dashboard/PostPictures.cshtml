@@ -3,6 +3,8 @@
     ViewData["Title"] = "Post Pictures";
     ViewData["CSSFile"] = "~/css/PostPictures.css";
     ViewData["JSFile"] = "~/js/PostPictures.js";
+    @model ThomasianMemoir.ViewModels.PostWithDetails;
+    var postId = Model.PostId;
 }
 <div>
 <div style="overflow:hidden; vertical-align:middle;">
@@ -15,18 +17,26 @@
         <div class="carousel-inner" style="display:flex; align-items:center;">
             <div class="blurredBG"></div>
 
-            <div class="carousel-item active">
-                <img src="../img/Sample_Banner.jpg" alt="First slide">
+            @foreach (var media in Model.UserMedia)
+            {
+            <div class="carousel-item @if(media == Model.UserMedia.First()) { <text>active</text> }">
+                @{if (media.Media != null && media.Media.Length > 0)
+                {                
+                    if (media.MediaType == "Image")
+                    {
+                    <img src="data:image;base64,@Convert.ToBase64String(@media.Media)" alt="Post Media">
+                    }
+                    else if (media.MediaType == "Video")
+                    {
+                    <video controls data-touch="false" class="embed-responsive vidContent" autoplay>
+                        <source src="data:video;base64,@Convert.ToBase64String(@media.Media)" alt="Post Media">
+                        Your browser does not support the video tag.
+                    </video>
+                    }
+                }
+                }
             </div>
-            <div class="carousel-item">
-                <img src="../img/BG/BG_Index.jpg" alt="Second slide">
-            </div>
-            <div class="carousel-item">
-                <img src="../img/BG/BG_Login.png" alt="Third slide">
-            </div>
-            <div class="carousel-item">
-                <img src="../img/Sample_Banner2.jpg" alt="Third slide">
-            </div>
+            } 
         </div>
         <!--Prev and next buttons-->
         <a class="carousel-control-prev" href="#postCarousel" role="button" data-slide="prev">
@@ -39,7 +49,7 @@
         </a>
         <!--Back and exit buttons-->
         <div class="carousel-indicators" style="justify-content:end; top:20px;">
-            <a asp-controller="Dashboard" asp-action="Post" class="fa-solid fa-xmark btn btnExit"></a>
+            <a asp-controller="Dashboard" asp-action="Post" asp-route-postId="@postId" class="fa-solid fa-xmark btn btnExit"></a>
         </div>
     </div>
 </div>

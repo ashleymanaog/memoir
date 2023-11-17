@@ -73,6 +73,8 @@
                 </a>
                 <div class="profilePic">
                     <img src="~/img/Avatars/Avatar1.png" class="profileImage" id="uploadProfilePicture-previewImg">
+                    <input asp-for="DefaultAvatar" type="text" id="defaultAvatar" value="Avatar1.png" style="display:none;">
+                    <input asp-for="ProfilePic" type="file" id="profilePic" style="display:none;">
                 </div>
             </div>
             
@@ -83,6 +85,8 @@
                 </a>
                 <div class="banner">
                     <img src="~/img/Banners/Banner1.png" id="uploadBannerPhoto-previewImg">
+                    <input asp-for="DefaultBanner" type="text" id="defaultBanner" value="Banner1.png" style="display:none;">
+                    <input asp-for="BannerPic" type="file" id="bannerPic" style="display:none;">
                 </div>
             </div>
         </div>
@@ -134,7 +138,7 @@
                     <label class="btn btn-outline-primary btnGroupButton btnBannerLabel" for="btnUploadBanner" data-tab-target="#uploadBanner" style="border-top-right-radius:50px; border-bottom-right-radius:50px;">Upload a Photo</label>
                     <div id="uploadBanner" data-tab-content style="text-align:center; margin:3rem;" class="btnBannerContent">
                         <label class="btn blueButton btnUploadPhoto" for="uploadBannerPhoto"><i class="fa-solid fa-upload" style="margin-right:10px;"></i>Upload Photo</label>
-                        <input type="file" id="uploadBannerPhoto" name="uploadBannerPhoto" style="color:#00a4b9; display:none;">
+                        <input type="button" id="uploadBannerPhoto" name="uploadBannerPhoto" style="color:#00a4b9; display:none;">
                         <span class="fileSelectedBanner" style="color:#00a4b9;"></span>
                     </div>
                 </div>
@@ -266,7 +270,7 @@
                     <label class="btn btn-outline-primary btnGroupButton btnProfileLabel" for="btnUploadProfile" data-tab-target="#uploadProfile" style="border-top-right-radius:50px; border-bottom-right-radius:50px;">Upload a Photo</label>
                     <div id="uploadProfile" data-tab-content style="text-align:center; margin:3rem;" class="btnProfileContent">
                         <label class="btn blueButton btnUploadPhoto" for="uploadProfilePicture"><i class="fa-solid fa-upload" style="margin-right:10px;"></i>Upload Photo</label>
-                        <input type="file" id="uploadProfilePicture" name="uploadProfilePicture" style="color:#00a4b9; display:none;">
+                        <input type="button" id="uploadProfilePicture" name="uploadProfilePicture" style="color:#00a4b9; display:none;">
                         <span class="fileSelectedProfile" style="color:#00a4b9;"></span>
                     </div>
                 </div>

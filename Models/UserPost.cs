@@ -13,11 +13,12 @@ namespace ThomasianMemoir.Models
         public string Content { get; set; }
         public int LikesCount { get; set; }
         public int CommentsCount { get; set; }
-        [ForeignKey("UserId")]
+        public string PostType { get; set; }
+        [ForeignKey("PostId")]
         public List<UserPostLikes> Likes { get; set; }
-        [ForeignKey("UserId")]
+        [ForeignKey("PostId")]
         public List<UserPostComments> Comments { get; set; }
-        [ForeignKey("UserId")]
+        [ForeignKey("PostId")]
         public List<UserPostMedia> Media { get; set; }
     }
 }
