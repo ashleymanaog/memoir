@@ -11,5 +11,9 @@ namespace ThomasianMemoir.Models
         public string UserId { get; set; }
         public UserInfo Commentator { get; set; }
         public string Comment { get; set; }
+        public int? ParentCommentId { get; set; }
+        public UserPostComments? ParentComment { get; set; }
+        public List<UserPostComments>? Replies { get; set; }
+        public DateTime Timestamp { get; set; }
     }
 }

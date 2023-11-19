@@ -94,9 +94,11 @@ namespace ThomasianMemoir.Controllers
                     newUserInfo.DefaultBanner = userEnteredData.DefaultBanner;
                     newUserInfo.ProfilePic = ConvertToByteArray(userEnteredData.ProfilePic);
                     newUserInfo.BannerPic = ConvertToByteArray(userEnteredData.BannerPic);
+                    
                     _dbContext.UserInfo.Add(newUserInfo);
+                    newUser.UserInfo = newUserInfo;
+
                     await _dbContext.SaveChangesAsync();
-                    /*Profile and Banner Pic to add*/
                     return RedirectToAction("Login", "Home");
                 }
                 else

@@ -1,4 +1,4 @@
-﻿using ThomasianMemoir.Models;
+﻿ using ThomasianMemoir.Models;
 
 namespace ThomasianMemoir.ViewModels
 {

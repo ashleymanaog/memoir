@@ -41,7 +41,7 @@
     word-break: break-all;
     word-wrap: break-word;
     left: 0;
-    display: block;
+    display: inline-block;
     text-align: left;
     line-height: 25px;
     padding: 0;
@@ -130,6 +130,15 @@ a { /*for username link*/
     color: #0e9bad;
 }
 
+.reply {
+    margin-left: 30px;
+    margin-top: 20px;
+    /*border-left: 0.19rem solid #c9c9c9;
+    border-bottom: 0.19rem solid #c9c9c9;*/
+    padding-left: 10px;
+    margin-bottom: 20px;
+}
+
 /*POST IMAGES*/
 .carousel-indicators {
     z-index: 1 !important;
@@ -164,6 +173,14 @@ a { /*for username link*/
     padding-top: 50px;
 }
 
+.vidContent {
+    position: absolute;
+    display: inline-block;
+    bottom: 0;
+    height: 100%;
+    background-color: black;
+}
+
 /*FOR HIGHER HEIGHT*/
 .addHeight {
     height: 600px;
@@ -180,7 +197,7 @@ a { /*for username link*/
     top: 0;
     filter: blur(30px);
     -webkit-filter: blur(10px);
-    background-image: url(../img/Sample_Banner2.jpg);
+    background-image: linear-gradient(black, black);
     transform: scale(1.2);
     background-position: 50% 50%;
     display: none;
@@ -190,15 +207,15 @@ a { /*for username link*/
     display: block;
 }
 
-/*COMMENT SECTIO*/
+/*COMMENT SECTION*/
 .commentDiv {
-    margin-top: 15px;
+    /*margin-top: 15px;*/
     margin-bottom: 15px;
     width: 100%;
 }
 
 .textareaCommentDiv {
-    display: flex;
+    /*display: flex;*/
     padding-left: 70px;
     padding-right: 5px;
     /*align-items: center;*/
@@ -244,6 +261,7 @@ a { /*for username link*/
     margin-left: 10px;
     position: absolute;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.4);
+    margin-top: 6px;
 }
 
 .comment {
@@ -251,6 +269,36 @@ a { /*for username link*/
     text-justify: inter-word;
     margin-left: 70px;
     margin-right: 15px;
+}
+
+.timestamp {
+    color: #6c757d;
+    font-size: 15px;
+}
+
+.btnLink {
+    display: block;
+    text-decoration: none;
+    color: #0ba2b5;
+    margin-top: 5px;
+    padding: 0;
+}
+
+    .btnLink:hover {
+        color: #0ba2b5 !important;
+    }
+
+    .btnLink:hover,
+    .btnLink:focus,
+    .btnLink:active {
+        outline: none;
+        box-shadow: none !important;
+        -webkit-appearance: none;
+    }
+
+.cancelReply {
+    margin: 0;
+    padding: 0;
 }
 
 /*FOR RESPONSIVENESS*/

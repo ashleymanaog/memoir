@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using ThomasianMemoir.Data;
 using ThomasianMemoir.Models;
 using ThomasianMemoir.ViewModels;
+using ThomasianMemoir.Extensions;
 
 namespace ThomasianMemoir.Controllers
 {
@@ -92,6 +93,8 @@ namespace ThomasianMemoir.Controllers
             ModelState.Remove("DefaultAvatar");
             if (ModelState.IsValid)
             {
+                var allowedFileTypes = new List<string> { "image/jpe", "image/jpg", "image/jpeg", "image/gif", "image/png", "image/bmp", "image/ico", "image/svg", "image/tif", "image/tiff", "image/ai", "image/drw", "image/pct", "image/psp", "image/xcf", "image/psd", "image/raw", "image/webp", "video/avi", "video/divx", "video/flv", "video/m4v", "video/mkv", "video/mov", "video/mp4", "video/mpeg", "video/mpg", "video/ogm", "video/ogv", "video/ogx", "video/rm", "video/rmvb", "video/smil", "video/webm", "video/wmv", "video/xvid"};
+
                 var currentUser = await _userManager.GetUserAsync(User);
                 var userProfile = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(currentUser.Id));
 
@@ -114,6 +117,13 @@ namespace ThomasianMemoir.Controllers
                         for (int i = 0; i < model.PostMedia.Count; i++)
                         {
                             var file = model.PostMedia[i];
+
+                            if (!allowedFileTypes.Contains(file.ContentType))
+                            {
+                                ModelState.AddModelError($"PostMedia[{i}]", "Invalid file type.");
+                                return View(model);
+                            }
+
                             var mediaType = GetMediaType(file.ContentType);
 
                             byte[] mediaBytes;
@@ -136,10 +146,10 @@ namespace ThomasianMemoir.Controllers
                     _dbContext.UserPost.Add(newPost);
                     await _dbContext.SaveChangesAsync();
 
-                    return RedirectToAction("Freshmen", "Dashboard");
+                    return View(model);
                 }
             }
-            return RedirectToAction("Freshmen", "Dashboard");
+            return View(model);
         }
 
         public IActionResult Sophomore()
@@ -160,6 +170,11 @@ namespace ThomasianMemoir.Controllers
         [HttpGet]
         public IActionResult Post(int postId)
         {
+            var currentUser = _userManager.GetUserAsync(User).Result;
+            if (currentUser == null)
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
             var post = _dbContext.UserPost
                 .Include(p => p.User)
                 .Include(p => p.Likes)
@@ -172,12 +187,21 @@ namespace ThomasianMemoir.Controllers
             {
                 return NotFound();
             }
-            else {
-                var userProfilePic = post.Comments.FirstOrDefault()?.Commentator.ProfilePic;
-                var userDefaultAvatar = post.Comments.FirstOrDefault()?.Commentator.DefaultAvatar;
-            }
 
-            var currentUser = _userManager.GetUserAsync(User).Result;
+            // Fetch root comments with their replies
+            var comments = _dbContext.UserPostComments
+                .Where(c => c.PostId == postId)
+                .Include(c => c.Commentator)
+                    .ThenInclude(commentator => commentator.User)
+                .Include(c => c.Replies)  // Include replies for each root comment
+                    .ThenInclude(reply => reply.Commentator)
+                        .ThenInclude(replyCommentator => replyCommentator.User)
+                .ToList();
+
+            var userProfilePic = post.Comments.FirstOrDefault()?.Commentator.ProfilePic;
+            var userDefaultAvatar = post.Comments.FirstOrDefault()?.Commentator.DefaultAvatar;
+
+            /*var currentUser = _userManager.GetUserAsync(User).Result;*/
             var userProfile = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(currentUser.Id));
 
             var postViewModel = new PostViewModel
@@ -186,10 +210,11 @@ namespace ThomasianMemoir.Controllers
                 {
                     Post = post,
                     PostId = postId,
+                    UserId = currentUser.Id,
                     Username = _userManager.FindByIdAsync(post.UserId).Result.UserName,
                     UserMedia = post.Media,
                     UserLikes = post.Likes,
-                    UserComments = post.Comments,
+                    UserComments = comments,
                     ProfilePic = post.User?.ProfilePic,
                     DefaultAvatar = post.User?.DefaultAvatar,
                     Liked = HasUserLikedPost(currentUser.Id, post.PostId)
@@ -200,6 +225,79 @@ namespace ThomasianMemoir.Controllers
             };
 
             return View(postViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult AddComment(AddCommentViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var currentUser = _userManager.GetUserAsync(User).Result;
+
+                    //Add New Comment
+                    var newComment = new UserPostComments
+                    {
+                        PostId = model.PostId,
+                        UserId = currentUser.Id,
+                        Comment = model.NewComment,
+                        Timestamp = DateTime.Now,
+                        ParentCommentId = model.ParentCommentId
+                    };
+
+                    var commentator = _dbContext.UserInfo.FirstOrDefault(u => u.UserId == newComment.UserId);
+
+                    if (commentator != null)
+                    {
+                        newComment.Commentator = commentator;
+                        _dbContext.UserPostComments.Add(newComment);
+                        _dbContext.SaveChanges();
+
+                        //Update CommentsCount & List of Comments
+                        var post = _dbContext.UserPost.Include(u => u.Comments).FirstOrDefault(p => p.PostId == model.PostId);
+                        
+                        if (post != null)
+                        {
+                            post.CommentsCount += 1;
+                            post.Comments.Add(newComment);
+                            _dbContext.SaveChanges();
+                        }
+
+                        //Adding Parent Comment
+                        var parentComment = _dbContext.UserPostComments
+                            .Include(c => c.Replies)
+                            .FirstOrDefault(c => c.CommentId == model.ParentCommentId);
+
+                        if (parentComment != null)
+                        {
+                            parentComment.Replies.Add(newComment);
+                        }
+                        _dbContext.SaveChanges();
+
+                        var newCommentForView = _dbContext.UserPostComments
+                            .Include(c => c.Commentator)
+                            .Include(c => c.Replies)
+                            .FirstOrDefault(c => c.CommentId == newComment.CommentId);
+                        string idparentComment = parentComment?.CommentId.ToString() ?? "";
+
+                        return Json(new { success = true, commentHtml = this.RenderToString("_CommentPartialView", newCommentForView), commentsCount = post.CommentsCount, postId = post.PostId, parentCommentId = idparentComment });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, error = "Commentator not found" });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Error adding comment: {ex.Message}");
+                    return Json(new { success = false, error = "Invalid model state" });
+                }
+            }
+            else
+            {
+                return Json(new { success = false, error = "An error occurred while adding the comment." });
+            }
         }
 
         [HttpGet]
@@ -268,6 +366,7 @@ namespace ThomasianMemoir.Controllers
 
                         var post = _dbContext.UserPost?.Find(postId);
                         post.LikesCount += 1;
+                        post.Likes.Add(newLike);
                         _dbContext.SaveChanges();
 
                         return Json(new { success = true, liked = true, likesCount = post.LikesCount });

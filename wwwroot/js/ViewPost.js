@@ -1,4 +1,4 @@
-﻿function initializeCarousel(postId) {
+﻿function initializeCarousel(postId, postIds) {
     //Index of carousel on display
     var totalItems = $('#postCarousel_' + postId + ' .carousel-item').length;
     var currentIndex = $('#postCarousel_' + postId + ' .carousel-item.active').index();
@@ -29,21 +29,27 @@
     updateCarouselInfo(postId);
     containImg(postId);
 
+    console.log(postIds)
     $(window).on('resize', function () {
-        debouncedContainImg(postId);
+        postIds.forEach(function (postId) {
+            const debouncedFunction = debounce(() => {containImg(postId);}, 50);
+            debouncedFunction();
+        });
     });
     
     //Be able to click video controls
     var container = $('#postCarousel_' + postId + ' .carousel-item');
     var prevControl = $('#postCarousel_' + postId + ' .carousel-control-prev');
     var nextControl = $('#postCarousel_' + postId + ' .carousel-control-next');
-    console.log(document.querySelector('#postCarousel_' + postId + ' video'))
     if (document.querySelector('#postCarousel_' + postId + ' video')) {
-        console.log('inside')
         prevControl.addClass('prevMargin');
         nextControl.addClass('nextMargin');
     }
 }
+
+$('#postCarousel').carousel({
+    interval: false
+});
 
 const debouncedContainImg = debounce(containImg, 50);
 // Debounce function to limit the rate of execution
@@ -78,29 +84,11 @@ function containImg(postId) {
         var url = img.attr('src');
         var newImg = new Image();
         newImg.src = url;
-
         const bg = $('#postCarousel_' + postId + ' .blurredBG');
-        var height = img.height();//img.clientHeight
-
-        if (height > 600) {
-            item.addClass('addHeight');
-            img.addClass('objectFitContain');
-            bg.addClass('displayed');
-            bg.css('backgroundImage', 'url(' + url + ')');
-        }
-        if (height == 600) {
-            item.removeClass('addHeight');
-            img.removeClass('objectFitContain');
-            bg.removeClass('displayed');
-            height = img.clientHeight;
-        }
-        if (height < 600) {
-            item.removeClass('addHeight');
-            img.removeClass('objectFitContain');
-            bg.removeClass('displayed');
-        }
-
+        
         newImg.onload = function () {
+            var height = img.height();
+            
             if (height > 600) {
                 item.addClass('addHeight');
                 img.addClass('objectFitContain');
@@ -108,9 +96,10 @@ function containImg(postId) {
                 bg.css('backgroundImage', 'url(' + url + ')');
             }
             if (height == 600) {
-                item.removeClass('addHeight');
-                img.removeClass('objectFitContain');
-                bg.removeClass('displayed');
+                item.addClass('addHeight');
+                img.addClass('objectFitContain');
+                bg.addClass('displayed');
+                bg.css('backgroundImage', 'url(' + url + ')');
                 height = img.clientHeight;
             }
             if (height < 600) {
@@ -118,7 +107,42 @@ function containImg(postId) {
                 img.removeClass('objectFitContain');
                 bg.removeClass('displayed');
             }
+            setTimeout(function () {
+                containImg(postId);
+            }, 50);
         }
+    }
+
+    const vid = $('#postCarousel_' + postId + ' .carousel-item.active video');
+    const source = $('#postCarousel_' + postId + ' .carousel-item.active video source');
+    
+    if (vid.length > 0 && source.attr('src')) {
+        const bg = $('#postCarousel_' + postId + ' .blurredBG');
+        bg.addClass('displayed');
+        bg.css('backgroundImage', 'linear-gradient(black, black)');
+
+        vid.each(function () {
+            const vid = $(this);
+            var height = vid.height();
+            
+            if (height >= 600) {
+                vid.addClass('addHeight');
+                vid.addClass('objectFitContain');
+            } else {
+                vid.removeClass('addHeight');
+                vid.removeClass('objectFitContain');
+            }
+
+            vid.on('loadedmetadata', function () {
+                if (height >= 600) {
+                    vid.addClass('addHeight');
+                    vid.addClass('objectFitContain');
+                } else {
+                    vid.removeClass('addHeight');
+                    vid.removeClass('objectFitContain');
+                }
+            });
+        });
     }
 }
 

@@ -292,7 +292,7 @@ a { /*for username link*/
     top: 0;
     filter: blur(30px);
     -webkit-filter: blur(10px);
-    background-image: url(../img/Sample_Banner2.jpg);
+    background-image: linear-gradient(black, black);
     transform: scale(1.2);
     background-position: 50% 50%;
     display: none;

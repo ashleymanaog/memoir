@@ -46,6 +46,13 @@ namespace ThomasianMemoir.Data
                 .WithOne(upc => upc.Post)
                 .HasForeignKey(upc => upc.PostId);
 
+            // Comment Relationship
+            modelBuilder.Entity<UserPostComments>()
+                .HasOne(c => c.ParentComment)
+                .WithMany(c => c.Replies)
+                .HasForeignKey(c => c.ParentCommentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             /*modelBuilder.Entity<Users>().HasData(
                 new Users()
                 {

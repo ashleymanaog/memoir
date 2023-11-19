@@ -1,0 +1,57 @@
+﻿@model ThomasianMemoir.Models.UserPostComments
+<div class="commentDiv" id="commentsSection">
+    <div style="float:left; display:inline-block;">
+        <a asp-controller="Profile" asp-action="PublicProfile" asp-route-userId="@Model.Commentator.UserId" style="pointer-events:auto;">
+            <div class="profilePicComment">
+                @if (Model.Commentator.ProfilePic != null)
+                {
+                    <img src="data:image;base64,@Convert.ToBase64String(Model.Commentator.ProfilePic)" style="clip-path:circle(50%);">
+                }
+                else
+                {
+                    <img src="~/img/Avatars/@Model.Commentator.DefaultAvatar" class="profileImage" style="clip-path:circle(50%);">
+                }
+            </div>
+        </a>
+    </div>
+    <div style="display:block; text-align:start;">
+      <span class="usernamePost btn" style="margin-left:70px; margin-bottom:5px; margin-right:10px;"><a asp-controller="Profile" asp-action="PublicProfile" asp-route-userId="@Model.UserId" style="display:inline-block; pointer-events:auto; position: relative;">@(Model.Commentator?.User?.UserName ?? "Unknown User")</a></span>
+      <span class="timestamp">
+        @{
+            var timeDiff = DateTime.Now - Model.Timestamp;
+
+            if (timeDiff.TotalSeconds < 60)
+            {
+                var seconds = (int)timeDiff.TotalSeconds;
+                <text>Commented @seconds second@(seconds != 1 ? "s" : "") ago</text>
+            }
+            else if (timeDiff.TotalMinutes < 60)
+            {
+                var minutes = (int)timeDiff.TotalMinutes;
+                <text>Commented @timeDiff.Minutes minute@(minutes != 1 ? "s" : "") ago</text>
+            }
+            else if (timeDiff.TotalHours < 24)
+            {
+                var hours = (int)timeDiff.TotalHours;
+                <text>Commented @timeDiff.Hours hour@(hours != 1 ? "s" : "") ago</text>
+            }
+            else
+            {
+                <text>Commented on Model.Timestamp.ToString("MM/dd/yyyy hh:mm tt")</text>
+            }
+        }
+      </span>
+    </div>
+    <div class="comment">@Model.Comment</div>
+
+    <!--Reply Button-->
+    <button class="reply-button btn btnLink" style="margin-left:69px;" data-username="@(Model.Commentator?.User?.UserName ?? "Unknown User")" data-commentid="@Model.CommentId" data-parentcomment="@Model.Comment">Reply</button>
+
+    <!--Replies-->
+    <div class="replies-container reply" id="comment_@Model.CommentId">
+    @foreach (var reply in Model.Replies)
+    {
+        @await Html.PartialAsync("_CommentPartialView", reply)
+    }
+    </div>
+</div>

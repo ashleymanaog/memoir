@@ -22,7 +22,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="userInfo">
+                <div class="userInfo" style="text-align:left;">
                     <span class="usernamePost btn"><a asp-controller="Profile" asp-action="PublicProfile" asp-route-userId="@userId" style="display:inline-block; pointer-events:auto; position: relative;">@Model.PostWithDetails.Username</a></span>
                     <span class="datePost">
                     @{
@@ -30,26 +30,24 @@
 
                     if (timeDifference.TotalSeconds < 60) {
                         var seconds = (int)timeDifference.TotalSeconds;
-                        <text>Posted @seconds second@(seconds != 1 ? "s" : "") ago</text>
+                                        <text>Posted @seconds second@(seconds != 1 ? "s" : "") ago</text>
                     } else if (timeDifference.TotalMinutes < 60) {
                         var minutes = (int)timeDifference.TotalMinutes;
-                        <text>Posted @timeDifference.Minutes minute@(minutes != 1 ? "s" : "") ago</text>
+                                        <text>Posted @timeDifference.Minutes minute@(minutes != 1 ? "s" : "") ago</text>
                     } else if (timeDifference.TotalHours < 24) {
                         var hours = (int)timeDifference.TotalHours;
-                        <text>Posted @timeDifference.Hours hour@(hours != 1 ? "s" : "") ago</text>
+                                        <text>Posted @timeDifference.Hours hour@(hours != 1 ? "s" : "") ago</text>
                     } else {
-                        <text>Posted on Model.Post.PostDate.ToString("MM/dd/yyyy hh:mm tt")</text>
+                                        <text>Posted on Model.Post.PostDate.ToString("MM/dd/yyyy hh:mm tt")</text>
                     }
                     }</span>
                 </div>
             </div>
         </div>
         <div>
-            <div class="row postCardInfo">@Model.PostWithDetails.Post.Content
-                @* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. *@
-            </div>
-            <div style="max-height:600px; overflow:hidden;vertical-align: middle;" class="imagesDiv">
-                <div id="postCarousel_@Model.PostWithDetails.PostId" class="carousel" data-ride="carousel">
+            <div class="row postCardInfo">@Model.PostWithDetails.Post.Content</div>
+            <div style="max-height:600px; overflow:hidden; vertical-align:middle; background-color:black;" class="imagesDiv">
+                <div id="postCarousel_@Model.PostWithDetails.PostId" class="carousel" data-ride="carousel" data-interval="false">
                     <a asp-controller="Dashboard" asp-action="PostPictures" asp-route-postId="@Model.PostWithDetails.PostId" class="carousel-indicators" style="top:20px; justify-content:end;">
                         <div class="num indicatorBG"></div>
                     </a>
@@ -66,7 +64,7 @@
                                 }
                                 else if (media.MediaType == "Video")
                                 {
-                                    <video controls data-touch="false" class="embed-responsive" autoplay>
+                                    <video controls data-touch="false" class="embed-responsive" autoplay muted>
                                         <source src="data:video;base64,@Convert.ToBase64String(@media.Media)" alt="Post Media">
                                     Your browser does not support the video tag.
                                     </video>
@@ -93,16 +91,16 @@
             </div>
 
             <div class="col-6">
-                <button type="button" id="btnCommentDiv" style="text-align:center;" class="btn btnComment" onclick="commentOnTextarea()">
-                    <i class="fa-solid fa-comment" style="margin-right:10px;"></i>Comment
+                <button type="button" id="btnCommentDiv" style="text-align:center;" class="btn btnComment btnComment_@postId" onclick="commentOnTextarea()">
+                    <i class="fa-solid fa-comment" style="margin-right:10px;"></i>Comment <span class="commentsCount">@if(Model.PostWithDetails.Post.CommentsCount > 0){@Model.PostWithDetails.Post.CommentsCount}</span>
                 </button>
             </div>
             <hr style="height:0.5px; margin:0;">
-            <div class="col-12" style="margin-bottom:20px;">
+            <div class="col-12" style="margin-top:15px;">
                 <div class="commentDiv">
-                    <div style="float:left; display:inline-block;">
-                        <a asp-controller="Profile" asp-action="PublicProfile" asp-route-userId="@Model.UserId" style="pointer-events:auto; position: relative;">
-                        <div class="profilePicComment">
+                    <div style="float:left; display:inline-block; padding-top:inherit;">
+                        <a asp-controller="Profile" asp-action="PublicProfile" asp-route-userId="@Model.UserId" style="pointer-events:auto;">
+                        <div class="profilePicComment"style="margin-top:0;">
                             @if (Model.UserProfile != null) {
                                 <img src="data:image;base64,@Convert.ToBase64String(Model.UserProfile)" style="clip-path:circle(50%);">
                             } else {
@@ -112,39 +110,40 @@
                         </a>
                     </div>
                     <div class="textareaCommentDiv">
-                        <textarea rows="1" cols="50" id="profileDescription" name="profileDescription" form="editProfileDescription" class="textbox textarea" placeholder="Share your thoughts..." ></textarea>
-                        <button type="submit" style="color: rgb(0, 0, 0); text-decoration:none; width:auto; height:40px;" class="btn btn-info btn-md center blueButton" id="btnSubmitComment">Comment</button>
+                        <span id="reply-details" style="display:none; float:left; text-align:left; margin-bottom:5px;">
+                            <span id="reply-to"></span>
+                            <button class="cancel-reply btn btnLink cancelReply" style="display:inline-block; text-decoration:none; color:#0ba2b5;">Cancel</button>
+                        </span>
+                        <form method="post" id="commentForm" style="width:100%;" class="d-flex">
+                            <textarea rows="1" id="commentTextarea" name="NewComment" form="commentForm" class="textbox textarea flex-column" placeholder="Share your thoughts..." required></textarea>
+                            <input type="hidden" name="PostId" value="@postId">
+                            <input type="hidden" id="ParentCommentId" name="ParentCommentId" value="">
+                            <button type="button" style="color: rgb(0, 0, 0); text-decoration:none; width:auto; height:40px; vertical-align:top;" class="btn btn-info btn-md center blueButton justify-content-end" id="btnSubmitComment">Comment</button>
+                        </form>
                     </div>
                 </div>
+                <div id="wholeCommentsSection">
                 @foreach (var comment in Model.PostWithDetails.UserComments)
                 {
-                <div class="commentDiv">
-                    <div style="float:left; display:inline-block;">
-                        <a asp-controller="Profile" asp-action="PublicProfile" asp-route-userId="@comment.Commentator.UserId" style="pointer-events:auto; position: relative;">
-                        <div class="profilePicComment">
-                            @if (comment.Commentator.ProfilePic != null) {
-                                <img src="data:image;base64,@Convert.ToBase64String(comment.Commentator.ProfilePic)" style="clip-path:circle(50%);">
-                            } else {
-                                <img src="~/img/Avatars/@comment.Commentator.DefaultAvatar" class="profileImage" style="clip-path:circle(50%);">
-                            }
-                        </div>
-                        </a>
-                    </div>
-                    <span class="usernamePost btn" style="margin-left:70px; margin-bottom:5px;"><a asp-controller="Profile" asp-action="Index" style="display:inline-block; pointer-events:auto; position: relative;">@comment.UserId</a></span>
-                    <div class="comment">@comment.Comment
-                        @* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. *@
-                    </div>
-                </div>
+                    if (comment.ParentCommentId == null)
+                    {
+                        @Html.Partial("_CommentPartialView", comment)
+                    }
                 }
+                </div>
             </div>
         </div>
     </div>
 </div>
 @section scripts {
 <script>
+    const postIds = [@postId];
+
     document.addEventListener("DOMContentLoaded", function () {
         initializeCarousel(@postId);
     });
+
+    initializeCarousel(@postId, postIds);
 
     function handleLikeButtonClick(postId) {
         if ($(`.btnLike_${postId}`).hasClass('liked')) {
@@ -206,5 +205,74 @@
             $(`.btnLike_${postId} .likesCount`).text(likesCount);
         }
     }
+
+    function updateCommentsCount(postId, commentsCount) {
+        if (commentsCount == 0) {
+            $(`.btnComment_${postId} .commentsCount`).text("");
+        } else {
+            $(`.btnComment_${postId} .commentsCount`).text(commentsCount);
+        }
+    }
+    
+    $(document).ready(function () {
+        //Check if textarea is not empty before submit
+        $('#commentTextarea').on('input', function () {
+            if ($(this).val().trim() !== '') {
+                $('#btnSubmitComment').prop('disabled', false).attr('type', 'submit');
+            } else {
+                $('#btnSubmitComment').prop('disabled', true).attr('type', 'button');
+            }
+        });
+
+        //Submit commentForm
+        $('#commentForm').submit(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: '/Dashboard/AddComment',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function (data) {
+                    if (data.success) {
+                        var commentContainer;
+
+                        if (data.parentCommentId !== "") { // is a reply
+                            commentContainer = $('#commentsSection #comment_' + data.parentCommentId);
+                        } else { // top-level comment
+                            commentContainer = $('#wholeCommentsSection');
+                        }
+
+                        commentContainer.append(data.commentHtml);
+
+                        $('#commentTextarea').val('');
+                        updateCommentsCount(data.postId, data.commentsCount);
+                    } else {
+                        alert('Failed to add comment. ' + data.error);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error adding comment:', status, error);
+                    alert('Error adding comment. Check the console for details.');
+                }
+            });
+        });
+
+        //Reply Button Clicked
+        $('#wholeCommentsSection').on('click', '.reply-button', function () {
+            var username = $(this).data('username');
+            var commentId = $(this).data('commentid');
+            var parentcomment = $(this).data('parentcomment');
+            $('#reply-details').show();
+                $('#reply-to').text('Reply to '+username+"'s comment: "+parentcomment);
+            $('#commentTextarea').focus();
+            $('#ParentCommentId').val(commentId);
+        });
+
+        //Cancel Reply Button Clicked
+        $('.cancel-reply').click(function () { 
+            $('#reply-details').hide();
+            $('#ParentCommentId').val("");
+        });
+    });
 </script>
 }

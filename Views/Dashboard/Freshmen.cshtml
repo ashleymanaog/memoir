@@ -3,7 +3,6 @@
     ViewData["CSSFile"] = "~/css/Dashboard.css";
     ViewData["JSFile"] = "~/js/Dashboard.js";
     ViewData["JSFile2"] = "~/js/ViewPost.js";
-    //@model ThomasianMemoir.ViewModels.CreatePostViewModel;
     @model ThomasianMemoir.ViewModels.PostsViewModel;
 }
 <!--BANNER-->
@@ -98,10 +97,8 @@
             </div>
         </div>
         <div>
-            <div class="row cardInfo postCardInfo">@post.Post.Content
-                @* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. *@
-            </div>
-            <div style="max-height:600px; overflow:hidden;vertical-align: middle;">
+            <div class="row cardInfo postCardInfo">@post.Post.Content</div>
+            <div style="max-height:600px; overflow:hidden; vertical-align:middle; background-color:black;">
                 <div id="postCarousel_@post.Post.PostId" class="carousel" data-ride="carousel">
                     <a asp-controller="Dashboard" asp-action="Post" asp-route-postId="@post.Post.PostId" class="carousel-indicators" style="top:20px; justify-content:end;">
                         <div class="num indicatorBG"></div>
@@ -120,7 +117,7 @@
                                 }
                                 else if (media.MediaType == "Video")
                                 {
-                                    <video controls data-touch="false" class="embed-responsive" autoplay>
+                                    <video controls data-touch="false" class="embed-responsive" autoplay muted>
                                         <source src="data:video;base64,@Convert.ToBase64String(@media.Media)" alt="Post Media">
                                     Your browser does not support the video tag.
                                     </video>
@@ -154,8 +151,10 @@
     
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            const postIds = @Html.Raw(Json.Serialize(Model.PostsWithDetails.Select(p => p.Post.PostId).ToList()));
+            
             @foreach (var post in Model.PostsWithDetails) {
-                <text>initializeCarousel(@post.Post.PostId); </text>
+                <text>initializeCarousel(@post.Post.PostId, postIds); </text>
             }
         });
     </script>
@@ -178,14 +177,13 @@
             </div>
                 <div class="modal-body">
                     <textarea asp-for="Content" class="textbox createPostTextarea" rows="10" placeholder="Share to Thomasians..." id="Content" required></textarea>
-                    @* @if (Model.PostsWithDetails.Count == 0) { <script>addMediaInput(1);</script> } *@
-                    <input  asp-for="PostMedia" type="file" name="PostMedia" accept="video/*" multiple />
-                    <button type="button">Add Media</button>
-                    <div style="display:none;"></div>
+                    <div style="display:none;">
+                        <input asp-for="PostMedia" type="file" name="PostMedia" accept="image/*,video/*" multiple />
+                    </div>
                 </div>
             <div class="modal-footer card-footer card-footer-createPost">
-                <button type="button" class="btn fa-regular fa-image btnPic"></button>
-                <button type="button" class="btn fa-solid fa-video btnVid"></button>
+                <label for="PostMedia" class="btn fa-regular fa-image btnPic"></label>
+                <label for="PostMedia" class="btn fa-solid fa-video btnVid"></label>
                 <button type="submit" class="btn btn-info btn-md center blueButton btnPost" id="btnPost">Post</button>
             </div>
         </form>
