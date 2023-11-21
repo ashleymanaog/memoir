@@ -1,0 +1,1 @@
+Files will be added in this folder, but .gitignore will ignore this folder to avoid uploading images/vids from this folder.
