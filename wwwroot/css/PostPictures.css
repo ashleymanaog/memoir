@@ -88,7 +88,7 @@
     display: block;
     filter: blur(50px);
     -webkit-filter: blur(50px);
-    background-image: url(../img/Sample_Banner2.jpg);
+    background-image: linear-gradient(black,black);
     transform: scale(1.2);
     background-position: 50% 50%;
     background-size: cover;

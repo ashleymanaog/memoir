@@ -33,8 +33,8 @@
     var email = TempData["TempEmail"] as string;
     var yearlevel = TempData["TempYearLevel"] as string;
     var profileDescription = TempData["TempProfileDescription"] as string;
-    var profilepic = TempData["TempProfilePic"] as byte[];
-    var bannerpic = TempData["TempBannerPic"] as byte[];
+    var profilepic = TempData["TempProfilePic"] as string;
+    var bannerpic = TempData["TempBannerPic"] as string;
     bool isPostOperation = TempData.ContainsKey("IsPostOperation") && (bool)TempData["IsPostOperation"];
     
     if (isPostOperation && TempData.ContainsKey("TempPersonalInfo"))
@@ -66,10 +66,10 @@
 <div>
     <div class="banner">
         @if (isPostOperation && TempData.ContainsKey("TempBannerPic")) {
-            <img src="data:image;base64,@Convert.ToBase64String(@bannerpic)">
+            <img src="@Url.Content(@bannerpic)">
         } else {
             @if (Model.BannerPic.BannerPic != null) {
-                <img src="data:image;base64,@Convert.ToBase64String(Model.BannerPic.BannerPic)">
+                <img src="@Url.Content(Model.BannerPic.BannerPic)">
             } else {
                 <img src="~/img/Banners/@Model.BannerPic.DefaultBanner" id="uploadBannerPhoto-previewImg">
             }
@@ -95,10 +95,10 @@
     <div class="profileChild">
     <div class="profilePic">
         @if (isPostOperation && TempData.ContainsKey("TempProfilePic")) {
-            <img src="data:image;base64,@Convert.ToBase64String(@profilepic)" style="clip-path:circle(50%);">
+            <img src="@Url.Content(@profilepic)" style="clip-path:circle(50%);">
         } else {
             @if (Model.ProfilePic.ProfilePic != null) {
-                <img src="data:image;base64,@Convert.ToBase64String(Model.ProfilePic.ProfilePic)" style="clip-path:circle(50%);">
+                <img src="@Url.Content(Model.ProfilePic.ProfilePic)" style="clip-path:circle(50%);">
             } else {
                 <img src="~/img/Avatars/@Model.ProfilePic.DefaultAvatar" class="profileImage" id="uploadProfilePicture-previewImg" style="clip-path:circle(50%);">
             }

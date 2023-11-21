@@ -6,6 +6,7 @@ using ThomasianMemoir.Data;
 using ThomasianMemoir.Models;
 using ThomasianMemoir.ViewModels;
 using ThomasianMemoir.Extensions;
+using System;
 
 namespace ThomasianMemoir.Controllers
 {
@@ -13,6 +14,7 @@ namespace ThomasianMemoir.Controllers
     {
         private readonly ILogger<DashboardController> _logger;
         private readonly AppDbContext _dbContext;
+        private readonly IWebHostEnvironment _environment;
         private DbSet<UserInfo> Users;
         private DbSet<UserPost> UserPost;
         private DbSet<UserPostLikes> UserPostLikes;
@@ -21,11 +23,12 @@ namespace ThomasianMemoir.Controllers
 
         private readonly UserManager<User> _userManager;
 
-        public DashboardController(ILogger<DashboardController> logger, AppDbContext dbContext, UserManager<User> userManager)
+        public DashboardController(ILogger<DashboardController> logger, AppDbContext dbContext, UserManager<User> userManager, IWebHostEnvironment environment)
         {
             _logger = logger;
             _dbContext = dbContext;
             _userManager = userManager;
+            _environment = environment;
             Users = _dbContext.UserInfo;
             UserPost = _dbContext.UserPost;
             UserPostLikes = _dbContext.UserPostLikes;
@@ -66,7 +69,7 @@ namespace ThomasianMemoir.Controllers
                         UserMedia = post.Media,
                         UserLikes = post.Likes,
                         UserComments = post.Comments,
-                        ProfilePic = userInfo?.ProfilePic,
+                        ProfilePic = "/uploads/" + userInfo?.ProfilePic,
                         DefaultAvatar = userInfo?.DefaultAvatar,
                         Liked = HasUserLikedPost(currentUser.Id, post.PostId)
                     };
@@ -76,7 +79,7 @@ namespace ThomasianMemoir.Controllers
             var viewModel = new PostsViewModel
             {
                 PostsWithDetails = freshmenPosts.ToList(),
-                UserProfile = userProfile?.ProfilePic,
+                UserProfile = "/uploads/" + userProfile?.ProfilePic,
                 DefaultAvatar = userProfile?.DefaultAvatar
             };
             return View(viewModel);
@@ -93,7 +96,7 @@ namespace ThomasianMemoir.Controllers
             ModelState.Remove("DefaultAvatar");
             if (ModelState.IsValid)
             {
-                var allowedFileTypes = new List<string> { "image/jpe", "image/jpg", "image/jpeg", "image/gif", "image/png", "image/bmp", "image/ico", "image/svg", "image/tif", "image/tiff", "image/ai", "image/drw", "image/pct", "image/psp", "image/xcf", "image/psd", "image/raw", "image/webp", "video/avi", "video/divx", "video/flv", "video/m4v", "video/mkv", "video/mov", "video/mp4", "video/mpeg", "video/mpg", "video/ogm", "video/ogv", "video/ogx", "video/rm", "video/rmvb", "video/smil", "video/webm", "video/wmv", "video/xvid"};
+                var allowedFileTypes = new List<string> { "image/jpe", "image/jpg", "image/jpeg", "image/gif", "image/png", "image/bmp", "image/ico", "image/svg", "image/tif", "image/tiff", "image/ai", "image/drw", "image/pct", "image/psp", "image/xcf", "image/psd", "image/raw", "image/webp", "video/avi", "video/divx", "video/flv", "video/m4v", "video/mkv", "video/mov", "video/mp4", "video/mpeg", "video/mpg", "video/ogm", "video/ogv", "video/ogx", "video/rm", "video/rmvb", "video/smil", "video/webm", "video/wmv", "video/xvid", "video/quicktime" };
 
                 var currentUser = await _userManager.GetUserAsync(User);
                 var userProfile = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(currentUser.Id));
@@ -126,19 +129,25 @@ namespace ThomasianMemoir.Controllers
 
                             var mediaType = GetMediaType(file.ContentType);
 
-                            byte[] mediaBytes;
+                            /*byte[] mediaBytes;
                             using (var memoryStream = new MemoryStream())
                             {
                                 await file.CopyToAsync(memoryStream);
                                 mediaBytes = memoryStream.ToArray();
-                            }
+                            }*/
 
                             var media = new UserPostMedia
                             {
-                                Media = mediaBytes,
+                                MediaPath = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName),
                                 MediaType = mediaType
                             };
-                            
+
+                            var filePath = Path.Combine(_environment.WebRootPath, "uploads", media.MediaPath.TrimStart('/'));
+                            using (var fileStream = new FileStream(filePath, FileMode.Create))
+                            {
+                                await file.CopyToAsync(fileStream);
+                            }
+
                             newPost.Media.Add(media);
                         }
                     }
@@ -146,7 +155,7 @@ namespace ThomasianMemoir.Controllers
                     _dbContext.UserPost.Add(newPost);
                     await _dbContext.SaveChangesAsync();
 
-                    return View(model);
+                    return RedirectToAction("Freshmen","Dashboard");
                 }
             }
             return View(model);
@@ -215,12 +224,12 @@ namespace ThomasianMemoir.Controllers
                     UserMedia = post.Media,
                     UserLikes = post.Likes,
                     UserComments = comments,
-                    ProfilePic = post.User?.ProfilePic,
+                    ProfilePic = "/uploads/" + post.User?.ProfilePic,
                     DefaultAvatar = post.User?.DefaultAvatar,
                     Liked = HasUserLikedPost(currentUser.Id, post.PostId)
                 },
                 UserId = currentUser.Id,
-                UserProfile = userProfile?.ProfilePic,
+                UserProfile = "/uploads/" + userProfile?.ProfilePic,
                 DefaultAvatar = userProfile?.DefaultAvatar
             };
 
@@ -321,7 +330,7 @@ namespace ThomasianMemoir.Controllers
                 PostId = postId,
                 Username = _userManager.FindByIdAsync(post.UserId).Result.UserName,
                 UserMedia = post.Media,
-                ProfilePic = post.User?.ProfilePic,
+                ProfilePic = "/uploads/" + post.User?.ProfilePic,
                 DefaultAvatar = post.User?.DefaultAvatar
             };
 

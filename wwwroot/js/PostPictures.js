@@ -24,6 +24,8 @@ containImg();
 function containImg() {
     const bg = document.querySelector(".blurredBG");
     const img = document.querySelector(".carousel-item.active img");
-    var url = img.src;
-    bg.style.backgroundImage = "url(" + url + ")";
+    if (img != null) {
+        var url = img.src;
+        bg.style.backgroundImage = "url(" + url + ")";
+    }
 }

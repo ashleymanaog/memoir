@@ -5,7 +5,7 @@
             <div class="profilePicComment">
                 @if (Model.Commentator.ProfilePic != null)
                 {
-                    <img src="data:image;base64,@Convert.ToBase64String(Model.Commentator.ProfilePic)" style="clip-path:circle(50%);">
+                    <img src="@Url.Content(Model.Commentator.ProfilePic)" style="clip-path:circle(50%);">
                 }
                 else
                 {

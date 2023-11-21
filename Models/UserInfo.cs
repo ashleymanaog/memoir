@@ -25,14 +25,14 @@ namespace ThomasianMemoir.Models
         [Required]
         public string DefaultAvatar { get; set; }
 
-        [Column(TypeName = "VARBINARY(MAX)")]
-        public byte[]? ProfilePic { get; set; }
+        /*[Column(TypeName = "VARBINARY(MAX)")]*/
+        public string? ProfilePic { get; set; }
 
         [Required]
         public string DefaultBanner { get; set; }
 
-        [Column(TypeName = "VARBINARY(MAX)")]
-        public byte[]? BannerPic { get; set; }
+        /*[Column(TypeName = "VARBINARY(MAX)")]*/
+        public string? BannerPic { get; set; }
 
         public string? ProfileDescription { get; set; }
 

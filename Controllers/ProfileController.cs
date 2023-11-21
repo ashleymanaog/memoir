@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
+using System.Xml.Linq;
 using ThomasianMemoir.Data;
 using ThomasianMemoir.Models;
 using ThomasianMemoir.ViewModels;
@@ -12,6 +13,7 @@ namespace ThomasianMemoir.Controllers
     public class ProfileController : Controller
     {
         private readonly AppDbContext _dbContext;
+        private readonly IWebHostEnvironment _environment;
         private DbSet<UserInfo> UserInfo;
         private DbSet<UserPost> UserPost;
         private DbSet<UserPostLikes> UserPostLikes;
@@ -20,10 +22,11 @@ namespace ThomasianMemoir.Controllers
 
         private readonly UserManager<User> _userManager;
 
-        public ProfileController(AppDbContext dbContext, UserManager<User> userManager)
+        public ProfileController(AppDbContext dbContext, UserManager<User> userManager, IWebHostEnvironment environment)
         {
             _dbContext = dbContext;
             _userManager = userManager;
+            _environment = environment;
             UserInfo = _dbContext.UserInfo;
             UserPost = _dbContext.UserPost;
             UserPostLikes = _dbContext.UserPostLikes;
@@ -31,7 +34,7 @@ namespace ThomasianMemoir.Controllers
             UserPostMedia = _dbContext.UserPostMedia;
         }
 
-        [HttpGet] /*wla pa posts*/
+        [HttpGet]
         public async Task<IActionResult> Profile()
         {
             try
@@ -48,8 +51,28 @@ namespace ThomasianMemoir.Controllers
                     return NotFound();
                 }
 
+                var postsWithDetails = _dbContext.UserPost
+                    .Where(post => post.UserId == currentUser.Id)
+                    .OrderByDescending(post => post.PostDate)
+                    .Include(post => post.Likes)
+                    .Include(post => post.Media)
+                    .ToList()
+                    .Select(post =>
+                    {
+                        return new PostWithDetails
+                        {
+                            Post = post,
+                            PostId = post.PostId,
+                            UserMedia = post.Media,
+                            UserLikes = post.Likes,
+                            Liked = HasUserLikedPost(currentUser.Id, post.PostId)
+                        };
+                    })
+                    .ToList();
+
                 var viewModel = new ProfileViewModel
                 {
+                    UserId = currentUser.Id,
                     Email = currentUser.Email,
                     Username = currentUser.UserName,
                     FirstName = userProfile.FirstName,
@@ -58,8 +81,9 @@ namespace ThomasianMemoir.Controllers
                     ProfileDescription = userProfile.ProfileDescription,
                     DefaultAvatar = userProfile.DefaultAvatar,
                     DefaultBanner = userProfile.DefaultBanner,
-                    ProfilePic = userProfile.ProfilePic,
-                    BannerPic = userProfile.BannerPic
+                    ProfilePic = "/uploads/" + userProfile.ProfilePic,
+                    BannerPic = "/uploads/" + userProfile.BannerPic,
+                    Posts = postsWithDetails
                 };
                 return View(viewModel);
             }
@@ -69,8 +93,13 @@ namespace ThomasianMemoir.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Profile(int postId)
+        {
+            return View();
+        }
 
-        [HttpGet] /*wla pa posts*/
+        [HttpGet]
         public async Task<IActionResult> PublicProfile(string userId)
         {
             try
@@ -87,8 +116,28 @@ namespace ThomasianMemoir.Controllers
                     return NotFound();
                 }
 
+                var postsWithDetails = _dbContext.UserPost
+                    .Where(post => post.UserId == userId)
+                    .OrderByDescending(post => post.PostDate)
+                    .Include(post => post.Likes)
+                    .Include(post => post.Media)
+                    .ToList()
+                    .Select(post =>
+                    {
+                        return new PostWithDetails
+                        {
+                            Post = post,
+                            PostId = post.PostId,
+                            UserMedia = post.Media,
+                            UserLikes = post.Likes,
+                            Liked = HasUserLikedPost(userId, post.PostId)
+                        };
+                    })
+                    .ToList();
+
                 var viewModel = new ProfileViewModel
                 {
+                    UserId = userId,
                     Email = user.Email,
                     Username = user.UserName,
                     FirstName = userProfile.FirstName,
@@ -97,8 +146,9 @@ namespace ThomasianMemoir.Controllers
                     ProfileDescription = userProfile.ProfileDescription,
                     DefaultAvatar = userProfile.DefaultAvatar,
                     DefaultBanner = userProfile.DefaultBanner,
-                    ProfilePic = userProfile.ProfilePic,
-                    BannerPic = userProfile.BannerPic
+                    ProfilePic = "/uploads/" + userProfile.ProfilePic,
+                    BannerPic = "/uploads/" + userProfile.BannerPic,
+                    Posts = postsWithDetails
                 };
                 return View(viewModel);
             }
@@ -106,6 +156,12 @@ namespace ThomasianMemoir.Controllers
             {
                 return RedirectToAction("Error", new ErrorViewModel { ErrorMessage = "Cannot find Profile." });
             }
+        }
+        
+        private bool HasUserLikedPost(string userId, int postId)
+        {
+            return _dbContext.UserPostLikes
+                .Any(like => like.PostId == postId && like.UserId.Equals(userId));
         }
 
         [HttpGet]
@@ -140,11 +196,11 @@ namespace ThomasianMemoir.Controllers
                     },
                     ProfilePic = new EditProfileProfilePicViewModel  {
                         DefaultAvatar = userProfile.DefaultAvatar,
-                        ProfilePic = userProfile.ProfilePic
+                        ProfilePic = "/uploads/" + userProfile.ProfilePic
                     },
                     BannerPic = new EditProfileBannerPicViewModel  {
                         DefaultBanner = userProfile.DefaultBanner,
-                        BannerPic = userProfile.BannerPic
+                        BannerPic = "/uploads/" + userProfile.BannerPic
                     }
                 };
                 return View(viewModel);
@@ -354,13 +410,36 @@ namespace ThomasianMemoir.Controllers
                 {
                     try
                     {
+                        var allowedFileTypes = new List<string> { "image/jpe", "image/jpg", "image/jpeg", "image/gif", "image/png", "image/bmp", "image/ico", "image/svg", "image/tif", "image/tiff", "image/ai", "image/drw", "image/pct", "image/psp", "image/xcf", "image/psd", "image/raw", "image/webp" };
+
                         var userInfo = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(currentUser.Id));
 
                         if (userInfo != null)
                         {
-                            //Update Default Avatar & Profile Pic in UserInfo table
                             userInfo.DefaultAvatar = model.ProfilePic.DefaultAvatar;
-                            userInfo.ProfilePic = ConvertToByteArray(model.ProfilePic.NewProfilePic);
+
+                            if (model.ProfilePic.NewProfilePic != null)
+                            {
+                                var file = model.ProfilePic.NewProfilePic;
+
+                                if (!allowedFileTypes.Contains(file.ContentType))
+                                {
+                                    ModelState.AddModelError("PostMedia", "Invalid file type.");
+                                    return View(model);
+                                }
+
+                                var newProfilePicPath = Guid.NewGuid().ToString() +
+                                    Path.GetExtension(model.ProfilePic.NewProfilePic.FileName);
+                                var filePath = Path.Combine(_environment.WebRootPath, "uploads",
+                                    newProfilePicPath.TrimStart('/'));
+
+                                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                                {
+                                    await model.ProfilePic.NewProfilePic.CopyToAsync(fileStream);
+                                }
+
+                                userInfo.ProfilePic = newProfilePicPath;
+                            }
                             await _dbContext.SaveChangesAsync();
                         }
                         return RedirectToAction("EditProfile");
@@ -400,13 +479,36 @@ namespace ThomasianMemoir.Controllers
                 {
                     try
                     {
+                        var allowedFileTypes = new List<string> { "image/jpe", "image/jpg", "image/jpeg", "image/gif", "image/png", "image/bmp", "image/ico", "image/svg", "image/tif", "image/tiff", "image/ai", "image/drw", "image/pct", "image/psp", "image/xcf", "image/psd", "image/raw", "image/webp" };
+
                         var userInfo = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(currentUser.Id));
 
                         if (userInfo != null)
                         {
-                            //Update Default Banner & Banner Pic in UserInfo table
-                            userInfo.DefaultBanner = model.BannerPic.DefaultBanner;
-                            userInfo.BannerPic = ConvertToByteArray(model.BannerPic.NewBannerPic);
+                            userInfo.DefaultAvatar = model.BannerPic.DefaultBanner;
+
+                            if (model.BannerPic.NewBannerPic != null)
+                            {
+                                var file = model.BannerPic.NewBannerPic;
+
+                                if (!allowedFileTypes.Contains(file.ContentType))
+                                {
+                                    ModelState.AddModelError("PostMedia", "Invalid file type.");
+                                    return View(model);
+                                }
+
+                                var newBannerPicPath = Guid.NewGuid().ToString() +
+                                    Path.GetExtension(model.BannerPic.NewBannerPic.FileName);
+                                var filePath = Path.Combine(_environment.WebRootPath, "uploads",
+                                    newBannerPicPath.TrimStart('/'));
+
+                                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                                {
+                                    await model.BannerPic.NewBannerPic.CopyToAsync(fileStream);
+                                }
+
+                                userInfo.BannerPic = newBannerPicPath;
+                            }
                             await _dbContext.SaveChangesAsync();
                         }
                         return RedirectToAction("EditProfile");

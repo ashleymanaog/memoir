@@ -10,7 +10,7 @@ namespace ThomasianMemoir.ViewModels
         public string UserId { get; set; }
         public string Username { get; set; }
         public string DefaultAvatar { get; set; }
-        public byte[] ProfilePic { get; set; }
+        public string ProfilePic { get; set; }
         public bool Liked { get; set; }
         public List<UserPostMedia> UserMedia { get; set; } = new List<UserPostMedia>();
         public List<UserPostLikes> UserLikes { get; set; } = new List<UserPostLikes>();

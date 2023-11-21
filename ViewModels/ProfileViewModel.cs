@@ -5,6 +5,7 @@ namespace ThomasianMemoir.ViewModels
 {
     public class ProfileViewModel
     {
+        public string UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Username { get; set; }
@@ -13,9 +14,9 @@ namespace ThomasianMemoir.ViewModels
         public string YearLevel { get; set; }
         public string? ProfileDescription { get; set; }
         public string DefaultAvatar { get; set; }
-        public byte[]? ProfilePic { get; set; }
+        public string? ProfilePic { get; set; }
         public string DefaultBanner { get; set; }
-        public byte[]? BannerPic { get; set; }
-        public ICollection<UserPost>? Posts { get; set; }
+        public string? BannerPic { get; set; }
+        public List<PostWithDetails> Posts { get; set; }
     }
 }

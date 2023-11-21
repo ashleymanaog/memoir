@@ -15,7 +15,7 @@
                     <a asp-controller="Profile" asp-action="PublicProfile" asp-route-userId="@userId" style="pointer-events:auto; position: relative;">
                         <div class="profilePicPost">
                             @if (Model.PostWithDetails.ProfilePic != null) {
-                                <img src="data:image;base64,@Convert.ToBase64String(Model.PostWithDetails.ProfilePic)" class="profileImage" id="uploadProfilePicture-previewImg" style="clip-path:circle(50%);">
+                                <img src="@Url.Content(Model.PostWithDetails.ProfilePic)" class="profileImage" id="uploadProfilePicture-previewImg" style="clip-path:circle(50%);">
                             } else {
                                 <img src="~/img/Avatars/@Model.PostWithDetails.DefaultAvatar" class="profileImage" style="clip-path:circle(50%);">
                             }
@@ -30,15 +30,15 @@
 
                     if (timeDifference.TotalSeconds < 60) {
                         var seconds = (int)timeDifference.TotalSeconds;
-                                        <text>Posted @seconds second@(seconds != 1 ? "s" : "") ago</text>
+                        <text>Posted @seconds second@(seconds != 1 ? "s" : "") ago</text>
                     } else if (timeDifference.TotalMinutes < 60) {
                         var minutes = (int)timeDifference.TotalMinutes;
-                                        <text>Posted @timeDifference.Minutes minute@(minutes != 1 ? "s" : "") ago</text>
+                        <text>Posted @timeDifference.Minutes minute@(minutes != 1 ? "s" : "") ago</text>
                     } else if (timeDifference.TotalHours < 24) {
                         var hours = (int)timeDifference.TotalHours;
-                                        <text>Posted @timeDifference.Hours hour@(hours != 1 ? "s" : "") ago</text>
+                        <text>Posted @timeDifference.Hours hour@(hours != 1 ? "s" : "") ago</text>
                     } else {
-                                        <text>Posted on Model.Post.PostDate.ToString("MM/dd/yyyy hh:mm tt")</text>
+                        <text>Posted on Model.Post.PostDate.ToString("MM/dd/yyyy hh:mm tt")</text>
                     }
                     }</span>
                 </div>
@@ -56,16 +56,16 @@
                         @foreach (var media in Model.PostWithDetails.UserMedia)
                         {
                         <div class="carousel-item @if(media == Model.PostWithDetails.UserMedia.First()) { <text>active</text> }">
-                            @if (media.Media != null && media.Media.Length > 0)
+                            @if (media.MediaPath != null && media.MediaPath.Length > 0)
                             {
                                 if (media.MediaType == "Image")
                                 {
-                                    <img src="data:image;base64,@Convert.ToBase64String(@media.Media)" alt="Post Media">
+                                    <img src="@Url.Content("/uploads/" + media.MediaPath)" alt="Post Media">
                                 }
                                 else if (media.MediaType == "Video")
                                 {
                                     <video controls data-touch="false" class="embed-responsive" autoplay muted>
-                                        <source src="data:video;base64,@Convert.ToBase64String(@media.Media)" alt="Post Media">
+                                        <source src="@Url.Content("/uploads/" + media.MediaPath)" alt="Post Media">
                                     Your browser does not support the video tag.
                                     </video>
                                 }
@@ -102,7 +102,7 @@
                         <a asp-controller="Profile" asp-action="PublicProfile" asp-route-userId="@Model.UserId" style="pointer-events:auto;">
                         <div class="profilePicComment"style="margin-top:0;">
                             @if (Model.UserProfile != null) {
-                                <img src="data:image;base64,@Convert.ToBase64String(Model.UserProfile)" style="clip-path:circle(50%);">
+                                <img src="@Url.Content(Model.UserProfile)" style="clip-path:circle(50%);">
                             } else {
                                 <img src="~/img/Avatars/@Model.DefaultAvatar" class="profileImage" style="clip-path:circle(50%);">
                             }

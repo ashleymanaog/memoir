@@ -9,7 +9,7 @@ namespace ThomasianMemoir.ViewModels
         [Required]
         public string DefaultAvatar { get; set; }
 
-        public byte[]? ProfilePic { get; set; }
+        public string? ProfilePic { get; set; }
         
         public IFormFile? NewProfilePic { get; set; }
     }

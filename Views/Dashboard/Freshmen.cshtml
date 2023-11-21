@@ -39,7 +39,7 @@
                 <div style="float:left; display:inline-block;">
                     <div class="profilePicCreatePost">
                         @if (Model.UserProfile != null) {
-                            <img src="data:image;base64,@Convert.ToBase64String(Model.UserProfile)" class="profileImage" style="clip-path:circle(50%);">
+                            <img src="@Url.Content(Model.UserProfile)" class="profileImage" style="clip-path:circle(50%);">
                         } else {
                             <img src="~/img/Avatars/@Model.DefaultAvatar" class="profileImage" style="clip-path:circle(50%);">
                         }
@@ -66,7 +66,7 @@
                     <a asp-controller="Profile" asp-action="PublicProfile" asp-route-userId="@post.Post.UserId" style="pointer-events:auto; position: relative;">
                         <div class="profilePicPost">
                             @if (post.ProfilePic != null) {
-                                <img src="data:image;base64,@Convert.ToBase64String(post.ProfilePic)" class="profileImage" id="uploadProfilePicture-previewImg" style="clip-path:circle(50%);">
+                                <img src="@Url.Content(post.ProfilePic)" class="profileImage" id="uploadProfilePicture-previewImg" style="clip-path:circle(50%);">
                             } else {
                                 <img src="~/img/Avatars/@post.DefaultAvatar" class="profileImage" style="clip-path:circle(50%);">
                             }
@@ -109,16 +109,16 @@
                         @foreach (var media in post.UserMedia)
                         {
                         <div class="carousel-item @if(media == post.UserMedia.First()) { <text>active</text> }">
-                            @if (media.Media != null && media.Media.Length > 0)
+                            @if (media.MediaPath != null && media.MediaPath.Length > 0)
                             {
                                 if (media.MediaType == "Image")
                                 {
-                                    <img src="data:image;base64,@Convert.ToBase64String(@media.Media)" alt="Post Media">
+                                    <img src="@Url.Content("/uploads/" + media.MediaPath)" alt="Post Media">
                                 }
                                 else if (media.MediaType == "Video")
                                 {
                                     <video controls data-touch="false" class="embed-responsive" autoplay muted>
-                                        <source src="data:video;base64,@Convert.ToBase64String(@media.Media)" alt="Post Media">
+                                        <source src="@Url.Content("/uploads/" + media.MediaPath)" alt="Post Media">
                                     Your browser does not support the video tag.
                                     </video>
                                 }
@@ -168,6 +168,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
         <form asp-action="Freshmen" method="POST" id="createPost" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
             <div class="modal-header" style="text-align:center; display:flex;">
                 <h5 class="modal-title" style="flex:1;">Write a post
                     <span class="text-muted" style="font-size: 15px; display:block;">Freshmen</span>

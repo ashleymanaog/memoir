@@ -7,7 +7,7 @@ namespace ThomasianMemoir.ViewModels
         //Retrieve Posts
         public List<PostWithDetails> PostsWithDetails { get; set; }
         public string DefaultAvatar { get; set; }
-        public byte[] UserProfile { get; set; }
+        public string UserProfile { get; set; }
         //Create Post
         public string UserId { get; set; }
         public DateTime PostDate { get; set; }

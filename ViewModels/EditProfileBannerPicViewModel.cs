@@ -8,7 +8,7 @@ namespace ThomasianMemoir.ViewModels
         [Required]
         public string DefaultBanner { get; set; }
         
-        public byte[]? BannerPic { get; set; }
+        public string? BannerPic { get; set; }
         
         public IFormFile? NewBannerPic { get; set; }
     }

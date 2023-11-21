@@ -78,10 +78,6 @@
     width: 80%;
 }
 
-.cardInfo { /*card paragraph*/
-    min-height: 100px;
-}
-
 /*LEFT COLUMN*/
 .userDescription { /*whole left column*/
     margin-left: auto;
@@ -222,6 +218,11 @@ a { /*for username link*/
     outline: none;
     box-shadow: none !important;
     -webkit-appearance: none;
+}
+
+
+.liked {
+    color: #0e9bad;
 }
 
 /*POST IMAGES*/

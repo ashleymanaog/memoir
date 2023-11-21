@@ -13,23 +13,23 @@
         <div class="carousel-indicators" style="justify-content:center; top:20px;">
             <div class="num indicatorBG"></div>
         </div>
-        <!--Images-->
+        <!--Images/Videos-->
         <div class="carousel-inner" style="display:flex; align-items:center;">
             <div class="blurredBG"></div>
 
             @foreach (var media in Model.UserMedia)
             {
             <div class="carousel-item @if(media == Model.UserMedia.First()) { <text>active</text> }">
-                @{if (media.Media != null && media.Media.Length > 0)
+                @{if (media.MediaPath != null && media.MediaPath.Length > 0)
                 {                
                     if (media.MediaType == "Image")
                     {
-                    <img src="data:image;base64,@Convert.ToBase64String(@media.Media)" alt="Post Media">
+                        <img src="@Url.Content("/uploads/" + media.MediaPath)" alt="Post Media">
                     }
                     else if (media.MediaType == "Video")
                     {
                     <video controls data-touch="false" class="embed-responsive vidContent" autoplay muted>
-                        <source src="data:video;base64,@Convert.ToBase64String(@media.Media)" alt="Post Media">
+                        <source src="@Url.Content("/uploads/" + media.MediaPath)" alt="Post Media">
                         Your browser does not support the video tag.
                     </video>
                     }
