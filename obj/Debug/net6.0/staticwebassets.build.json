@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "2xRWLq8B5fQYi+rogPwCrtXwE7hU7qXoItrW2jrsF30=",
+  "Hash": "foXMra7/Dq4j6ZpVtrta8p++CDG10z1VoNPM3bGPcz8=",
   "Source": "ThomasianMemoir",
   "BasePath": "_content/ThomasianMemoir",
   "Mode": "Default",
@@ -3330,23 +3330,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
-    },
-    {
-      "Identity": "C:\\Users\\Miguel\\source\\repos\\memoir\\wwwroot\\uploads\\27b65b33-440c-4116-8459-f0a61dfed23e.jpg",
-      "SourceId": "ThomasianMemoir",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Miguel\\source\\repos\\memoir\\wwwroot\\",
-      "BasePath": "_content/ThomasianMemoir",
-      "RelativePath": "uploads/27b65b33-440c-4116-8459-f0a61dfed23e.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\27b65b33-440c-4116-8459-f0a61dfed23e.jpg"
     },
     {
       "Identity": "C:\\Users\\Miguel\\source\\repos\\memoir\\wwwroot\\uploads\\Files_will_be_added_here.txt",
