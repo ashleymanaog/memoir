@@ -521,6 +521,47 @@ namespace ThomasianMemoir.Controllers
             }
             return View("EditProfile", model);
         }
+
+         [HttpGet]
+        public IActionResult DeletePost(int postId)
+        {
+            // Fetch the post details
+            var post = _dbContext.UserPost
+                .Include(p => p.Media)
+                .FirstOrDefault(p => p.PostId == postId);
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            // You can perform additional checks here to ensure the current user is authorized to delete the post.
+
+            return View(post);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ConfirmDelete(int postId)
+        {
+            // Fetch the post details
+            var post = _dbContext.UserPost.FirstOrDefault(p => p.PostId == postId);
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            // You can perform additional checks here to ensure the current user is authorized to delete the post.
+
+            // Delete the post
+            _dbContext.UserPost.Remove(post);
+            _dbContext.SaveChanges();
+
+            // Redirect to the user's profile or another appropriate page
+            return RedirectToAction("Profile");
+        }
+
         private byte[] ConvertToByteArray(IFormFile file)
         {
             if (file == null || file.Length == 0)

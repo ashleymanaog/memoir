@@ -9,93 +9,101 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ThomasianMemoir
 build_property.RootNamespace = ThomasianMemoir
-build_property.ProjectDir = C:\Users\Ira\Documents\CodingProjects\Visual Studio 2022\ThomasianMemoir\
+build_property.ProjectDir = C:\Users\Miguel\source\repos\memoir\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Ira\Documents\CodingProjects\Visual Studio 2022\ThomasianMemoir
+build_property.MSBuildProjectDirectory = C:\Users\Miguel\source\repos\memoir
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/Dashboard/Freshmen.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/Dashboard/Freshmen.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEZyZXNobWVuLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/Dashboard/Homepage.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/Dashboard/Homepage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEhvbWVwYWdlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/Dashboard/Junior.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/Dashboard/Junior.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEp1bmlvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/Dashboard/Post.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/Dashboard/Post.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXFBvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/Dashboard/PostPictures.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/Dashboard/PostPictures.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXFBvc3RQaWN0dXJlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/Dashboard/Senior.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/Dashboard/Senior.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXFNlbmlvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/Dashboard/Sophomore.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/Dashboard/Sophomore.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXFNvcGhvbW9yZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/Dashboard/_CommentPartialView.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/Dashboard/_CommentPartialView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXF9Db21tZW50UGFydGlhbFZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/Home/Index.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/Home/Login.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/Home/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/Home/Registration.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/Home/Registration.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZWdpc3RyYXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/Profile/EditProfile.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/Profile/ConfirmDelete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxDb25maXJtRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Miguel/source/repos/memoir/Views/Profile/DeletePost.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxEZWxldGVQb3N0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Miguel/source/repos/memoir/Views/Profile/EditProfile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxFZGl0UHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/Profile/Profile.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/Profile/Profile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxQcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/Profile/PublicProfile.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/Profile/PublicProfile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxQdWJsaWNQcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/Shared/Error.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/Shared/_EmptyLayout.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/Shared/_EmptyLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9FbXB0eUxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/Shared/_LoggedInLayout.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/Shared/_LoggedInLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dnZWRJbkxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/_ViewImports.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/_ViewStart.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Ira/Documents/CodingProjects/Visual Studio 2022/ThomasianMemoir/Views/Shared/_Layout.cshtml]
+[C:/Users/Miguel/source/repos/memoir/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-eqsdqfj6hd

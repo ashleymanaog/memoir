@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\ThomasianMemoir.csproj": {}
+    "C:\\Users\\Miguel\\source\\repos\\memoir\\ThomasianMemoir.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\ThomasianMemoir.csproj": {
+    "C:\\Users\\Miguel\\source\\repos\\memoir\\ThomasianMemoir.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\ThomasianMemoir.csproj",
+        "projectUniqueName": "C:\\Users\\Miguel\\source\\repos\\memoir\\ThomasianMemoir.csproj",
         "projectName": "ThomasianMemoir",
-        "projectPath": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\ThomasianMemoir.csproj",
-        "packagesPath": "C:\\Users\\Ira\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\obj\\",
+        "projectPath": "C:\\Users\\Miguel\\source\\repos\\memoir\\ThomasianMemoir.csproj",
+        "packagesPath": "C:\\Users\\Miguel\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Miguel\\source\\repos\\memoir\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Ira\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Miguel\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

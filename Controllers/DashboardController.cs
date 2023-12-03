@@ -428,6 +428,64 @@ namespace ThomasianMemoir.Controllers
             return Json(new { success = false, error = "User not authenticated" });
         }
 
+        [HttpPost]
+        public IActionResult DeletePost(int postId)
+        {
+            try
+            {
+                var currentUser = _userManager.GetUserAsync(User).Result;
+
+                if (currentUser != null)
+                {
+                    var post = _dbContext.UserPost
+                        .FirstOrDefault(p => p.PostId == postId && p.UserId.Equals(currentUser.Id));
+
+                    if (post != null)
+                    {
+                        // Remove post likes
+                        var postLikes = _dbContext.UserPostLikes
+                            .Where(like => like.PostId == postId)
+                            .ToList();
+                        _dbContext.UserPostLikes.RemoveRange(postLikes);
+
+                        // Remove post comments
+                        var postComments = _dbContext.UserPostComments
+                            .Where(comment => comment.PostId == postId)
+                            .ToList();
+                        _dbContext.UserPostComments.RemoveRange(postComments);
+
+                        // Remove post media
+                        var postMedia = _dbContext.UserPostMedia
+                            .Where(media => media.PostId == postId)
+                            .ToList();
+                        foreach (var media in postMedia)
+                        {
+                            // Remove media files from server
+                            var filePath = Path.Combine(_environment.WebRootPath, "uploads", media.MediaPath.TrimStart('/'));
+                            if (System.IO.File.Exists(filePath))
+                            {
+                                System.IO.File.Delete(filePath);
+                            }
+                        }
+                        _dbContext.UserPostMedia.RemoveRange(postMedia);
+
+                        // Remove post
+                        _dbContext.UserPost.Remove(post);
+                        _dbContext.SaveChanges();
+
+                        return Json(new { success = true });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error deleting post: {ex.Message}");
+            }
+
+            return Json(new { success = false, error = "User not authenticated or post not found" });
+        }
+
+
         private string GetMediaType(string contentType)
         {
             switch (contentType)
