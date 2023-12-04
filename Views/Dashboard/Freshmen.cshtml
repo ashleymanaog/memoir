@@ -38,11 +38,13 @@
             <div class="createPost">
                 <div style="float:left; display:inline-block;">
                     <div class="profilePicCreatePost">
-                        @if (Model.UserProfile != null) {
-                            <img src="@Url.Content(Model.UserProfile)" class="profileImage" style="clip-path:circle(50%);">
-                        } else {
-                            <img src="~/img/Avatars/@Model.DefaultAvatar" class="profileImage" style="clip-path:circle(50%);">
-                        }
+                        <a asp-controller="Profile" asp-action="Profile" style="pointer-events:auto; position: relative;">
+                            @if (Model.UserProfile != null) {
+                                <img src="~/uploads/@Url.Content(Model.UserProfile)" class="profileImage" style="clip-path:circle(50%);">
+                            } else {
+                                <img src="~/img/Avatars/@Model.DefaultAvatar" class="profileImage" style="clip-path:circle(50%);">
+                            }
+                        </a>
                     </div>
                 </div>
                 <div class="btnCreatePost">
@@ -66,7 +68,7 @@
                     <a asp-controller="Profile" asp-action="PublicProfile" asp-route-userId="@post.Post.UserId" style="pointer-events:auto; position: relative;">
                         <div class="profilePicPost">
                             @if (post.ProfilePic != null) {
-                                <img src="@Url.Content(post.ProfilePic)" class="profileImage" id="uploadProfilePicture-previewImg" style="clip-path:circle(50%);">
+                                <img src="~/uploads/@Url.Content(post.ProfilePic)" class="profileImage" id="uploadProfilePicture-previewImg" style="clip-path:circle(50%);">
                             } else {
                                 <img src="~/img/Avatars/@post.DefaultAvatar" class="profileImage" style="clip-path:circle(50%);">
                             }

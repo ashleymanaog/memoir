@@ -69,7 +69,7 @@ namespace ThomasianMemoir.Controllers
                         UserMedia = post.Media,
                         UserLikes = post.Likes,
                         UserComments = post.Comments,
-                        ProfilePic = "/uploads/" + userInfo?.ProfilePic,
+                        ProfilePic = userInfo?.ProfilePic,
                         DefaultAvatar = userInfo?.DefaultAvatar,
                         Liked = HasUserLikedPost(currentUser.Id, post.PostId)
                     };
@@ -79,7 +79,7 @@ namespace ThomasianMemoir.Controllers
             var viewModel = new PostsViewModel
             {
                 PostsWithDetails = freshmenPosts.ToList(),
-                UserProfile = "/uploads/" + userProfile?.ProfilePic,
+                UserProfile = userProfile?.ProfilePic,
                 DefaultAvatar = userProfile?.DefaultAvatar
             };
             return View(viewModel);
@@ -224,12 +224,12 @@ namespace ThomasianMemoir.Controllers
                     UserMedia = post.Media,
                     UserLikes = post.Likes,
                     UserComments = comments,
-                    ProfilePic = "/uploads/" + post.User?.ProfilePic,
+                    ProfilePic = post.User?.ProfilePic,
                     DefaultAvatar = post.User?.DefaultAvatar,
                     Liked = HasUserLikedPost(currentUser.Id, post.PostId)
                 },
                 UserId = currentUser.Id,
-                UserProfile = "/uploads/" + userProfile?.ProfilePic,
+                UserProfile = userProfile?.ProfilePic,
                 DefaultAvatar = userProfile?.DefaultAvatar
             };
 
@@ -330,7 +330,7 @@ namespace ThomasianMemoir.Controllers
                 PostId = postId,
                 Username = _userManager.FindByIdAsync(post.UserId).Result.UserName,
                 UserMedia = post.Media,
-                ProfilePic = "/uploads/" + post.User?.ProfilePic,
+                ProfilePic = post.User?.ProfilePic,
                 DefaultAvatar = post.User?.DefaultAvatar
             };
 

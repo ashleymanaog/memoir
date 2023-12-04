@@ -30,7 +30,7 @@
 <div class="banner">
     @if (Model.BannerPic != null)
     {
-        <img src="@Url.Content(Model.BannerPic)">
+        <img src="~/uploads/@Url.Content(Model.BannerPic)">
     }
     else
     {
@@ -43,7 +43,7 @@
         <div class="profilePic">
             @if (Model.ProfilePic != null)
             {
-                <img src="@Url.Content(Model.ProfilePic)" style="clip-path:circle(50%);">
+                <img src="~/uploads/@Url.Content(Model.ProfilePic)" style="clip-path:circle(50%);">
             }
             else
             {
@@ -92,7 +92,7 @@
                   <a asp-controller="Profile" asp-action="PublicProfile" asp-route-userId="@post.Post.UserId" style="pointer-events:auto; position: relative;">
                     <div class="profilePicPost">
                         @if (Model.ProfilePic != null) {
-                            <img src="@Url.Content(Model.ProfilePic)" class="profileImage" id="uploadProfilePicture-previewImg" style="clip-path:circle(50%);">
+                            <img src="~/uploads/@Url.Content(Model.ProfilePic)" class="profileImage" id="uploadProfilePicture-previewImg" style="clip-path:circle(50%);">
                         } else {
                             <img src="~/img/Avatars/@Model.DefaultAvatar" class="profileImage" style="clip-path:circle(50%);">
                         }

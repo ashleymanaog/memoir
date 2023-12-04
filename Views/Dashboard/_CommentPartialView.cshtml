@@ -5,7 +5,7 @@
             <div class="profilePicComment">
                 @if (Model.Commentator.ProfilePic != null)
                 {
-                    <img src="@Url.Content(Model.Commentator.ProfilePic)" style="clip-path:circle(50%);">
+                    <img src="~/uploads/@Url.Content(Model.Commentator.ProfilePic)" style="clip-path:circle(50%);">
                 }
                 else
                 {

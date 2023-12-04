@@ -15,7 +15,7 @@
                     <a asp-controller="Profile" asp-action="PublicProfile" asp-route-userId="@userId" style="pointer-events:auto; position: relative;">
                         <div class="profilePicPost">
                             @if (Model.PostWithDetails.ProfilePic != null) {
-                                <img src="@Url.Content(Model.PostWithDetails.ProfilePic)" class="profileImage" id="uploadProfilePicture-previewImg" style="clip-path:circle(50%);">
+                                <img src="~/uploads/@Url.Content(Model.PostWithDetails.ProfilePic)" class="profileImage" id="uploadProfilePicture-previewImg" style="clip-path:circle(50%);">
                             } else {
                                 <img src="~/img/Avatars/@Model.PostWithDetails.DefaultAvatar" class="profileImage" style="clip-path:circle(50%);">
                             }
@@ -102,7 +102,7 @@
                         <a asp-controller="Profile" asp-action="PublicProfile" asp-route-userId="@Model.UserId" style="pointer-events:auto;">
                         <div class="profilePicComment"style="margin-top:0;">
                             @if (Model.UserProfile != null) {
-                                <img src="@Url.Content(Model.UserProfile)" style="clip-path:circle(50%);">
+                                <img src="~/uploads/@Url.Content(Model.UserProfile)" style="clip-path:circle(50%);">
                             } else {
                                 <img src="~/img/Avatars/@Model.DefaultAvatar" class="profileImage" style="clip-path:circle(50%);">
                             }
@@ -234,6 +234,9 @@
                 data: $(this).serialize(),
                 success: function (data) {
                     if (data.success) {
+                        $('#reply-details').hide();
+                        $('#ParentCommentId').val("");
+
                         var commentContainer;
 
                         if (data.parentCommentId !== "") { // is a reply

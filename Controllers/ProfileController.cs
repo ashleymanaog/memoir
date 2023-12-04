@@ -81,8 +81,8 @@ namespace ThomasianMemoir.Controllers
                     ProfileDescription = userProfile.ProfileDescription,
                     DefaultAvatar = userProfile.DefaultAvatar,
                     DefaultBanner = userProfile.DefaultBanner,
-                    ProfilePic = "/uploads/" + userProfile.ProfilePic,
-                    BannerPic = "/uploads/" + userProfile.BannerPic,
+                    ProfilePic = userProfile.ProfilePic,
+                    BannerPic = userProfile.BannerPic,
                     Posts = postsWithDetails
                 };
                 return View(viewModel);
@@ -146,8 +146,8 @@ namespace ThomasianMemoir.Controllers
                     ProfileDescription = userProfile.ProfileDescription,
                     DefaultAvatar = userProfile.DefaultAvatar,
                     DefaultBanner = userProfile.DefaultBanner,
-                    ProfilePic = "/uploads/" + userProfile.ProfilePic,
-                    BannerPic = "/uploads/" + userProfile.BannerPic,
+                    ProfilePic = userProfile.ProfilePic,
+                    BannerPic = userProfile.BannerPic,
                     Posts = postsWithDetails
                 };
                 return View(viewModel);
@@ -196,11 +196,11 @@ namespace ThomasianMemoir.Controllers
                     },
                     ProfilePic = new EditProfileProfilePicViewModel  {
                         DefaultAvatar = userProfile.DefaultAvatar,
-                        ProfilePic = "/uploads/" + userProfile.ProfilePic
+                        ProfilePic = userProfile.ProfilePic
                     },
                     BannerPic = new EditProfileBannerPicViewModel  {
                         DefaultBanner = userProfile.DefaultBanner,
-                        BannerPic = "/uploads/" + userProfile.BannerPic
+                        BannerPic = userProfile.BannerPic
                     }
                 };
                 return View(viewModel);
@@ -219,7 +219,9 @@ namespace ThomasianMemoir.Controllers
             var user = _userManager.GetUserAsync(User).Result;
             var info = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(user.Id));
             TempData["TempProfilePic"] = info.ProfilePic;
+            TempData["TempDefaultAvatar"] = info.DefaultAvatar;
             TempData["TempBannerPic"] = info.BannerPic;
+            TempData["TempDefaultBanner"] = info.DefaultBanner;
             TempData["IsPostOperation"] = true;
             ModelState.Remove("Password.OldPassword");
             ModelState.Remove("Password.NewPassword");
@@ -286,7 +288,9 @@ namespace ThomasianMemoir.Controllers
             var user = _userManager.GetUserAsync(User).Result;
             var info = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(user.Id));
             TempData["TempProfilePic"] = info.ProfilePic;
+            TempData["TempDefaultAvatar"] = info.DefaultAvatar;
             TempData["TempBannerPic"] = info.BannerPic;
+            TempData["TempDefaultBanner"] = info.DefaultBanner;
             TempData["IsPostOperation"] = true;
             ModelState.Remove("PersonalInfo.FirstName");
             ModelState.Remove("PersonalInfo.LastName");
@@ -339,7 +343,9 @@ namespace ThomasianMemoir.Controllers
             var user = _userManager.GetUserAsync(User).Result;
             var info = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(user.Id));
             TempData["TempProfilePic"] = info.ProfilePic;
+            TempData["TempDefaultAvatar"] = info.DefaultAvatar;
             TempData["TempBannerPic"] = info.BannerPic;
+            TempData["TempDefaultBanner"] = info.DefaultBanner;
             TempData["IsPostOperation"] = true;
             ModelState.Remove("PersonalInfo.FirstName");
             ModelState.Remove("PersonalInfo.LastName");
@@ -440,6 +446,10 @@ namespace ThomasianMemoir.Controllers
 
                                 userInfo.ProfilePic = newProfilePicPath;
                             }
+                            else
+                            {
+                                userInfo.ProfilePic = null;
+                            }
                             await _dbContext.SaveChangesAsync();
                         }
                         return RedirectToAction("EditProfile");
@@ -485,7 +495,7 @@ namespace ThomasianMemoir.Controllers
 
                         if (userInfo != null)
                         {
-                            userInfo.DefaultAvatar = model.BannerPic.DefaultBanner;
+                            userInfo.DefaultBanner = model.BannerPic.DefaultBanner;
 
                             if (model.BannerPic.NewBannerPic != null)
                             {
@@ -509,6 +519,10 @@ namespace ThomasianMemoir.Controllers
 
                                 userInfo.BannerPic = newBannerPicPath;
                             }
+                            else
+                            {
+                                userInfo.BannerPic = null;
+                            }
                             await _dbContext.SaveChangesAsync();
                         }
                         return RedirectToAction("EditProfile");
@@ -522,43 +536,32 @@ namespace ThomasianMemoir.Controllers
             return View("EditProfile", model);
         }
 
-         [HttpGet]
-        public IActionResult DeletePost(int postId)
-        {
-            // Fetch the post details
-            var post = _dbContext.UserPost
-                .Include(p => p.Media)
-                .FirstOrDefault(p => p.PostId == postId);
-
-            if (post == null)
-            {
-                return NotFound();
-            }
-
-            // You can perform additional checks here to ensure the current user is authorized to delete the post.
-
-            return View(post);
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult ConfirmDelete(int postId)
+        [ActionName("ConfirmDelete")]
+        public async Task<IActionResult> ConfirmDelete(int postId)
         {
-            // Fetch the post details
-            var post = _dbContext.UserPost.FirstOrDefault(p => p.PostId == postId);
-
-            if (post == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                var currentUser = await _userManager.GetUserAsync(User);
+                if (currentUser != null)
+                {
+                    try
+                    {
+                        var post = _dbContext.UserPost.FirstOrDefault(p => p.PostId == postId);
+                        if (post == null)
+                        {
+                            return NotFound();
+                        }
+                        _dbContext.UserPost.Remove(post);
+                        _dbContext.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        ModelState.AddModelError("removePostErr", e.Message);
+                    }
+                }
             }
-
-            // You can perform additional checks here to ensure the current user is authorized to delete the post.
-
-            // Delete the post
-            _dbContext.UserPost.Remove(post);
-            _dbContext.SaveChanges();
-
-            // Redirect to the user's profile or another appropriate page
             return RedirectToAction("Profile");
         }
 

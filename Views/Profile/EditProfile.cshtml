@@ -34,7 +34,9 @@
     var yearlevel = TempData["TempYearLevel"] as string;
     var profileDescription = TempData["TempProfileDescription"] as string;
     var profilepic = TempData["TempProfilePic"] as string;
+    var defaultavatar = TempData["TempDefaultAvatar"] as string;
     var bannerpic = TempData["TempBannerPic"] as string;
+    var defaultbanner = TempData["TempDefaultBanner"] as string;
     bool isPostOperation = TempData.ContainsKey("IsPostOperation") && (bool)TempData["IsPostOperation"];
     
     if (isPostOperation && TempData.ContainsKey("TempPersonalInfo"))
@@ -66,10 +68,14 @@
 <div>
     <div class="banner">
         @if (isPostOperation && TempData.ContainsKey("TempBannerPic")) {
-            <img src="@Url.Content(@bannerpic)">
+            if (bannerpic != null) {
+                <img src="~/uploads/@Url.Content(@bannerpic)">
+            } else {
+                <img src="~/img/Banners/@defaultbanner">
+            }
         } else {
             @if (Model.BannerPic.BannerPic != null) {
-                <img src="@Url.Content(Model.BannerPic.BannerPic)">
+                <img src="~/uploads/@Url.Content(Model.BannerPic.BannerPic)">
             } else {
                 <img src="~/img/Banners/@Model.BannerPic.DefaultBanner" id="uploadBannerPhoto-previewImg">
             }
@@ -95,10 +101,14 @@
     <div class="profileChild">
     <div class="profilePic">
         @if (isPostOperation && TempData.ContainsKey("TempProfilePic")) {
-            <img src="@Url.Content(@profilepic)" style="clip-path:circle(50%);">
+            if (bannerpic != null) {
+                <img src="~/uploads/@Url.Content(@profilepic)" style="clip-path:circle(50%);">
+            } else {
+                <img src="~/img/Avatars/@defaultavatar">
+            }
         } else {
             @if (Model.ProfilePic.ProfilePic != null) {
-                <img src="@Url.Content(Model.ProfilePic.ProfilePic)" style="clip-path:circle(50%);">
+                <img src="~/uploads/@Url.Content(Model.ProfilePic.ProfilePic)" style="clip-path:circle(50%);">
             } else {
                 <img src="~/img/Avatars/@Model.ProfilePic.DefaultAvatar" class="profileImage" id="uploadProfilePicture-previewImg" style="clip-path:circle(50%);">
             }

@@ -12515,19 +12515,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Miguel\\.nuget\\packages\\": {}
+    "C:\\Users\\Ira\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Miguel\\source\\repos\\memoir\\ThomasianMemoir.csproj",
+      "projectUniqueName": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\ThomasianMemoir.csproj",
       "projectName": "ThomasianMemoir",
-      "projectPath": "C:\\Users\\Miguel\\source\\repos\\memoir\\ThomasianMemoir.csproj",
-      "packagesPath": "C:\\Users\\Miguel\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Miguel\\source\\repos\\memoir\\obj\\",
+      "projectPath": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\ThomasianMemoir.csproj",
+      "packagesPath": "C:\\Users\\Ira\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Miguel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Ira\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
