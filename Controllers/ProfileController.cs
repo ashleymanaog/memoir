@@ -12,6 +12,7 @@ namespace ThomasianMemoir.Controllers
 {
     public class ProfileController : Controller
     {
+        private readonly ILogger<DashboardController> _logger;
         private readonly AppDbContext _dbContext;
         private readonly IWebHostEnvironment _environment;
         private DbSet<UserInfo> UserInfo;
@@ -22,8 +23,9 @@ namespace ThomasianMemoir.Controllers
 
         private readonly UserManager<User> _userManager;
 
-        public ProfileController(AppDbContext dbContext, UserManager<User> userManager, IWebHostEnvironment environment)
+        public ProfileController(ILogger<DashboardController> logger, AppDbContext dbContext, UserManager<User> userManager, IWebHostEnvironment environment)
         {
+            _logger = logger;
             _dbContext = dbContext;
             _userManager = userManager;
             _environment = environment;
@@ -537,30 +539,57 @@ namespace ThomasianMemoir.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        [ActionName("ConfirmDelete")]
-        public async Task<IActionResult> ConfirmDelete(int postId)
+        public IActionResult DeletePost(int postId)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var currentUser = await _userManager.GetUserAsync(User);
+                var currentUser = _userManager.GetUserAsync(User).Result;
+
                 if (currentUser != null)
                 {
-                    try
+                    var post = _dbContext.UserPost
+                        .FirstOrDefault(p => p.PostId == postId && p.UserId.Equals(currentUser.Id));
+
+                    if (post != null)
                     {
-                        var post = _dbContext.UserPost.FirstOrDefault(p => p.PostId == postId);
-                        if (post == null)
+                        // Remove post likes
+                        var postLikes = _dbContext.UserPostLikes
+                            .Where(like => like.PostId == postId)
+                            .ToList();
+                        _dbContext.UserPostLikes.RemoveRange(postLikes);
+
+                        // Remove post comments
+                        var postComments = _dbContext.UserPostComments
+                            .Where(comment => comment.PostId == postId)
+                            .ToList();
+                        _dbContext.UserPostComments.RemoveRange(postComments);
+
+                        // Remove post media
+                        var postMedia = _dbContext.UserPostMedia
+                            .Where(media => media.PostId == postId)
+                            .ToList();
+                        foreach (var media in postMedia)
                         {
-                            return NotFound();
+                            // Remove media files from server
+                            var filePath = Path.Combine(_environment.WebRootPath, "uploads", media.MediaPath.TrimStart('/'));
+                            if (System.IO.File.Exists(filePath))
+                            {
+                                System.IO.File.Delete(filePath);
+                            }
                         }
+                        _dbContext.UserPostMedia.RemoveRange(postMedia);
+
+                        // Remove post
                         _dbContext.UserPost.Remove(post);
                         _dbContext.SaveChanges();
-                    }
-                    catch (Exception e)
-                    {
-                        ModelState.AddModelError("removePostErr", e.Message);
+
+                        return RedirectToAction("Profile");
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error deleting post: {ex.Message}");
             }
             return RedirectToAction("Profile");
         }

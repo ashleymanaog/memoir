@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "6wJoHxkDA9pc98nVQCplYH081by/0PeRnvcdXsgYD5g=",
+  "Hash": "tHVXpCAeevRBP1YGgyhaDsFTLM3bg3wwWGFyh7+phNY=",
   "Source": "ThomasianMemoir",
   "BasePath": "_content/ThomasianMemoir",
   "Mode": "Default",
@@ -2261,23 +2261,6 @@
       "OriginalItemSpec": "wwwroot\\js\\Dashboard.js"
     },
     {
-      "Identity": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\js\\DeletePost.js",
-      "SourceId": "ThomasianMemoir",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\",
-      "BasePath": "_content/ThomasianMemoir",
-      "RelativePath": "js/DeletePost.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\DeletePost.js"
-    },
-    {
       "Identity": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\js\\EditPost.js",
       "SourceId": "ThomasianMemoir",
       "SourceType": "Discovered",
@@ -3483,23 +3466,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\dffeec49-6147-4171-864d-36afbfec02f1.png"
-    },
-    {
-      "Identity": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\f55325eb-9432-406a-9f78-97cb063e2d55.mp4",
-      "SourceId": "ThomasianMemoir",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\",
-      "BasePath": "_content/ThomasianMemoir",
-      "RelativePath": "uploads/f55325eb-9432-406a-9f78-97cb063e2d55.mp4",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\f55325eb-9432-406a-9f78-97cb063e2d55.mp4"
     },
     {
       "Identity": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\Files_will_be_added_here.txt",

@@ -285,10 +285,6 @@
       "PackagePath": "staticwebassets\\js\\Dashboard.js"
     },
     {
-      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\js\\DeletePost.js",
-      "PackagePath": "staticwebassets\\js\\DeletePost.js"
-    },
-    {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\js\\EditPost.js",
       "PackagePath": "staticwebassets\\js\\EditPost.js"
     },
@@ -575,10 +571,6 @@
     {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\dffeec49-6147-4171-864d-36afbfec02f1.png",
       "PackagePath": "staticwebassets\\uploads\\dffeec49-6147-4171-864d-36afbfec02f1.png"
-    },
-    {
-      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\f55325eb-9432-406a-9f78-97cb063e2d55.mp4",
-      "PackagePath": "staticwebassets\\uploads\\f55325eb-9432-406a-9f78-97cb063e2d55.mp4"
     },
     {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.ThomasianMemoir.Microsoft.AspNetCore.StaticWebAssets.props",
