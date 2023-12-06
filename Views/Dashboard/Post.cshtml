@@ -38,7 +38,7 @@
                         var hours = (int)timeDifference.TotalHours;
                         <text>Posted @timeDifference.Hours hour@(hours != 1 ? "s" : "") ago</text>
                     } else {
-                        <text>Posted on Model.Post.PostDate.ToString("MM/dd/yyyy hh:mm tt")</text>
+                        <text>Posted on @Model.PostWithDetails.Post.PostDate.ToString("MM/dd/yyyy hh:mm tt")</text>
                     }
                     }</span>
                 </div>

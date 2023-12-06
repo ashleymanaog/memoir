@@ -31,10 +31,12 @@
 
     console.log(postIds)
     $(window).on('resize', function () {
-        postIds.forEach(function (postId) {
-            const debouncedFunction = debounce(() => {containImg(postId);}, 50);
-            debouncedFunction();
-        });
+        if (Array.isArray(postIds)) {
+            postIds.forEach(function (postId) {
+                const debouncedFunction = debounce(() => { containImg(postId); }, 50);
+                debouncedFunction();
+            });
+        }
     });
     
     //Be able to click video controls

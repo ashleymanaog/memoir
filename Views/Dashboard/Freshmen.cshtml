@@ -3,6 +3,7 @@
     ViewData["CSSFile"] = "~/css/Dashboard.css";
     ViewData["JSFile"] = "~/js/Dashboard.js";
     ViewData["JSFile2"] = "~/js/ViewPost.js";
+    ViewData["JSFile3"] = "~/js/PreviewMediaDashboard.js";
     @model ThomasianMemoir.ViewModels.PostsViewModel;
 }
 <!--BANNER-->
@@ -171,22 +172,22 @@
         <div class="modal-content">
         <form asp-action="Freshmen" method="POST" id="createPost" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
-            <div class="modal-header" style="text-align:center; display:flex;">
-                <h5 class="modal-title" style="flex:1;">Write a post
+                <div class="modal-header" style="text-align:center; display:flex;">
+                <h5 class="modal-title" style="flex:1; margin-right:-35px;">Write a post
                     <span class="text-muted" style="font-size: 15px; display:block;">Freshmen</span>
                 </h5>
                 <button type="button" class="close fa-solid fa-xmark" data-dismiss="modal" aria-label="Close" style="font-size:1.5rem; padding-top:1.1rem;">
                 </button>
             </div>
                 <div class="modal-body">
-                    <textarea asp-for="Content" class="textbox createPostTextarea" rows="10" placeholder="Share to Thomasians..." id="Content" required></textarea>
-                    <div style="display:none;">
-                        <input asp-for="PostMedia" type="file" name="PostMedia" accept="image/*,video/*" multiple />
-                    </div>
+                    <textarea asp-for="Content" class="textbox createPostTextarea" rows="5" placeholder="Share to Thomasians..." id="Content" required></textarea>
+                    <input asp-for="PostMedia" type="file" name="PostMedia" accept="image/*,video/*" multiple onchange="handleMediaChange(this)" id="filesInput" style="display:none;"/>
+                    <div class="postMediaDiv" id="postMediaDiv"></div>
                 </div>
             <div class="modal-footer card-footer card-footer-createPost">
-                <label for="PostMedia" class="btn fa-regular fa-image btnPic"></label>
-                <label for="PostMedia" class="btn fa-solid fa-video btnVid"></label>
+                <label for="PostMedia" class="btn fa-regular fa-image btnPic" onclick="document.getElementById('filesInput').click()"></label>
+                <label for="PostMedia" class="btn fa-solid fa-video btnVid" onclick="document.getElementById('filesInput').click()"></label>
+                <label for="addMedia" class="btn fa-solid fa-plus btnAdd" onclick="addMedia()" id="addMedia" style="display:none;"></label>
                 <button type="submit" class="btn btn-info btn-md center blueButton btnPost" id="btnPost">Post</button>
             </div>
         </form>

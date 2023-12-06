@@ -468,6 +468,7 @@ a { /*for username link*/
     padding-bottom: 20px;
     border: none;
     resize: none;
+    margin-bottom: 10px;
 }
 
 .createPostTextarea:focus {
@@ -483,11 +484,11 @@ a { /*for username link*/
     padding-bottom: 0px;
 }
 
-.btnPic, .btnVid {
+.btnPic, .btnVid, .btnAdd {
     font-size: 20px;
 }
 
-.btnPic:hover, .btnVid:hover {
+.btnPic:hover, .btnVid:hover, .btnAdd:hover {
     color: #0e9bad;
 }
 
@@ -507,6 +508,15 @@ a { /*for username link*/
     -webkit-appearance: none;
 }
 
+
+.btnAdd:hover,
+.btnAdd:focus,
+.btnAdd:active {
+    outline: none;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+}
+
 .btnPost {
     width: auto;
     padding-left: 50px;
@@ -516,4 +526,163 @@ a { /*for username link*/
     margin: 0;
     float: right;
     border-radius: 0px 0px 27px 0px !important;
+}
+
+/*PICS*/
+.postMediaDiv { /*all images div*/
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.postImgDiv { /*1 image div*/
+    margin-top: 10px;
+    height: 350px;
+    width: 100%;
+}
+
+.hoverImg { /*black hover*/
+    height: 350px;
+    width: 100%;
+    position: relative;
+}
+
+    .hoverImg::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.45);
+        display: none;
+    }
+
+.postImgDiv:hover .hoverImg::before { /*hover on one image, show transparent black*/
+    display: block;
+}
+
+.btnEditPicDiv label {
+    display: none;
+}
+
+.btnEditPicDiv button {
+    display: none;
+}
+
+.btnEditPic {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-top: 165px;
+    display: block;
+    color: white !important;
+    font-size: 25px;
+}
+
+.btnRemovePic {
+    content: "";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: block;
+    color: white !important;
+    font-size: 25px;
+}
+
+.postImgDiv:hover .btnEditPicDiv label, .postImgDiv:hover .btnEditPicDiv button { /*hover on one image, show icons*/
+    display: block;
+}
+
+.btnRemovePic:hover,
+.btnRemovePic:focus,
+.btnRemovePic:active {
+    outline: none;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+}
+
+/*VIDS*/
+.postVidDiv { /*1 vid div*/
+    margin-top: 10px;
+    height: 100%;
+    width: 100%;
+}
+
+.hoverVid { /*black hover*/
+    height:100%;
+    width: 100%;
+    position: relative;
+    z-index: 4;
+}
+
+    .hoverVid::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.45);
+        display: none;
+    }
+
+.postVidDiv:hover .hoverVid::before { /*hover on one vid*/
+    display: block;
+}
+
+.btnEditVidDiv label {
+    display: none;
+    z-index: 4;
+}
+
+.btnEditVidDiv button {
+    display: none;
+    z-index: 4;
+}
+
+.btnEditVid {
+    padding-top: 11%;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: 0;
+    bottom: 0;
+    transform: translate(-50%, -50%);
+    display: block;
+    color: white !important;
+    font-size: 25px;
+    filter: drop-shadow(1px 1px 10px rgba(0,0,0,0.9)) drop-shadow(-1px -1px 15px rgba(0,0,0,0.9));
+}
+
+.btnRemoveVid {
+    content: "";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: block;
+    color: white !important;
+    font-size: 25px;
+    filter: drop-shadow(1px 1px 10px rgba(0,0,0,0.9)) drop-shadow(-1px -1px 15px rgba(0,0,0,0.9));
+}
+
+.postVidDiv:hover .btnEditVidDiv label, .postVidDiv:hover .btnEditVidDiv button { /*hover on one image, show icons*/
+    display: block;
+    z-index: 4;
+}
+
+.btnRemoveVid:hover,
+.btnRemoveVid:focus,
+.btnRemoveVid:active {
+    outline: none;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+}
+
+/*OTHERs*/
+.noDisplay { /*for removing pic*/
+    display: none;
 }

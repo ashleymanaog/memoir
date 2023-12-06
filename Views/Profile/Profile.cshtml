@@ -3,6 +3,7 @@
     ViewData["CSSFile"] = "~/css/Profile.css";
     ViewData["JSFile"] = "~/js/ViewPost.js";
     ViewData["JSFile2"] = "~/js/EditPost.js";
+    ViewData["JSFile3"] = "~/js/PreviewMediaProfile.js";
     @model ThomasianMemoir.ViewModels.ProfileViewModel;
     var studentClassification = "";
 
@@ -87,12 +88,24 @@
 
     <!--User Posts-->
     <div class="col-lg-7 userPosts">
+    <script>
+        var userMedia = [];
+        var baseUrl = '@Url.Content("~/uploads/")';
+        var counter = 0
+        var postIndex = [];
+    </script>
         @foreach (var post in Model.Posts)
-        {
+        {        
+            var userMediaOrig = Json.Serialize(post.UserMedia);
+            <script>
+                userMedia.push(@Html.Raw(userMediaOrig));
+                postIndex.push({ counter: counter, postId: @post.Post.PostId });
+            </script>
+
             <!--1st Post-->
             <div class="card userPostsCard">
                 <div class="card-header" style="min-height:60px; position: relative;">
-                    <a asp-controller="Dashboard" asp-action="Post" class="navbar-brand card-header-link"></a>
+                    <a asp-controller="Dashboard" asp-action="Post" asp-route-postId="@post.Post.PostId" class="navbar-brand card-header-link"></a>
                     <div class="infoPost">
                         <div style="float:left; display:inline-block;">
                             <a asp-controller="Profile" asp-action="Profile" style="pointer-events:auto; position: relative;">
@@ -137,7 +150,7 @@
                             </span>
                         </div>
                         <div style="position:absolute; right:10px; top:25px;">
-                            <label for="editPost" class="fa-solid fa-pen-to-square btn btnEditPost" data-toggle="modal" data-target="#editPostModal_@post.Post.PostId"></label>
+                            <label for="editPost" class="fa-solid fa-pen-to-square btn btnEditPost" data-toggle="modal" data-target="#editPostModal_@post.Post.PostId" onclick="addIconVisibility(@post.Post.PostId.ToString(), postIndex)"></label>
                             <label for="deletePost" class="fa-solid fa-trash btn btnDeletePost" data-toggle="modal" data-target="#deletePostModal_@post.Post.PostId"></label>
                         </div>
                     </div>
@@ -151,7 +164,6 @@
                             </a>
                             <div class="carousel-inner" style="max-height:600px; display:flex; align-items:center;">
                                 <div class="blurredBG"></div>
-
                                 @foreach (var media in post.UserMedia)
                                 {
                                     <div class="carousel-item @if(media == post.UserMedia.First()) { <text>active</text> }">
@@ -203,50 +215,75 @@
             <div class="modal fade" id="editPostModal_@post.Post.PostId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
-                        <form asp-action="Profile" method="POST" id="editPost" enctype="multipart/form-data">
+                        <form asp-action="EditPost" method="POST" id="editPost_@post.Post.PostId" enctype="multipart/form-data">
                             @Html.AntiForgeryToken()
                             <div class="modal-header" style="text-align:center; display:flex;">
                                 <h5 class="modal-title" style="flex:1;">
-                                    Edit post
-                                    <span class="text-muted" style="font-size: 15px; display:block;">Freshmen</span>
+                                    Edit Post
+                                    <span class="text-muted" style="font-size: 15px; display:block;">@post.Post.PostType</span>
                                 </h5>
                                 <button type="button" class="close fa-solid fa-xmark" data-dismiss="modal" aria-label="Close" style="font-size:1.5rem; padding-top:1.1rem;">
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <textarea class="textbox editPostTextarea" rows="5" placeholder="Share to Thomasians...">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </textarea>
-                                <div class="postImagesDiv">
-                                    <!--1st Image-->
-                                    <div class="postImgDiv active" id="postImgDiv">
-                                        <div class="hoverImg">
-                                            <div class="btnEditPicDiv">
-                                                <label class="fa-solid fa-pen-to-square btn btnEditPic" for="uploadPhoto" onclick="editPic()"></label>
-                                                <input type="file" id="uploadPhoto" name="uploadPhoto" style="color:#00a4b9; display:none;">
-                                                <button class="fa-solid fa-xmark btn btnRemovePic"></button>
+                                <textarea asp-for="Content" class="textbox editPostTextarea" rows="5" placeholder="Share to Thomasians..." required>@post.Post.Content</textarea>
+                                <input asp-for="PostMedia" type="file" name="PostMedia" accept="image/*,video/*" multiple onchange="handleMediaChange(@post.Post.PostId, this, postIndex)" onclick="addMediaFromEmpty(@post.Post.PostId, postIndex)" id="filesInput_@post.Post.PostId" />
+                                <input asp-for="EditedMediaIds" type="hidden" name="EditedMediaIds" id="editedMediaIds_@post.Post.PostId" />
+                                <input asp-for="DeletedMediaIds" type="hidden" name="DeletedMediaIds" id="deletedMediaIds_@post.Post.PostId" />
+
+                                <div class="postMediaDiv" id="postMediaDiv_@post.Post.PostId">
+                                @{
+                                    int index = 0;
+                                }
+                                @foreach (var media in post.UserMedia)
+                                {
+                                    <text>
+                                    @if (media.MediaType == "Image")
+                                    {
+                                        <div class="postImgDiv">
+                                            <div class="hoverImg">
+                                                <div class="btnEditPicDiv">
+                                                    <label class="fa-solid fa-pen-to-square btn btnEditPic" for="uploadMedia_@index" onclick="editMedia('@post.Post.PostId', @index, '@media.MediaId', postIndex)" value="@media.MediaPath"></label>
+                                                    <button class="fa-solid fa-xmark btn btnRemovePic" onclick="removeMedia('@post.Post.PostId', @index, '@media.MediaId', postIndex)"></button>
+                                                </div>
+                                                <img src="@Url.Content("/uploads/" + media.MediaPath)" class="postActualImg" id="post-previewImg_@index">
                                             </div>
-                                            <img src="../img/Sample_Banner.jpg" class="postActualImg" id="postActualImg">
                                         </div>
-                                    </div>
-                                    <!--2nd Image-->
-                                    <div class="postImgDiv" id="postImgDiv">
-                                        <div class="hoverImg">
-                                            <div class="btnEditPicDiv">
-                                                <label class="fa-solid fa-pen-to-square btn btnEditPic" for="uploadPhoto2" onclick="editPic()"></label>
-                                                <input type="file" id="uploadPhoto2" name="uploadPhoto" style="color:#00a4b9; display:none;">
-                                                <button class="fa-solid fa-xmark btn btnRemovePic"></button>
+                                    }
+                                    else if (media.MediaType == "Video")
+                                    {
+                                        <div class="postVidDiv">
+                                            <div class="hoverVid">
+                                                <div class="btnEditVidDiv">
+                                                    <label class="fa-solid fa-pen-to-square btn btnEditVid" for="uploadMedia_@index" onclick="editMedia(@post.Post.PostId, @index, @media.MediaId, postIndex)" value="@media.MediaPath"></label>
+                                                    <button class="fa-solid fa-xmark btn btnRemoveVid" onclick="removeMedia(@post.Post.PostId, @index, @media.MediaId, postIndex)"></button>
+                                                </div>
+                                                <video controls data-touch="false" class="embed-responsive" autoplay muted id="post-previewVid_@index">
+                                                    <source src="@Url.Content("/uploads/" + media.MediaPath)" alt="Post Media">
+                                                    Your browser does not support the video tag.
+                                                </video>
                                             </div>
-                                            <img src="../img/BG/BG_Index.jpg" class="postActualImg" id="postActualImg2">
                                         </div>
-                                    </div>
+                                    }
+                                    @{  index++; }
+                                    </text>
+                                }
                                 </div>
                             </div>
                             <div class="modal-footer card-footer card-footer-editPost">
-                                <button type="button" class="btn fa-regular fa-image btnPic"></button>
-                                <button type="button" class="btn fa-solid fa-video btnVid"></button>
+                                <button type="button" class="btn fa-regular fa-image btnPic" onclick="document.getElementById('filesInput_@post.Post.PostId').click()"></button>
+                                <button type="button" class="btn fa-solid fa-video btnVid" onclick="document.getElementById('filesInput_@post.Post.PostId').click()"></button>
+                                <label for="addMedia" class="btn fa-solid fa-plus btnAdd" onclick="addMedia(@post.Post.PostId, postIndex)" id="addMedia_@post.Post.PostId" style="display:none;"></label>
                                 <button type="submit" class="btn btn-info btn-md center blueButton btnPost" data-dismiss="modal" id="btnSavePost">Save</button>
                             </div>
                         </form>
+                        <script>                            
+                            document.getElementById("filesInput_@post.Post.PostId").addEventListener("change", function () {
+                                handleMediaChange(@post.Post.PostId.ToString(), this, postIndex);
+                            });
+
+                            counter++;
+                        </script>
                     </div>
                 </div>
             </div>

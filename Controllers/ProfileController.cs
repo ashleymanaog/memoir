@@ -594,6 +594,143 @@ namespace ThomasianMemoir.Controllers
             return RedirectToAction("Profile");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPost([FromForm] ProfileViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    // Handle validation errors
+                    return View(model);
+                }
+
+                var currentUser = await _userManager.GetUserAsync(User);
+                var userProfile = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(currentUser.Id));
+
+                if (currentUser != null && userProfile != null)
+                {
+                    // Find post to update
+                    var postToUpdate = userProfile.Posts.FirstOrDefault(p => p.PostId == model.Posts[0].Post.PostId);
+
+                    var allowedFileTypes = new List<string> { "image/jpe", "image/jpg", "image/jpeg", "image/gif", "image/png", "image/bmp", "image/ico", "image/svg", "image/tif", "image/tiff", "image/ai", "image/drw", "image/pct", "image/psp", "image/xcf", "image/psd", "image/raw", "image/webp", "video/avi", "video/divx", "video/flv", "video/m4v", "video/mkv", "video/mov", "video/mp4", "video/mpeg", "video/mpg", "video/ogm", "video/ogv", "video/ogx", "video/rm", "video/rmvb", "video/smil", "video/webm", "video/wmv", "video/xvid", "video/quicktime" };
+
+                    if (postToUpdate != null)
+                    {
+                        /*// Update post content
+                        postToUpdate.Content = model.Content;
+
+                        // Handle edited media
+                        if (model.EditedMediaIds != null && model.EditedMediaIds.Count > 0)
+                        {
+                            for (int i = 0; i < model.EditedMediaIds.Count; i++)
+                            {
+                                var editedMediaId = model.EditedMediaIds[i];
+
+                                // Check if the media is edited (editedMediaId is not 0 and not null)
+                                if (editedMediaId != 0 && editedMediaId.HasValue)
+                                {
+                                    // Find the corresponding UserPostMedia entity in your database
+                                    var editedMedia = userProfile.Posts
+                                        .SelectMany(p => p.Media)
+                                        .FirstOrDefault(m => m.MediaId == editedMediaId.Value);
+
+                                    // Check if the editedMedia is found
+                                    if (editedMedia != null)
+                                    {
+                                        // Update the media path and media type
+                                        var file = model.PostMedia[i];
+                                        editedMedia.MediaPath = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                                        editedMedia.MediaType = GetMediaType(file.ContentType);
+
+                                        // Save changes to the database
+                                        await _dbContext.SaveChangesAsync();
+                                    }
+                                }
+                            }
+                        }
+
+
+                        // Handle deleted media
+                        if (model.DeletedMediaIds != null && model.DeletedMediaIds.Count > 0)
+                        {
+                            foreach (var deletedMediaId in model.DeletedMediaIds)
+                            {
+                                if (!string.IsNullOrEmpty(deletedMediaId)) // chekc not null/empty
+                                {
+                                    if (int.TryParse(deletedMediaId, out var mediaIdToDelete)) //parse to int
+                                    {
+                                        var mediaToDelete = _dbContext.UserPostMedia.FirstOrDefault(m => m.MediaId == mediaIdToDelete);
+                                        if (mediaToDelete != null)
+                                        {
+                                            _dbContext.UserPostMedia.Remove(mediaToDelete);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // Handle new media
+                        if (model.PostMedia != null && model.PostMedia.Count > 0)
+                        {
+                            // Store indexes of editedMediaIdsArray with mediaId of "0"
+                            var mediaIdZeroIndexes = new List<int>();
+                            for (int i = 0; i < model.EditedMediaIds.Count; i++)
+                            {
+                                if (model.EditedMediaIds[i] == "0")
+                                {
+                                    mediaIdZeroIndexes.Add(i);
+                                }
+                            }
+
+                            foreach (var index in mediaIdZeroIndexes)
+                            {
+                                // Check if the index is within the range of model.PostMedia
+                                if (index >= 0 && index < model.PostMedia.Count)
+                                {
+                                    var newMediaFile = model.PostMedia[index];
+
+                                    if (!allowedFileTypes.Contains(newMediaFile.ContentType))
+                                    {
+                                        ModelState.AddModelError($"PostMedia[{index}]", "Invalid file type.");
+                                        return View(model);
+                                    }
+
+                                    var mediaType = GetMediaType(newMediaFile.ContentType);
+
+                                    var media = new UserPostMedia
+                                    {
+                                        MediaPath = Guid.NewGuid().ToString() + Path.GetExtension(newMediaFile.FileName),
+                                        MediaType = mediaType
+                                    };
+
+                                    var filePath = Path.Combine(_environment.WebRootPath, "uploads", media.MediaPath.TrimStart('/'));
+                                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                                    {
+                                        await newMediaFile.CopyToAsync(fileStream);
+                                    }
+
+                                    _dbContext.UserPostMedia.Add(media);
+                                }
+                            }
+                        }*/
+                        await _dbContext.SaveChangesAsync();
+
+                        return RedirectToAction("Profile", "Profile");
+                    }
+                }
+
+                return RedirectToAction("Profile", "Profile");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error editing post: {ex.Message}");
+                // Handle exception, log, and redirect as needed
+                return RedirectToAction("Profile", "Profile");
+            }
+        }
+
         private byte[] ConvertToByteArray(IFormFile file)
         {
             if (file == null || file.Length == 0)
@@ -604,6 +741,19 @@ namespace ThomasianMemoir.Controllers
             {
                 file.CopyTo(stream);
                 return stream.ToArray();
+            }
+        }
+
+        private string GetMediaType(string contentType)
+        {
+            switch (contentType)
+            {
+                case var _ when contentType.StartsWith("image/"):
+                    return "Image";
+                case var _ when contentType.StartsWith("video/"):
+                    return "Video";
+                default:
+                    return "Unknown";
             }
         }
     }

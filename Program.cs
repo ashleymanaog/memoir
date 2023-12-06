@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using ThomasianMemoir.Data;
 using ThomasianMemoir.Configuration;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,11 @@ var httpSettings = builder.Configuration.GetSection("HttpSettings").Get<HttpSett
 var securitySettings = builder.Configuration.GetSection("SecuritySettings").Get<SecuritySettings>();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+    });
 
 // Configure maximum request length and execution timeout
 builder.Services.Configure<IISServerOptions>(options =>
