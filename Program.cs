@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ThomasianMemoir.Data;
 using ThomasianMemoir.Configuration;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 

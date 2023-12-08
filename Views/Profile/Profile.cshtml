@@ -5,51 +5,132 @@
     ViewData["JSFile2"] = "~/js/EditPost.js";
     ViewData["JSFile3"] = "~/js/PreviewMediaProfile.js";
     @model ThomasianMemoir.ViewModels.ProfileViewModel;
-    var studentClassification = "";
+    @using Newtonsoft.Json
 
-    if (Model.YearLevel == "1st Year")
+    var username = TempData["TempUsername"] as string;
+    var email = TempData["TempEmail"] as string;
+    var yearlevel = TempData["TempYearLevel"] as string;
+    var profileDescription = TempData["TempProfileDescription"] as string;
+    var profilepic = TempData["TempProfilePic"] as string;
+    var defaultavatar = TempData["TempDefaultAvatar"] as string;
+    var bannerpic = TempData["TempBannerPic"] as string;
+    var defaultbanner = TempData["TempDefaultBanner"] as string;
+    var serializedPosts = TempData["SerializedPosts"] as string;
+    bool isPostOperation = TempData.ContainsKey("IsPostOperation") && (bool)TempData["IsPostOperation"];
+    var fullname = "";
+
+    var userPosts = new List<ThomasianMemoir.ViewModels.PostWithDetails>();
+    var settings = new JsonSerializerSettings
+    { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
+    //var serializedPosts = JsonConvert.SerializeObject(Model.Posts, settings);
+    //var serializedPostsRaw = Html.Raw(serializedPosts);
+    if (isPostOperation)
     {
-        studentClassification = "Freshmen";
-    }
-    else if (Model.YearLevel == "2nd Year")
-    {
-        studentClassification = "Sophomore";
-    }
-    else if (Model.YearLevel == "3rd Year")
-    {
-        studentClassification = "Junior";
-    }
-    else if (Model.YearLevel == "4th Year")
-    {
-        studentClassification = "Senior";
-    }
-    else if (Model.YearLevel == "5th Year")
-    {
-        studentClassification = "Senior";
-    }
-} 
-<!--Banner-->
-<div class="banner">
-    @if (Model.BannerPic != null)
-    {
-        <img src="~/uploads/@Url.Content(Model.BannerPic)">
+        fullname = TempData["TempFirstName"]+" "+TempData["TempLastName"];
+        userPosts = string.IsNullOrEmpty(serializedPosts)
+            ? new List<ThomasianMemoir.ViewModels.PostWithDetails>()
+            : JsonConvert.DeserializeObject<List<ThomasianMemoir.ViewModels.PostWithDetails>>(serializedPosts);
     }
     else
     {
-        <img src="~/img/Banners/@Model.DefaultBanner" id="uploadBannerPhoto-previewImg">
+        fullname = @Model.FirstName+" "+@Model.LastName;
+        userPosts = Model.Posts;
+    }
+
+    var studentClassification = "";
+    if (!isPostOperation)
+    {
+        if (Model.YearLevel == "1st Year")
+        {
+            studentClassification = "Freshmen";
+        }
+        else if (Model.YearLevel == "2nd Year")
+        {
+            studentClassification = "Sophomore";
+        }
+        else if (Model.YearLevel == "3rd Year")
+        {
+            studentClassification = "Junior";
+        }
+        else if (Model.YearLevel == "4th Year")
+        {
+            studentClassification = "Senior";
+        }
+        else if (Model.YearLevel == "5th Year")
+        {
+            studentClassification = "Senior";
+        }
+    }
+    else
+    {
+        if (yearlevel == "1st Year")
+        {
+            studentClassification = "Freshmen";
+        }
+        else if (yearlevel == "2nd Year")
+        {
+            studentClassification = "Sophomore";
+        }
+        else if (yearlevel == "3rd Year")
+        {
+            studentClassification = "Junior";
+        }
+        else if (yearlevel == "4th Year")
+        {
+            studentClassification = "Senior";
+        }
+        else if (yearlevel == "5th Year")
+        {
+            studentClassification = "Senior";
+        }
+    }
+} 
+<div asp-validation-summary="All" class="text-danger"></div>
+<span class="text-danger" style="text-align:center;" id="spanErr">@Html.ValidationMessage("editPost")</span>
+<span>Error for UserId:</span>
+<span asp-validation-for="UserId" class="editProfileSpan"></span>
+<span>Error for PostId:</span>
+<span asp-validation-for="EditPost.PostId" class="editProfileSpan"></span>
+<span>Error for Content:</span>
+<span asp-validation-for="EditPost.Content" class="editProfileSpan"></span>
+<span>Error for PostMedia:</span>
+<span asp-validation-for="EditPost.PostMedia" class="editProfileSpan"></span>
+<span>Error for EditedMediaIds:</span>
+<span asp-validation-for="EditPost.EditedMediaIds" class="editProfileSpan"></span>
+<span>Error for DeletedMediaIds:</span>
+<span asp-validation-for="EditPost.DeletedMediaIds" class="editProfileSpan"></span>
+<!--Banner-->
+<div class="banner">
+    @if (isPostOperation && TempData.ContainsKey("TempBannerPic")) {
+        if (bannerpic != null) {
+            <img src="~/uploads/@Url.Content(@bannerpic)">
+        } else {
+            <img src="~/img/Banners/@defaultbanner">
+        }
+    } else {
+        @if (Model.BannerPic != null) {
+            <img src="~/uploads/@Url.Content(Model.BannerPic)">
+        } else {
+            <img src="~/img/Banners/@Model.DefaultBanner" id="uploadBannerPhoto-previewImg">
+        }
     }
 </div>
 <!--Profile-->
 <div class="profileParent">
     <div class="profileChild">
         <div class="profilePic">
-            @if (Model.ProfilePic != null)
-            {
-                <img src="~/uploads/@Url.Content(Model.ProfilePic)" style="clip-path:circle(50%);">
-            }
-            else
-            {
-                <img src="~/img/Avatars/@Model.DefaultAvatar" class="profileImage" id="uploadProfilePicture-previewImg" style="clip-path:circle(50%);">
+            @if (isPostOperation && TempData.ContainsKey("TempProfilePic")) {
+                if (bannerpic != null) {
+                    <img src="~/uploads/@Url.Content(@profilepic)" style="clip-path:circle(50%);">
+                } else {
+                    <img src="~/img/Avatars/@defaultavatar" class="profileImage" id="uploadProfilePicture-previewImg" style="clip-path:circle(50%);">
+                }
+            } else {
+                @if (Model.ProfilePic != null) {
+                    <img src="~/uploads/@Url.Content(Model.ProfilePic)" style="clip-path:circle(50%);">
+                } else {
+                    <img src="~/img/Avatars/@Model.DefaultAvatar" class="profileImage" id="uploadProfilePicture-previewImg" style="clip-path:circle(50%);">
+                }
             }
         </div>
     </div>
@@ -59,16 +140,16 @@
     <!--User Information-->
     <div class="col-lg-4 px-md-5 userDescription">
         <div style="margin-bottom:20px;">
-            <h2 style="font-weight:700; margin-bottom:0; word-break:break-all;">@Model.FirstName @Model.LastName</h2>
-            <span style="font-size:21px; word-break:break-all;">@@@Model.Username</span>
+            <h2 style="font-weight:700; margin-bottom:0; word-break:break-all;">@fullname</h2>
+            <span style="font-size:21px; word-break:break-all;">@@@if (isPostOperation && TempData.ContainsKey("TempUsername")){@username}else{@Model.Username}</span>
         </div>
         <div class="card" style="margin-bottom:10px;">
             <div class="cardInfo" style="margin:30px; text-align: justify; text-justify:inter-word;">
                 <div style="margin-bottom:10px;">
-                    <span class="boldtext" style="margin-right:12px;">Email Address:</span><span class="">@Model.Email</span><br />
+                    <span class="boldtext" style="margin-right:12px;">Email Address:</span><span class="">@if (isPostOperation && TempData.ContainsKey("TempEmail")){@email}else{@Model.Email}</span><br />
                 </div>
                 <div style="margin-bottom:10px;">
-                    <span class="boldtext" style="margin-right:12px;">Year Level:</span><span class="">@Model.YearLevel</span><br />
+                    <span class="boldtext" style="margin-right:12px;">Year Level:</span><span class="">@if (isPostOperation && TempData.ContainsKey("TempYearLevel")){@yearlevel}else{@Model.YearLevel}</span><br />
                 </div>
                 <div style="margin-bottom:10px;">
                     <span class="boldtext" style="margin-right:12px;">Student Classification:</span><span class="">@studentClassification</span><br />
@@ -76,6 +157,10 @@
                 @if (@Model.ProfileDescription != null)
                 {
                     @Model.ProfileDescription
+                }
+                else if (isPostOperation && TempData.ContainsKey("TempProfileDescription"))
+                {
+                     @profileDescription
                 }
             </div>
         </div>
@@ -94,7 +179,7 @@
         var counter = 0
         var postIndex = [];
     </script>
-        @foreach (var post in Model.Posts)
+        @foreach (var post in userPosts)
         {        
             var userMediaOrig = Json.Serialize(post.UserMedia);
             <script>
@@ -110,19 +195,25 @@
                         <div style="float:left; display:inline-block;">
                             <a asp-controller="Profile" asp-action="Profile" style="pointer-events:auto; position: relative;">
                                 <div class="profilePicPost">
-                                    @if (Model.ProfilePic != null)
+                                    @if (isPostOperation && TempData.ContainsKey("TempProfilePic")) {
+                                        if (bannerpic != null) {
+                                            <img src="~/uploads/@Url.Content(@profilepic)" style="clip-path:circle(50%);">
+                                        } else {
+                                            <img src="~/img/Avatars/@defaultavatar">
+                                        }
+                                    } else
                                     {
-                                        <img src="~/uploads/@Url.Content(Model.ProfilePic)" class="profileImage" id="uploadProfilePicture-previewImg" style="clip-path:circle(50%);">
-                                    }
-                                    else
-                                    {
-                                        <img src="~/img/Avatars/@Model.DefaultAvatar" class="profileImage" style="clip-path:circle(50%);">
+                                        @if (Model.ProfilePic != null) {
+                                            <img src="~/uploads/@Url.Content(Model.ProfilePic)" class="profileImage" id="uploadProfilePicture-previewImg" style="clip-path:circle(50%);">
+                                        } else {
+                                            <img src="~/img/Avatars/@Model.DefaultAvatar" class="profileImage" style="clip-path:circle(50%);">
+                                        }
                                     }
                                 </div>
                             </a>
                         </div>
                         <div class="userInfo">
-                            <span class="usernamePost btn"><a asp-controller="Profile" asp-action="Profile" style="display:inline-block; pointer-events:auto; position: relative;">@Model.Username</a></span>
+                            <span class="usernamePost btn"><a asp-controller="Profile" asp-action="Profile" style="display:inline-block; pointer-events:auto; position: relative;">@if (isPostOperation && TempData.ContainsKey("TempUsername")){@username}else{@Model.Username}</a></span>
                             <span class="datePost">
                                 @{
                                     var timeDifference = DateTime.Now - post.Post.PostDate;
@@ -226,10 +317,13 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <textarea asp-for="Content" class="textbox editPostTextarea" rows="5" placeholder="Share to Thomasians..." required>@post.Post.Content</textarea>
-                                <input asp-for="PostMedia" type="file" name="PostMedia" accept="image/*,video/*" multiple onchange="handleMediaChange(@post.Post.PostId, this, postIndex)" onclick="addMediaFromEmpty(@post.Post.PostId, postIndex)" id="filesInput_@post.Post.PostId" />
-                                <input asp-for="EditedMediaIds" type="hidden" name="EditedMediaIds" id="editedMediaIds_@post.Post.PostId" />
-                                <input asp-for="DeletedMediaIds" type="hidden" name="DeletedMediaIds" id="deletedMediaIds_@post.Post.PostId" />
+                                @* <input asp-for="Posts" type="hidden" name="Posts" value="@serializedPostsRaw" /> *@
+                                <input asp-for="UserId" type="hidden" name="UserId" value="@Model.UserId" />
+                                <input asp-for="EditPost.PostId" type="hidden" name="EditPost.PostId" value="@post.Post.PostId" />
+                                <textarea class="textbox editPostTextarea" name="EditPost.Content" rows="5" placeholder="Share to Thomasians..." id="content_@post.Post.PostId">@post.Post.Content</textarea>
+                                <input asp-for="EditPost.PostMedia" type="file" name="EditPost.PostMedia" accept="image/*,video/*" multiple onchange="handleMediaChange(@post.Post.PostId, this, postIndex)" onclick="addMediaFromEmpty(@post.Post.PostId, postIndex)" id="filesInput_@post.Post.PostId" />
+                                <input asp-for="EditPost.EditedMediaIds" type="hidden" name="EditPost.EditedMediaIds" id="editedMediaIds_@post.Post.PostId" />
+                                <input asp-for="EditPost.DeletedMediaIds" type="hidden" name="EditPost.DeletedMediaIds" id="deletedMediaIds_@post.Post.PostId" />
 
                                 <div class="postMediaDiv" id="postMediaDiv_@post.Post.PostId">
                                 @{
@@ -274,7 +368,7 @@
                                 <button type="button" class="btn fa-regular fa-image btnPic" onclick="document.getElementById('filesInput_@post.Post.PostId').click()"></button>
                                 <button type="button" class="btn fa-solid fa-video btnVid" onclick="document.getElementById('filesInput_@post.Post.PostId').click()"></button>
                                 <label for="addMedia" class="btn fa-solid fa-plus btnAdd" onclick="addMedia(@post.Post.PostId, postIndex)" id="addMedia_@post.Post.PostId" style="display:none;"></label>
-                                <button type="submit" class="btn btn-info btn-md center blueButton btnPost" data-dismiss="modal" id="btnSavePost">Save</button>
+                                <button type="submit" class="btn btn-info btn-md center blueButton btnPost" id="btnSavePost">Save</button>
                             </div>
                         </form>
                         <script>                            
@@ -325,8 +419,8 @@
 @section scripts {
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const postIds = @Html.Raw(Json.Serialize(Model.Posts.Select(p => p.Post.PostId).ToList()));
-            @foreach (var post in Model.Posts)
+            const postIds = @Html.Raw(Json.Serialize(userPosts.Select(p => p.Post.PostId).ToList()));
+        @foreach (var post in userPosts)
             {
                 <text>initializeCarousel(@post.Post.PostId, postIds); </text>
             }

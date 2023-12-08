@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 using System.Xml.Linq;
 using ThomasianMemoir.Data;
 using ThomasianMemoir.Models;
@@ -93,12 +96,6 @@ namespace ThomasianMemoir.Controllers
             {
                 return RedirectToAction("Error", new ErrorViewModel { ErrorMessage = "An unexpected error occurred." });
             }
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Profile(int postId)
-        {
-            return View();
         }
 
         [HttpGet]
@@ -539,51 +536,62 @@ namespace ThomasianMemoir.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeletePost(int postId)
+        public async Task<IActionResult> DeletePost(int postId)
         {
             try
             {
-                var currentUser = _userManager.GetUserAsync(User).Result;
+                var currentUser = await _userManager.GetUserAsync(User);
 
                 if (currentUser != null)
                 {
-                    var post = _dbContext.UserPost
-                        .FirstOrDefault(p => p.PostId == postId && p.UserId.Equals(currentUser.Id));
-
-                    if (post != null)
-                    {
-                        // Remove post likes
-                        var postLikes = _dbContext.UserPostLikes
-                            .Where(like => like.PostId == postId)
-                            .ToList();
-                        _dbContext.UserPostLikes.RemoveRange(postLikes);
-
-                        // Remove post comments
-                        var postComments = _dbContext.UserPostComments
-                            .Where(comment => comment.PostId == postId)
-                            .ToList();
-                        _dbContext.UserPostComments.RemoveRange(postComments);
-
-                        // Remove post media
-                        var postMedia = _dbContext.UserPostMedia
-                            .Where(media => media.PostId == postId)
-                            .ToList();
-                        foreach (var media in postMedia)
+                    using (var transaction = _dbContext.Database.BeginTransaction()) {
+                        try
                         {
-                            // Remove media files from server
-                            var filePath = Path.Combine(_environment.WebRootPath, "uploads", media.MediaPath.TrimStart('/'));
-                            if (System.IO.File.Exists(filePath))
+                            var post = _dbContext.UserPost
+                            .FirstOrDefault(p => p.PostId == postId && p.UserId.Equals(currentUser.Id));
+
+                            if (post != null)
                             {
-                                System.IO.File.Delete(filePath);
+                                // Remove post likes
+                                var postLikes = _dbContext.UserPostLikes
+                                    .Where(like => like.PostId == postId)
+                                    .ToList();
+                                _dbContext.UserPostLikes.RemoveRange(postLikes);
+
+                                // Remove post comments
+                                var postComments = _dbContext.UserPostComments
+                                    .Where(comment => comment.PostId == postId)
+                                    .ToList();
+                                _dbContext.UserPostComments.RemoveRange(postComments);
+
+                                // Remove post media
+                                var postMedia = _dbContext.UserPostMedia
+                                    .Where(media => media.PostId == postId)
+                                    .ToList();
+                                foreach (var media in postMedia)
+                                {
+                                    // Remove media files from server
+                                    var filePath = Path.Combine(_environment.WebRootPath, "uploads", media.MediaPath.TrimStart('/'));
+                                    if (System.IO.File.Exists(filePath))
+                                    {
+                                        System.IO.File.Delete(filePath);
+                                    }
+                                }
+                                _dbContext.UserPostMedia.RemoveRange(postMedia);
+
+                                // Remove post
+                                _dbContext.UserPost.Remove(post);
+                                transaction.Commit();
+                                await _dbContext.SaveChangesAsync();
+
+                                return RedirectToAction("Profile");
                             }
                         }
-                        _dbContext.UserPostMedia.RemoveRange(postMedia);
-
-                        // Remove post
-                        _dbContext.UserPost.Remove(post);
-                        _dbContext.SaveChanges();
-
-                        return RedirectToAction("Profile");
+                        catch (Exception ex)
+                        {
+                            _logger.LogError($"Error deleting post: {ex.Message}");
+                            transaction.Rollback();
+                        }
                     }
                 }
             }
@@ -596,89 +604,144 @@ namespace ThomasianMemoir.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ActionName("EditPost")]
         public async Task<IActionResult> EditPost([FromForm] ProfileViewModel model)
         {
+            var user = await _userManager.GetUserAsync(User);
+            var info = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(user.Id));
+            TempData["TempFirstName"] = info.FirstName;
+            TempData["TempLastName"] = info.LastName;
+            TempData["TempUsername"] = user.UserName;
+            TempData["TempEmail"] = user.Email;
+            TempData["TempYearLevel"] = info.YearLevel;
+            TempData["TempProfileDescription"] = info.ProfileDescription;
+            TempData["TempProfilePic"] = info.ProfilePic;
+            TempData["TempDefaultAvatar"] = info.DefaultAvatar;
+            TempData["TempBannerPic"] = info.BannerPic;
+            TempData["TempDefaultBanner"] = info.DefaultBanner;
+            TempData["IsPostOperation"] = true;
+                        
+            ModelState.Remove("FirstName");
+            ModelState.Remove("LastName");
+            ModelState.Remove("Username");
+            ModelState.Remove("Email");
+            ModelState.Remove("Password");
+            ModelState.Remove("YearLevel");
+            ModelState.Remove("ProfileDescription");
+            ModelState.Remove("DefaultAvatar");
+            ModelState.Remove("ProfilePic");
+            ModelState.Remove("DefaultBanner");
+            ModelState.Remove("BannerPic");
+            ModelState.Remove("Posts");
+
+            using var transaction = _dbContext.Database.BeginTransaction();
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    // Handle validation errors
-                    return View(model);
+                    var postsWithDetails = _dbContext.UserPost
+                    .Where(post => post.UserId == user.Id)
+                    .OrderByDescending(post => post.PostDate)
+                    .Include(post => post.Likes)
+                    .Include(post => post.Media)
+                    .ToList()
+                    .Select(post =>
+                    {
+                        return new PostWithDetails
+                        {
+                            Post = post,
+                            PostId = post.PostId,
+                            UserMedia = post.Media ?? new List<UserPostMedia>(),
+                            UserLikes = post.Likes,
+                            Liked = HasUserLikedPost(user.Id, post.PostId)
+                        };
+                    })
+                    .ToList();
+                    if (postsWithDetails != null && postsWithDetails.Any())
+                    {
+                        var settings = new JsonSerializerSettings
+                        { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
+                        TempData["SerializedPosts"] = JsonConvert.SerializeObject(postsWithDetails, settings);
+                    }
+                    var errors = ModelState.Values
+                        .SelectMany(v => v.Errors.OfType<ModelError>())
+                        .ToList();
+                    ModelState.AddModelError("editPost", errors.ToString());
+                    return View("Profile", model);
                 }
 
                 var currentUser = await _userManager.GetUserAsync(User);
+                //null here may problem
                 var userProfile = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(currentUser.Id));
 
                 if (currentUser != null && userProfile != null)
                 {
                     // Find post to update
-                    var postToUpdate = userProfile.Posts.FirstOrDefault(p => p.PostId == model.Posts[0].Post.PostId);
+                    var postToUpdate = _dbContext.UserPost.FirstOrDefault(p => p.UserId == userProfile.UserId && p.PostId == model.EditPost.PostId);
+
 
                     var allowedFileTypes = new List<string> { "image/jpe", "image/jpg", "image/jpeg", "image/gif", "image/png", "image/bmp", "image/ico", "image/svg", "image/tif", "image/tiff", "image/ai", "image/drw", "image/pct", "image/psp", "image/xcf", "image/psd", "image/raw", "image/webp", "video/avi", "video/divx", "video/flv", "video/m4v", "video/mkv", "video/mov", "video/mp4", "video/mpeg", "video/mpg", "video/ogm", "video/ogv", "video/ogx", "video/rm", "video/rmvb", "video/smil", "video/webm", "video/wmv", "video/xvid", "video/quicktime" };
 
                     if (postToUpdate != null)
                     {
-                        /*// Update post content
-                        postToUpdate.Content = model.Content;
+                        // UPDATE POST CONTENT
+                        postToUpdate.Content = model.EditPost.Content;
+                        await _dbContext.SaveChangesAsync();
 
-                        // Handle edited media
-                        if (model.EditedMediaIds != null && model.EditedMediaIds.Count > 0)
+                        // HANDLE EDITED MEDIA
+                        if (model.EditPost.EditedMediaIds != null && model.EditPost.EditedMediaIds.Count > 0)
                         {
-                            for (int i = 0; i < model.EditedMediaIds.Count; i++)
+                            for (int i = 0; i < model.EditPost.EditedMediaIds.Count; i++)
                             {
-                                var editedMediaId = model.EditedMediaIds[i];
+                                var editedMediaId = model.EditPost.EditedMediaIds[i];
 
                                 // Check if the media is edited (editedMediaId is not 0 and not null)
-                                if (editedMediaId != 0 && editedMediaId.HasValue)
+                                if (editedMediaId != "0")
                                 {
                                     // Find the corresponding UserPostMedia entity in your database
                                     var editedMedia = userProfile.Posts
+                                        .Where(p => p.Media != null)
                                         .SelectMany(p => p.Media)
-                                        .FirstOrDefault(m => m.MediaId == editedMediaId.Value);
+                                        .FirstOrDefault(m => m.MediaId == int.Parse(editedMediaId ?? "0"));
+
+                                    Debug.WriteLine($"Edited Media: {editedMedia}");
 
                                     // Check if the editedMedia is found
                                     if (editedMedia != null)
                                     {
                                         // Update the media path and media type
-                                        var file = model.PostMedia[i];
+                                        var file = model.EditPost.PostMedia[i];
+                                        Debug.WriteLine($"File: {file}");
+
+                                        if (!allowedFileTypes.Contains(file.ContentType))
+                                        {
+                                            ModelState.AddModelError($"PostMedia[{i}]", "Invalid file type.");
+                                            return View("Profile", model);
+                                        }
+
                                         editedMedia.MediaPath = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                                         editedMedia.MediaType = GetMediaType(file.ContentType);
 
-                                        // Save changes to the database
+                                        var filePath = Path.Combine(_environment.WebRootPath, "uploads", editedMedia.MediaPath.TrimStart('/'));
+                                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                                        {
+                                            await file.CopyToAsync(fileStream);
+                                        }
+
                                         await _dbContext.SaveChangesAsync();
                                     }
                                 }
                             }
                         }
 
-
-                        // Handle deleted media
-                        if (model.DeletedMediaIds != null && model.DeletedMediaIds.Count > 0)
-                        {
-                            foreach (var deletedMediaId in model.DeletedMediaIds)
-                            {
-                                if (!string.IsNullOrEmpty(deletedMediaId)) // chekc not null/empty
-                                {
-                                    if (int.TryParse(deletedMediaId, out var mediaIdToDelete)) //parse to int
-                                    {
-                                        var mediaToDelete = _dbContext.UserPostMedia.FirstOrDefault(m => m.MediaId == mediaIdToDelete);
-                                        if (mediaToDelete != null)
-                                        {
-                                            _dbContext.UserPostMedia.Remove(mediaToDelete);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        // Handle new media
-                        if (model.PostMedia != null && model.PostMedia.Count > 0)
+                        // HANDLE NEW MEDIA
+                        if (model.EditPost.PostMedia != null && model.EditPost.PostMedia.Count > 0)
                         {
                             // Store indexes of editedMediaIdsArray with mediaId of "0"
                             var mediaIdZeroIndexes = new List<int>();
-                            for (int i = 0; i < model.EditedMediaIds.Count; i++)
+                            for (int i = 0; i < model.EditPost.EditedMediaIds.Count; i++)
                             {
-                                if (model.EditedMediaIds[i] == "0")
+                                if (model.EditPost.EditedMediaIds[i] == "0")
                                 {
                                     mediaIdZeroIndexes.Add(i);
                                 }
@@ -687,9 +750,9 @@ namespace ThomasianMemoir.Controllers
                             foreach (var index in mediaIdZeroIndexes)
                             {
                                 // Check if the index is within the range of model.PostMedia
-                                if (index >= 0 && index < model.PostMedia.Count)
+                                if (index >= 0 && index < model.EditPost.PostMedia.Count)
                                 {
-                                    var newMediaFile = model.PostMedia[index];
+                                    var newMediaFile = model.EditPost.PostMedia[index];
 
                                     if (!allowedFileTypes.Contains(newMediaFile.ContentType))
                                     {
@@ -714,20 +777,45 @@ namespace ThomasianMemoir.Controllers
                                     _dbContext.UserPostMedia.Add(media);
                                 }
                             }
-                        }*/
-                        await _dbContext.SaveChangesAsync();
+                        }
 
+                        // HANDLE DELETED MEDIA
+                        if (model.EditPost.DeletedMediaIds != null && model.EditPost.DeletedMediaIds.Count > 0)
+                        {
+                            foreach (var deletedMediaId in model.EditPost.DeletedMediaIds)
+                            {
+                                if (deletedMediaId != "0") // check not null/empty
+                                {
+                                    int? mediaIdToDelete = int.Parse(deletedMediaId ?? "0");
+                                    var mediaToDelete = _dbContext.UserPostMedia.FirstOrDefault(m => m.MediaId == mediaIdToDelete);
+                                    if (mediaToDelete != null)
+                                    {
+                                        _dbContext.UserPostMedia.Remove(mediaToDelete);
+                                    }
+                                }
+                            }
+                        }
+                        _dbContext.Entry(postToUpdate).State = EntityState.Modified;
+                        int savedChanges = await _dbContext.SaveChangesAsync();
+                        transaction.Commit();
+                        await _dbContext.SaveChangesAsync();
+                        return RedirectToAction("Profile", "Profile");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("editPost", "Post not found.");
                         return RedirectToAction("Profile", "Profile");
                     }
                 }
-
                 return RedirectToAction("Profile", "Profile");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error editing post: {ex.Message}");
+                ModelState.AddModelError("editPost", ex.Message);
+                _logger.LogError($"Error editing post: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                transaction.Rollback();
                 // Handle exception, log, and redirect as needed
-                return RedirectToAction("Profile", "Profile");
+                return View("Profile", model);
             }
         }
 

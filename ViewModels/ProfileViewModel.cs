@@ -18,10 +18,10 @@ namespace ThomasianMemoir.ViewModels
         public string DefaultBanner { get; set; }
         public string? BannerPic { get; set; }
         public List<PostWithDetails> Posts { get; set; }
-        //Edit Post
-        public string Content { get; set; }
-        public List<IFormFile>? PostMedia { get; set; }
-        public List<int>? EditedMediaIds { get; set; }
-        public List<int>? DeletedMediaIds { get; set; }
+        public ProfileEditPostViewModel EditPost { get; set; }
+        public ProfileViewModel()
+        {
+            EditPost = new ProfileEditPostViewModel();
+        }
     }
 }

@@ -4,29 +4,6 @@
     ViewData["JSFile"] = "~/js/ChooseProfileAndBanner.js";
     @model ThomasianMemoir.ViewModels.EditProfileCompositeViewModel;
 
-    var studentClassification = "";
-
-    if (Model.PersonalInfo.YearLevel == "1st Year")
-    {
-        studentClassification = "Freshmen";
-    }
-    else if (Model.PersonalInfo.YearLevel == "2nd Year")
-    {
-        studentClassification = "Sophomore";
-    }
-    else if (Model.PersonalInfo.YearLevel == "3rd Year")
-    {
-        studentClassification = "Junior";
-    }
-    else if (Model.PersonalInfo.YearLevel == "4th Year")
-    {
-        studentClassification = "Senior";
-    }
-    else if (Model.PersonalInfo.YearLevel == "5th Year")
-    {
-        studentClassification = "Senior";
-    }
-
     var firstname = TempData["TempFirstName"] as string;
     var lastname = TempData["TempLastName"] as string;
     var username = TempData["TempUsername"] as string;
@@ -38,7 +15,8 @@
     var bannerpic = TempData["TempBannerPic"] as string;
     var defaultbanner = TempData["TempDefaultBanner"] as string;
     bool isPostOperation = TempData.ContainsKey("IsPostOperation") && (bool)TempData["IsPostOperation"];
-    
+        
+    var studentClassification = "";
     if (isPostOperation && TempData.ContainsKey("TempPersonalInfo"))
     {
         if (yearlevel == "1st Year")
@@ -58,6 +36,29 @@
             studentClassification = "Senior";
         }
         else if (yearlevel == "5th Year")
+        {
+            studentClassification = "Senior";
+        }
+    }
+    else
+    {
+        if (Model.PersonalInfo.YearLevel == "1st Year")
+        {
+            studentClassification = "Freshmen";
+        }
+        else if (Model.PersonalInfo.YearLevel == "2nd Year")
+        {
+            studentClassification = "Sophomore";
+        }
+        else if (Model.PersonalInfo.YearLevel == "3rd Year")
+        {
+            studentClassification = "Junior";
+        }
+        else if (Model.PersonalInfo.YearLevel == "4th Year")
+        {
+            studentClassification = "Senior";
+        }
+        else if (Model.PersonalInfo.YearLevel == "5th Year")
         {
             studentClassification = "Senior";
         }

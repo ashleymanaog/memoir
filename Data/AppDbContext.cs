@@ -60,5 +60,13 @@ namespace ThomasianMemoir.Data
                 }
             );*/
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            // Enable logging to the console
+            optionsBuilder.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
+            optionsBuilder.EnableSensitiveDataLogging();
+        }
+
     }
 }
