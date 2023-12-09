@@ -326,7 +326,7 @@ function editMedia(actualPostId, indexToEdit, mediaId, postIndex) {
 
             input.click();
         }
-    } else if (mediaId.trim() == "" || mediaId.trim() == "0") {
+    } else if (String(mediaId).trim() == "" || String(mediaId).trim() == "0") {
         input.addEventListener("change", function () {
             var editedFile = input.files[0];
             if (editedFile) {
