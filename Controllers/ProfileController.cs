@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Xml.Linq;
 using ThomasianMemoir.Data;
+using ThomasianMemoir.Extensions;
 using ThomasianMemoir.Models;
 using ThomasianMemoir.ViewModels;
 
@@ -634,7 +636,7 @@ namespace ThomasianMemoir.Controllers
             ModelState.Remove("BannerPic");
             ModelState.Remove("Posts");
 
-            using var transaction = _dbContext.Database.BeginTransaction();
+            //using var transaction = _dbContext.Database.BeginTransaction();
             try
             {
                 if (!ModelState.IsValid)
@@ -667,7 +669,7 @@ namespace ThomasianMemoir.Controllers
                         .SelectMany(v => v.Errors.OfType<ModelError>())
                         .ToList();
                     ModelState.AddModelError("editPost", errors.ToString());
-                    return View("Profile", model);
+                    return Json(new { success = false, error = "Invalid model state" });
                 }
 
                 var currentUser = _userManager.GetUserAsync(User).Result;
@@ -681,7 +683,6 @@ namespace ThomasianMemoir.Controllers
                 {
                     // Find post to update
                     var postToUpdate = _dbContext.UserPost.FirstOrDefault(p => p.UserId == userProfile.UserId && p.PostId == model.EditPost.PostId);
-
 
                     var allowedFileTypes = new List<string> { "image/jpe", "image/jpg", "image/jpeg", "image/gif", "image/png", "image/bmp", "image/ico", "image/svg", "image/tif", "image/tiff", "image/ai", "image/drw", "image/pct", "image/psp", "image/xcf", "image/psd", "image/raw", "image/webp", "video/avi", "video/divx", "video/flv", "video/m4v", "video/mkv", "video/mov", "video/mp4", "video/mpeg", "video/mpg", "video/ogm", "video/ogv", "video/ogx", "video/rm", "video/rmvb", "video/smil", "video/webm", "video/wmv", "video/xvid", "video/quicktime" };
 
@@ -847,17 +848,18 @@ namespace ThomasianMemoir.Controllers
                         }
                         _dbContext.Entry(postToUpdate).State = EntityState.Modified;
                         int savedChanges = await _dbContext.SaveChangesAsync();
-                        transaction.Commit();
+                        //transaction.Commit();
                         await _dbContext.SaveChangesAsync();
-                        return RedirectToAction("Profile", "Profile");
+                        //return RedirectToAction("Profile", "Profile");
+                        return Json(new { success = true });
                     }
                     else
                     {
                         ModelState.AddModelError("editPost", "Post not found.");
-                        return RedirectToAction("Profile", "Profile");
+                        return Json(new { success = false, error = "Post not found." });
                     }
                 }
-                return RedirectToAction("Profile", "Profile");
+                return Json(new { success = false, error = "User not found." });
             }
             catch (Exception ex)
             {
@@ -870,9 +872,9 @@ namespace ThomasianMemoir.Controllers
                     Debug.WriteLine(innerException.Message);
                     innerException = innerException.InnerException;
                 }
-                transaction.Rollback();
+                //transaction.Rollback();
                 // Handle exception, log, and redirect as needed
-                return View("Profile", model);
+                return Json(new { success = false, error = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)) });
             }
         }
 

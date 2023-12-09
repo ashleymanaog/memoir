@@ -549,8 +549,8 @@
       "PackagePath": "staticwebassets\\uploads\\00b98410-128e-42c2-89ed-49269990d44c.png"
     },
     {
-      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\02216496-1873-48bb-8ccd-88d12ad9edfe.mp4",
-      "PackagePath": "staticwebassets\\uploads\\02216496-1873-48bb-8ccd-88d12ad9edfe.mp4"
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\095e058c-7bac-4dd1-b8b9-604b58d8e060.mp4",
+      "PackagePath": "staticwebassets\\uploads\\095e058c-7bac-4dd1-b8b9-604b58d8e060.mp4"
     },
     {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\0d4f74b1-b35f-4ec3-b99d-4fc55d0f33db.png",
@@ -565,6 +565,10 @@
       "PackagePath": "staticwebassets\\uploads\\1d877575-07e9-4317-92bf-01c516ce638f.png"
     },
     {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\244b63ff-834a-46b7-923c-4c0ed6eaf70e.mp4",
+      "PackagePath": "staticwebassets\\uploads\\244b63ff-834a-46b7-923c-4c0ed6eaf70e.mp4"
+    },
+    {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\266c82d2-ca8b-44ee-bc55-a6cfde5d56fa.png",
       "PackagePath": "staticwebassets\\uploads\\266c82d2-ca8b-44ee-bc55-a6cfde5d56fa.png"
     },
@@ -577,12 +581,24 @@
       "PackagePath": "staticwebassets\\uploads\\350aa89d-a08d-4baf-a892-56d84eb14c36.png"
     },
     {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\36486d76-4cce-4801-a2df-b300fb06931c.png",
+      "PackagePath": "staticwebassets\\uploads\\36486d76-4cce-4801-a2df-b300fb06931c.png"
+    },
+    {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\3f1332a8-4859-4cdf-a605-d7300ef4eda5.png",
       "PackagePath": "staticwebassets\\uploads\\3f1332a8-4859-4cdf-a605-d7300ef4eda5.png"
     },
     {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\415a09fb-0337-45f1-ae91-0f76ed95cc42.png",
+      "PackagePath": "staticwebassets\\uploads\\415a09fb-0337-45f1-ae91-0f76ed95cc42.png"
+    },
+    {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\4265d602-96d1-4f7c-af9a-cc1066e5790b.png",
       "PackagePath": "staticwebassets\\uploads\\4265d602-96d1-4f7c-af9a-cc1066e5790b.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\47b2c2cf-5410-47b6-8b46-0ef76c89af33.mp4",
+      "PackagePath": "staticwebassets\\uploads\\47b2c2cf-5410-47b6-8b46-0ef76c89af33.mp4"
     },
     {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\4a42c5f3-baae-447b-a6cc-86ebab6eb6fb.png",
@@ -593,8 +609,20 @@
       "PackagePath": "staticwebassets\\uploads\\4c7d6430-9fa5-4f2f-ae62-38623de21e8c.png"
     },
     {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\4ea718b5-d680-41bc-a422-aebf1ed3d6c7.mp4",
+      "PackagePath": "staticwebassets\\uploads\\4ea718b5-d680-41bc-a422-aebf1ed3d6c7.mp4"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\5613e63c-2bae-4870-bb68-8b72e9528a01.mp4",
+      "PackagePath": "staticwebassets\\uploads\\5613e63c-2bae-4870-bb68-8b72e9528a01.mp4"
+    },
+    {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\56eed11a-7dc6-4d1d-841b-4145a61b6649.png",
       "PackagePath": "staticwebassets\\uploads\\56eed11a-7dc6-4d1d-841b-4145a61b6649.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\57204f7f-2192-40ee-af93-0025624c40bb.png",
+      "PackagePath": "staticwebassets\\uploads\\57204f7f-2192-40ee-af93-0025624c40bb.png"
     },
     {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\5b6f6f9a-6485-437b-b02d-8205eb17454c.png",
@@ -605,16 +633,12 @@
       "PackagePath": "staticwebassets\\uploads\\5c8aea6d-ad81-4402-a6ca-6931d3b306d8.png"
     },
     {
-      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\6d0536de-5169-4084-be6f-fc53bc8d5aad.png",
-      "PackagePath": "staticwebassets\\uploads\\6d0536de-5169-4084-be6f-fc53bc8d5aad.png"
-    },
-    {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\76daabac-e5b9-4793-ab5d-9d9641372231.png",
       "PackagePath": "staticwebassets\\uploads\\76daabac-e5b9-4793-ab5d-9d9641372231.png"
     },
     {
-      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\7afbcf23-fe55-4bb1-bace-9c11ad22af4c.png",
-      "PackagePath": "staticwebassets\\uploads\\7afbcf23-fe55-4bb1-bace-9c11ad22af4c.png"
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\784076dd-38c9-4cbd-83bc-e55c46a62321.png",
+      "PackagePath": "staticwebassets\\uploads\\784076dd-38c9-4cbd-83bc-e55c46a62321.png"
     },
     {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\7be5cedb-9603-4bd0-9a6d-b462e456a642.png",
@@ -623,6 +647,18 @@
     {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\80122a16-632a-429f-8260-995d68ba8d50.png",
       "PackagePath": "staticwebassets\\uploads\\80122a16-632a-429f-8260-995d68ba8d50.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\805d1344-c8e9-475e-9074-0f6584daafb5.mp4",
+      "PackagePath": "staticwebassets\\uploads\\805d1344-c8e9-475e-9074-0f6584daafb5.mp4"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\84a3d949-f67b-4784-9e46-317af0644f23.png",
+      "PackagePath": "staticwebassets\\uploads\\84a3d949-f67b-4784-9e46-317af0644f23.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\8bfdf946-3450-454b-b5e9-f55783cef559.png",
+      "PackagePath": "staticwebassets\\uploads\\8bfdf946-3450-454b-b5e9-f55783cef559.png"
     },
     {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\97a10631-4a0d-4c8d-b4e4-bcffad74eede.png",
@@ -641,6 +677,26 @@
       "PackagePath": "staticwebassets\\uploads\\ae09b141-8fc9-4f0a-90dd-0f027d6ca319.mp4"
     },
     {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\ae28d266-f89d-4fe6-9895-3526e3e85c4a.png",
+      "PackagePath": "staticwebassets\\uploads\\ae28d266-f89d-4fe6-9895-3526e3e85c4a.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\b7f3e0a9-9bec-4952-9f65-34e952ef73fc.png",
+      "PackagePath": "staticwebassets\\uploads\\b7f3e0a9-9bec-4952-9f65-34e952ef73fc.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\be062b61-350e-40d7-82d4-642c2d7e1499.png",
+      "PackagePath": "staticwebassets\\uploads\\be062b61-350e-40d7-82d4-642c2d7e1499.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\c26d61c1-166c-4730-8923-9eab146a023d.png",
+      "PackagePath": "staticwebassets\\uploads\\c26d61c1-166c-4730-8923-9eab146a023d.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\cdf50e43-c2c5-4cc7-9442-7792289ab8f7.png",
+      "PackagePath": "staticwebassets\\uploads\\cdf50e43-c2c5-4cc7-9442-7792289ab8f7.png"
+    },
+    {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\d94cce43-bfe1-4347-bff8-5d0354057712.png",
       "PackagePath": "staticwebassets\\uploads\\d94cce43-bfe1-4347-bff8-5d0354057712.png"
     },
@@ -657,8 +713,28 @@
       "PackagePath": "staticwebassets\\uploads\\de20a594-8bd6-46f4-b722-4b840fabe5df.png"
     },
     {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\dfce2d00-4a5b-4708-9ac4-37774b467e32.png",
+      "PackagePath": "staticwebassets\\uploads\\dfce2d00-4a5b-4708-9ac4-37774b467e32.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\dff64d52-d6e1-422c-a58f-7d80cb44c463.png",
+      "PackagePath": "staticwebassets\\uploads\\dff64d52-d6e1-422c-a58f-7d80cb44c463.png"
+    },
+    {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\dffeec49-6147-4171-864d-36afbfec02f1.png",
       "PackagePath": "staticwebassets\\uploads\\dffeec49-6147-4171-864d-36afbfec02f1.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\e22b504d-baea-4c15-8665-2a424afac779.png",
+      "PackagePath": "staticwebassets\\uploads\\e22b504d-baea-4c15-8665-2a424afac779.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\f534890f-b451-4f67-9374-5b7b0ad30c43.png",
+      "PackagePath": "staticwebassets\\uploads\\f534890f-b451-4f67-9374-5b7b0ad30c43.png"
+    },
+    {
+      "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\f6683806-0342-4b7e-8ab2-bf3817fedc6a.png",
+      "PackagePath": "staticwebassets\\uploads\\f6683806-0342-4b7e-8ab2-bf3817fedc6a.png"
     },
     {
       "Id": "C:\\Users\\Ira\\Documents\\CodingProjects\\Visual Studio 2022\\ThomasianMemoir\\wwwroot\\uploads\\f98ec65e-bae6-4d08-9b88-41cddced6111.png",
