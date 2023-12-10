@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using ThomasianMemoir.Data;
 using ThomasianMemoir.Models;
+using ThomasianMemoir.Services;
 using ThomasianMemoir.ViewModels;
 
 namespace ThomasianMemoir.Controllers
@@ -22,14 +24,16 @@ namespace ThomasianMemoir.Controllers
 
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly EmailService _emailService;
 
-        public HomeController(ILogger<HomeController> logger, AppDbContext dbContext, SignInManager<User> signInManager, UserManager<User> userManager, IWebHostEnvironment environment)
+        public HomeController(ILogger<HomeController> logger, AppDbContext dbContext, SignInManager<User> signInManager, UserManager<User> userManager, IWebHostEnvironment environment, EmailService emailService)
         {
             _logger = logger;
             _dbContext = dbContext;
             _signInManager = signInManager;
             _userManager = userManager;
             _environment = environment;
+            _emailService = emailService;
             UserInfo = _dbContext.UserInfo;
             //UserPost = _dbContext.UserPost;
             //UserPostLikes = _dbContext.UserPostLikes;
@@ -51,6 +55,12 @@ namespace ThomasianMemoir.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginInfo)
         {
+            ModelState.Remove("Email");
+            ModelState.Remove("ResetPassword.Email");
+            ModelState.Remove("ResetPassword.Token");
+            ModelState.Remove("ResetPassword.Password");
+            ModelState.Remove("ResetPassword.ConfirmPassword");
+
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(loginInfo.Username, loginInfo.Password, loginInfo.RememberMe, false);
@@ -66,6 +76,72 @@ namespace ThomasianMemoir.Controllers
             }
             return View(loginInfo);
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(LoginViewModel model)
+        {
+            ModelState.Remove("Username");
+            ModelState.Remove("Password");
+            ModelState.Remove("RememberMe");
+            ModelState.Remove("ResetPassword.Email");
+            ModelState.Remove("ResetPassword.Token");
+            ModelState.Remove("ResetPassword.Password");
+            ModelState.Remove("ResetPassword.ConfirmPassword");
+
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null)
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, token }, protocol: HttpContext.Request.Scheme);
+                    await _emailService.SendPasswordResetEmailAsync(model.Email, token, callbackUrl);
+                    // Now, send the email with the reset link containing the token
+                    // Use your email service or IdentityMessageService to send the email
+                    // (Implementation of email sending is not provided here)
+                }
+                return RedirectToAction("Login");
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(LoginViewModel model)
+        {
+            ModelState.Remove("Username");
+            ModelState.Remove("Password");
+            ModelState.Remove("RememberMe");
+            ModelState.Remove("Email");
+
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null)
+                {
+                    // Verify the reset token
+                    var result = await _userManager.ResetPasswordAsync(user, model.ResetPassword.Token, model.ResetPassword.Password);
+                    if (result.Succeeded)
+                    {
+                        // Password reset successful
+                        return RedirectToAction("ResetPasswordConfirmation");
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
+                }
+                return RedirectToAction("Login");
+            }
+            return View(model);
+        }
+
 
         [HttpGet]
         public IActionResult Registration()

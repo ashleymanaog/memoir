@@ -258,24 +258,14 @@ function removeMedia(postId, indexToRemove, mediaId, postIndex) {
     } else { // New Files
         var filesArray = Array.from(input.files); // convert FileList to array
 
-        // Get actualIndexToRemove (in filesInput)
-        var existingEditedMediaCount = editedMediaIdsArray.filter(mediaId => mediaId !== '0' && mediaId !== '' && mediaId !== null && mediaId !== undefined).length;
-        var myPostIndex = postIndex.find(item => item.postId === parseInt(postId))?.counter;
-        console.log("myPostIndex", myPostIndex)
-        var userMediaForPost = userMedia[myPostIndex];
-        var mediaArrayForPost = userMediaForPost ? userMediaForPost.$values : [];
-        var existingMediaCount = mediaArrayForPost.length;
-        var actualIndexToRemove = indexToRemove - existingMediaCount + existingEditedMediaCount;
-
         console.log("filesInput before delete:", Array.from(input.files).map(file => file.name));
-        console.log("actualIndexToRemove: ", actualIndexToRemove);
 
         // Remove from editedMediaIds
-        editedMediaIdsArray.splice(actualIndexToRemove, 1);
+        editedMediaIdsArray.splice(indexToRemove, 1);
         editedMediaIdsInput.value = editedMediaIdsArray.join(',');
 
         // Remove from filesInput
-        filesArray.splice(actualIndexToRemove, 1); // remove
+        filesArray.splice(indexToRemove, 1); // remove
         // Create a new FileList from the updated array
         var newFileList = new DataTransfer();
         filesArray.forEach(file => newFileList.items.add(file));

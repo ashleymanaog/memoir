@@ -12,6 +12,7 @@ namespace ThomasianMemoir.ViewModels
         public string DefaultAvatar { get; set; }
         public string ProfilePic { get; set; }
         public bool Liked { get; set; }
+        public bool IsSensitiveInfo { get; set; }
         public List<UserPostMedia> UserMedia { get; set; } = new List<UserPostMedia>();
         public List<UserPostLikes> UserLikes { get; set; } = new List<UserPostLikes>();
         public List<UserPostComments> UserComments { get; set; } = new List<UserPostComments>();

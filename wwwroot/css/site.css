@@ -358,3 +358,34 @@ a {
 .modal-dialog {
     padding: 2rem;
 }
+
+/*SPOILER*/
+.spoiler {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+    .spoiler::before {
+        content: 'Click to see sensitive content...';
+        position: absolute;
+        left: -2px;
+        top: -2px;
+        right: -2px;
+        bottom: -2px;
+        border-radius: 1px;
+        font-size: .9rem;
+        color: #9c968a;
+        background: #272218;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        opacity: 1;
+        padding-left: 1rem;
+    }
+
+   /* .spoiler:hover::before {
+        opacity: 0;
+        transform: translateY(-50%)rotateX(80deg);
+    }*/

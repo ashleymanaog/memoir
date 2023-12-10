@@ -690,7 +690,7 @@ namespace ThomasianMemoir.Controllers
                     {
                         // UPDATE POST CONTENT
                         postToUpdate.Content = model.EditPost.Content;
-                        await _dbContext.SaveChangesAsync();
+                        postToUpdate.IsSensitiveInfo = model.EditPost.IsSensitiveInfo;
 
                         // HANDLE EDITED MEDIA
                         if (model.EditPost.EditedMediaIds != null && model.EditPost.EditedMediaIds.Count > 0)

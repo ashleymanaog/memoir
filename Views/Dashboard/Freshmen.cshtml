@@ -5,10 +5,32 @@
     ViewData["JSFile2"] = "~/js/ViewPost.js";
     ViewData["JSFile3"] = "~/js/PreviewMediaDashboard.js";
     @model ThomasianMemoir.ViewModels.PostsViewModel;
+
+    var studentClassification = "";
+    if (Model.YearLevel == "1st Year")
+    {
+        studentClassification = "Freshmen";
+    }
+    else if (Model.YearLevel == "2nd Year")
+    {
+        studentClassification = "Sophomore";
+    }
+    else if (Model.YearLevel == "3rd Year")
+    {
+        studentClassification = "Junior";
+    }
+    else if (Model.YearLevel == "4th Year")
+    {
+        studentClassification = "Senior";
+    }
+    else if (Model.YearLevel == "5th Year")
+    {
+        studentClassification = "Senior";
+    }
 }
 <!--BANNER-->
 <div class="banner">
-    <img src="~/img/Covers/Cover-Freshmen.png" alt="Freshmen Cover">
+    <img src="~/img/Covers/Cover-@(studentClassification).png" alt="@(studentClassification) Cover">
     <a asp-controller="Dashboard" asp-action="Homepage" target="_self" class="btn btn-info btn-md center blueButton btnHome">
         <i class="fa-solid fa-chevron-left" style="margin-right:10px;"></i>
         Back to Homepage
@@ -84,15 +106,15 @@
 
                         if (timeDifference.TotalSeconds < 60) {
                             var seconds = (int)timeDifference.TotalSeconds;
-                            <text>Posted @seconds second@(seconds != 1 ? "s" : "") ago</text>
+                                <text>Posted @seconds second@(seconds != 1 ? "s" : "") ago</text>
                         } else if (timeDifference.TotalMinutes < 60) {
                             var minutes = (int)timeDifference.TotalMinutes;
-                            <text>Posted @timeDifference.Minutes minute@(minutes != 1 ? "s" : "") ago</text>
+                                <text>Posted @timeDifference.Minutes minute@(minutes != 1 ? "s" : "") ago</text>
                         } else if (timeDifference.TotalHours < 24) {
                             var hours = (int)timeDifference.TotalHours;
-                            <text>Posted @timeDifference.Hours hour@(hours != 1 ? "s" : "") ago</text>
+                                <text>Posted @timeDifference.Hours hour@(hours != 1 ? "s" : "") ago</text>
                         } else {
-                            <text>Posted on @post.Post.PostDate.ToString("MM/dd/yyyy hh:mm tt")</text>
+                                <text>Posted on @post.Post.PostDate.ToString("MM/dd/yyyy hh:mm tt")</text>
                         }
                         }
                     </span>
@@ -100,7 +122,7 @@
             </div>
         </div>
         <div>
-            <div class="row cardInfo postCardInfo">@post.Post.Content</div>
+            <div class="row cardInfo postCardInfo @(post.Post.IsSensitiveInfo ? "spoiler" : "")">@post.Post.Content</div>
             <div style="max-height:600px; overflow:hidden; vertical-align:middle; background-color:black;">
                 <div id="postCarousel_@post.Post.PostId" class="carousel" data-ride="carousel">
                     <a asp-controller="Dashboard" asp-action="Post" asp-route-postId="@post.Post.PostId" class="carousel-indicators" style="top:20px; justify-content:end;">
@@ -170,17 +192,22 @@
 <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
-        <form asp-action="Freshmen" method="POST" id="createPost" enctype="multipart/form-data">
+        <form asp-action="@studentClassification" method="POST" id="createPost" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
                 <div class="modal-header" style="text-align:center; display:flex;">
                 <h5 class="modal-title" style="flex:1; margin-right:-35px;">Write a post
-                    <span class="text-muted" style="font-size: 15px; display:block;">Freshmen</span>
+                    <span class="text-muted" style="font-size: 15px; display:block;">@studentClassification</span>
                 </h5>
                 <button type="button" class="close fa-solid fa-xmark" data-dismiss="modal" aria-label="Close" style="font-size:1.5rem; padding-top:1.1rem;">
                 </button>
             </div>
                 <div class="modal-body">
-                    <textarea asp-for="Content" class="textbox createPostTextarea" rows="5" placeholder="Share to Thomasians..." id="Content" required></textarea>
+                    <span asp-validation-for="Content" class="text-danger" id="error" style="padding-left:20px; padding-top:20px; display:none;"></span>
+                    <textarea asp-for="Content" class="textbox createPostTextarea" rows="5" placeholder="Share to Thomasians..." id="content"></textarea>
+                    <div class="form-check" style="margin-left:20px; margin-bottom: 20px;">
+                        <input asp-for="IsSensitiveInfo" class="form-check-input" type="checkbox" id="isSensitiveInfo">
+                        <label class="form-check-label" asp-for="IsSensitiveInfo">This is a sensitive information</label>
+                    </div>
                     <input asp-for="PostMedia" type="file" name="PostMedia" accept="image/*,video/*" multiple onchange="handleMediaChange(this)" id="filesInput" style="display:none;"/>
                     <div class="postMediaDiv" id="postMediaDiv"></div>
                 </div>
@@ -188,7 +215,7 @@
                 <label for="PostMedia" class="btn fa-regular fa-image btnPic" onclick="document.getElementById('filesInput').click()"></label>
                 <label for="PostMedia" class="btn fa-solid fa-video btnVid" onclick="document.getElementById('filesInput').click()"></label>
                 <label for="addMedia" class="btn fa-solid fa-plus btnAdd" onclick="addMedia()" id="addMedia" style="display:none;"></label>
-                <button type="submit" class="btn btn-info btn-md center blueButton btnPost" id="btnPost">Post</button>
+                    <button type="submit" class="btn btn-info btn-md center blueButton btnPost" id="btnPost" onclick="createPost()">Post</button>
             </div>
         </form>
         </div>
@@ -257,5 +284,59 @@
             $(`.btnLike_${postId} .likesCount`).text(likesCount);
         }
     }
+
+    //Submit createPost form
+    function createPost() {
+        var formData = new FormData(document.getElementById(`createPost`));
+        formData.forEach(function (value, key) {
+            console.log(key, value);
+        });
+
+        console.log($(`#content`).val());
+        console.log($(`#content`).val() != "" && $(`#content`).val() != null);
+        if ($(`#content`).val() != "" && $(`#content`).val() != null) {
+            $(`#createPost`).submit(function (e) {
+                console.log('Form submitted');
+                e.preventDefault();
+
+                $.ajax({
+                    url: '/Dashboard/Freshmen',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        'RequestVerificationToken': $('input[name=__RequestVerificationToken]').val()
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            location.reload();
+                        } else {
+                            console.log(data.error);
+                            $(`#error`).text(`${data.error}`).css('display', 'block');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            var errorMessages = xhr.responseJSON.errors;
+                            for (var key in errorMessages) {
+                                if (errorMessages.hasOwnProperty(key)) {
+                                    $(`#${key}`).text(errorMessages[key]).css('display', 'block');
+                                }
+                            }
+                            console.error('Error creating post', status, error);
+                        }
+                    }
+                });
+            });
+        } else {
+            $(`#error`).text("Caption is required.").css('display', 'block');
+        }
+    }
+
+    $(document).on('submit', '[id^=createPost]', function (e) {
+        e.preventDefault();
+        return false;
+    });
 </script>
 }

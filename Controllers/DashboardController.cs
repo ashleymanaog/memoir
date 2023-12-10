@@ -7,6 +7,7 @@ using ThomasianMemoir.Models;
 using ThomasianMemoir.ViewModels;
 using ThomasianMemoir.Extensions;
 using System;
+using ThomasianMemoir.Services;
 
 namespace ThomasianMemoir.Controllers
 {
@@ -15,6 +16,7 @@ namespace ThomasianMemoir.Controllers
         private readonly ILogger<DashboardController> _logger;
         private readonly AppDbContext _dbContext;
         private readonly IWebHostEnvironment _environment;
+        private readonly ProfanityFilterService profanityFilterService;
         private DbSet<UserInfo> Users;
         private DbSet<UserPost> UserPost;
         private DbSet<UserPostLikes> UserPostLikes;
@@ -29,6 +31,7 @@ namespace ThomasianMemoir.Controllers
             _dbContext = dbContext;
             _userManager = userManager;
             _environment = environment;
+            profanityFilterService = new ProfanityFilterService();
             Users = _dbContext.UserInfo;
             UserPost = _dbContext.UserPost;
             UserPostLikes = _dbContext.UserPostLikes;
@@ -80,7 +83,8 @@ namespace ThomasianMemoir.Controllers
             {
                 PostsWithDetails = freshmenPosts.ToList(),
                 UserProfile = userProfile?.ProfilePic,
-                DefaultAvatar = userProfile?.DefaultAvatar
+                DefaultAvatar = userProfile?.DefaultAvatar,
+                YearLevel = userProfile?.YearLevel
             };
             return View(viewModel);
         }
@@ -94,6 +98,7 @@ namespace ThomasianMemoir.Controllers
             ModelState.Remove("PostsWithDetails");
             ModelState.Remove("UserProfile");
             ModelState.Remove("DefaultAvatar");
+            ModelState.Remove("YearLevel");
             if (ModelState.IsValid)
             {
                 var allowedFileTypes = new List<string> { "image/jpe", "image/jpg", "image/jpeg", "image/gif", "image/png", "image/bmp", "image/ico", "image/svg", "image/tif", "image/tiff", "image/ai", "image/drw", "image/pct", "image/psp", "image/xcf", "image/psd", "image/raw", "image/webp", "video/avi", "video/divx", "video/flv", "video/m4v", "video/mkv", "video/mov", "video/mp4", "video/mpeg", "video/mpg", "video/ogm", "video/ogv", "video/ogx", "video/rm", "video/rmvb", "video/smil", "video/webm", "video/wmv", "video/xvid", "video/quicktime" };
@@ -103,6 +108,14 @@ namespace ThomasianMemoir.Controllers
 
                 if (currentUser != null)
                 {
+                    bool containsBadWords = profanityFilterService.ContainsBadWords(model.Content);
+
+                    if (containsBadWords)
+                    {
+                        ModelState.AddModelError("postContent", "The post contains inappropriate language.");
+                        return Json(new { success = false, error = "The post contains inappropriate language." });
+                    }
+
                     var newPost = new UserPost
                     {
                         UserId = currentUser.Id,
@@ -112,6 +125,7 @@ namespace ThomasianMemoir.Controllers
                         LikesCount = 0,
                         CommentsCount = 0,
                         PostType = "Freshmen",
+                        IsSensitiveInfo = model.IsSensitiveInfo,
                         Media = new List<UserPostMedia>()
                     };
 
@@ -155,10 +169,10 @@ namespace ThomasianMemoir.Controllers
                     _dbContext.UserPost.Add(newPost);
                     await _dbContext.SaveChangesAsync();
 
-                    return RedirectToAction("Freshmen","Dashboard");
+                    return Json(new { success = true });
                 }
             }
-            return View(model);
+            return Json(new { success = false, error = "Invalid model state" });
         }
 
         public IActionResult Sophomore()

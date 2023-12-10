@@ -49,6 +49,8 @@
                 </button>
             </div>
             <div class="modal-body row">
+                <form asp-action="ForgotPassword" method="POST" id="forgotPassword" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
                 <div class="col-md-5">
                     <label for="email" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Email Address</label>
                     <span class="errorSpan">Error Message Here</span>
@@ -66,6 +68,16 @@
                         <button type="submit" style="color: rgb(0, 0, 0); text-decoration:none; margin-top:8px; width:80px; height:41px;" class="btn btn-info btn-md center blueButton" id="btnSend">Send</button>
                     </div>
                 </div>
+                </form>
+                <form asp-action="ResetPassword" method="POST" id="resetPassword" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+                <div class="col-md-5">
+                    <label for="email" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">Email Address</label>
+                    <span class="errorSpan">Error Message Here</span>
+                </div>
+                <div class="col-md-7">
+                    <input type="email" class="form-control textbox" style="margin-top:8px;" id="email" name="email" placeholder="Email Address">
+                </div>
                 <div class="col-md-5">
                     <label for="newpassword" class="form-label" style="padding:0; margin-top:15px; margin-bottom:0;">New Password</label>
                     <span class="errorSpan">Error Message Here</span>
@@ -80,11 +92,75 @@
                 <div class="col-md-7">
                     <input type="password" class="form-control textbox" style="margin-top:8px;" id="confirmnewpassword" placeholder="Confirm New Password">
                 </div>
+                <button type="submit" class="btn btn-warning btn-md yellowButton" id="btnSubmit">Submit</button onclick="resetPassword()">
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-warning btn-md yellowButton" data-dismiss="modal" id="btnSaveBanner">Submit</button>
+                <button type="button" class="btn btn-warning btn-md yellowButton" id="btnSubmitUI" onclick="triggerBtnSubmit()">Submit</button>
                 <button type="button" class="btn btn-light border border-dark btn-md whiteButton" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        function triggerBtnSubmit() {
+            document.getElementById('btnSubmit').click();
+        }
+
+        //Submit resetPassword form
+        function resetPassword() {
+            var formData = new FormData(document.getElementById(`resetPassword`));
+            formData.forEach(function (value, key) {
+                console.log(key, value);
+            });
+
+            if ($(`#content_${postId}`).val()) {
+
+            if ($(`#content_${postId}`).val()) {
+                $(`#editPostModal_${postId}`).submit(function (e) {
+                    console.log('Form submitted');
+                    e.preventDefault();
+
+                    $.ajax({
+                        url: '/Profile/EditPost',
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        headers: {
+                            'RequestVerificationToken': $('input[name=__RequestVerificationToken]').val()
+                        },
+                        success: function (data) {
+                            if (data.success) {
+                                location.reload();
+                            } else {
+                                console.log(data.error);
+                                $(`#error_${postId}`).text("Caption is required.").css('display', 'block');
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            if (xhr.responseJSON && xhr.responseJSON.errors) {
+                                var errorMessages = xhr.responseJSON.errors;
+                                for (var key in errorMessages) {
+                                    if (errorMessages.hasOwnProperty(key)) {
+                                        $(`#${key}`).text(errorMessages[key]).css('display', 'block');
+                                    }
+                                }
+                                console.error('Error editing post', status, error);
+                            }
+                        }
+                    });
+                });
+            } else {
+                $(`#error_${postId}`).text("Caption is required.").css('display', 'block');
+            }
+        }
+
+        $(document).on('submit', '[id^=editPost_]', function (e) {
+            e.preventDefault();
+            return false;
+        });
+    </script>
+}

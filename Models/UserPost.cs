@@ -14,6 +14,7 @@ namespace ThomasianMemoir.Models
         public int LikesCount { get; set; }
         public int CommentsCount { get; set; }
         public string PostType { get; set; }
+        public bool IsSensitiveInfo { get; set; }
         [ForeignKey("PostId")]
         public List<UserPostLikes> Likes { get; set; }
         [ForeignKey("PostId")]

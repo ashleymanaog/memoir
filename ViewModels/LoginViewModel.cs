@@ -14,5 +14,16 @@ namespace ThomasianMemoir.ViewModels
 
         [Display(Name = "Remember me")]
         public bool RememberMe { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } // for reset token
+
+        public ResetPasswordViewModel ResetPassword { get; set; } //for chaging password itself
+
+        public LoginViewModel()
+        {
+            ResetPassword = new ResetPasswordViewModel();
+        }
     }
 }

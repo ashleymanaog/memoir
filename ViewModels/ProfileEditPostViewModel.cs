@@ -11,5 +11,6 @@ namespace ThomasianMemoir.ViewModels
         public List<IFormFile>? PostMedia { get; set; }
         public List<string?>? EditedMediaIds { get; set; }
         public List<string?>? DeletedMediaIds { get; set; }
+        public bool IsSensitiveInfo { get; set; }
     }
 }

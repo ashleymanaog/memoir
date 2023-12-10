@@ -5,6 +5,7 @@ using ThomasianMemoir.Data;
 using ThomasianMemoir.Configuration;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Identity;
+using ThomasianMemoir.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,6 +62,10 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddLogging();
+
+builder.Services.AddScoped<ProfanityFilterService>();
+
+builder.Services.AddScoped<EmailService>();
 
 var app = builder.Build();
 

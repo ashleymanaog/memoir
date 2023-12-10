@@ -57,3 +57,9 @@ function OnInput(e) {
         this.style.height = txHeight + "px";
     }
 }
+
+//Spoiler
+$('.spoiler').on('click', function (e) {
+    $(this).toggleClass('spoiler');
+    e.stopPropagation();
+});

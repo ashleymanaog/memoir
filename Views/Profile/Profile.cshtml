@@ -88,20 +88,6 @@
         }
     }
 } 
-<div asp-validation-summary="All" class="text-danger"></div>
-<span class="text-danger" style="text-align:center;" id="spanErr">@Html.ValidationMessage("editPost")</span>
-<span>Error for UserId:</span>
-<span asp-validation-for="UserId" class="editProfileSpan"></span>
-<span>Error for PostId:</span>
-<span asp-validation-for="EditPost.PostId" class="editProfileSpan"></span>
-<span>Error for Content:</span>
-<span asp-validation-for="EditPost.Content" class="text-danger"></span>
-<span>Error for PostMedia:</span>
-<span asp-validation-for="EditPost.PostMedia" class="editProfileSpan"></span>
-<span>Error for EditedMediaIds:</span>
-<span asp-validation-for="EditPost.EditedMediaIds" class="editProfileSpan"></span>
-<span>Error for DeletedMediaIds:</span>
-<span asp-validation-for="EditPost.DeletedMediaIds" class="editProfileSpan"></span>
 <!--Banner-->
 <div class="banner">
     @if (isPostOperation && TempData.ContainsKey("TempBannerPic")) {
@@ -250,7 +236,7 @@
                     </div>
                 </div>
                 <div>
-                    <div class="row cardInfo postCardInfo">@post.Post.Content</div>
+                    <div class="row cardInfo postCardInfo @(post.Post.IsSensitiveInfo ? "spoiler" : "")">@post.Post.Content</div>
                     <div style="max-height:600px; overflow:hidden; vertical-align: middle; background-color:black;">
                         <div id="postCarousel_@post.Post.PostId" class="carousel" data-ride="carousel">
                             <a asp-controller="Dashboard" asp-action="Post" asp-route-postId="@post.Post.PostId" class="carousel-indicators" style="top:20px; justify-content:end;">
@@ -330,6 +316,17 @@
                                 <input asp-for="EditPost.PostMedia" type="file" name="EditPost.PostMedia" accept="image/*,video/*" multiple onchange="handleMediaChange(@post.Post.PostId, this, postIndex)" onclick="addMediaFromEmpty(@post.Post.PostId, postIndex)" id="filesInput_@post.Post.PostId" />
                                 <input asp-for="EditPost.EditedMediaIds" type="hidden" name="EditPost.EditedMediaIds" id="editedMediaIds_@post.Post.PostId" />
                                 <input asp-for="EditPost.DeletedMediaIds" type="hidden" name="EditPost.DeletedMediaIds" id="deletedMediaIds_@post.Post.PostId" />
+                                <div class="form-check" style="margin-left:20px; margin-bottom: 20px;">
+                                    @if (post.Post.IsSensitiveInfo == true)
+                                    {
+                                        <input asp-for="EditPost.IsSensitiveInfo" class="form-check-input" type="checkbox" id="isSensitiveInfo" checked>
+                                    }
+                                    else if (post.Post.IsSensitiveInfo == false)
+                                    {
+                                        <input asp-for="EditPost.IsSensitiveInfo" class="form-check-input" type="checkbox" id="isSensitiveInfo">
+                                    }
+                                    <label asp-for="EditPost.IsSensitiveInfo" class="form-check-label">This is a sensitive information</label>
+                                </div>
 
                                 <div class="postMediaDiv" id="postMediaDiv_@post.Post.PostId">
                                     @{
