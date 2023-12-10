@@ -432,7 +432,7 @@ namespace ThomasianMemoir.Controllers
                                 if (!allowedFileTypes.Contains(file.ContentType))
                                 {
                                     ModelState.AddModelError("PostMedia", "Invalid file type.");
-                                    return View(model);
+                                    return RedirectToAction("EditProfile");
                                 }
 
                                 var newProfilePicPath = Guid.NewGuid().ToString() +
@@ -458,6 +458,7 @@ namespace ThomasianMemoir.Controllers
                     catch (Exception e)
                     {
                         ModelState.AddModelError("updateProfileDescriptionErr", e.Message);
+                        return RedirectToAction("EditProfile");
                     }
                 }
             }
@@ -505,7 +506,7 @@ namespace ThomasianMemoir.Controllers
                                 if (!allowedFileTypes.Contains(file.ContentType))
                                 {
                                     ModelState.AddModelError("PostMedia", "Invalid file type.");
-                                    return View(model);
+                                    return RedirectToAction("EditProfile");
                                 }
 
                                 var newBannerPicPath = Guid.NewGuid().ToString() +
@@ -531,6 +532,7 @@ namespace ThomasianMemoir.Controllers
                     catch (Exception e)
                     {
                         ModelState.AddModelError("updateProfileDescriptionErr", e.Message);
+                        return RedirectToAction("EditProfile");
                     }
                 }
             }

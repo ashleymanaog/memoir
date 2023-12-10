@@ -138,7 +138,7 @@ namespace ThomasianMemoir.Controllers
                             if (!allowedFileTypes.Contains(file.ContentType))
                             {
                                 ModelState.AddModelError($"PostMedia[{i}]", "Invalid file type.");
-                                return View(model);
+                                return Json(new { success = false, error = "Invalid file type." });
                             }
 
                             var mediaType = GetMediaType(file.ContentType);
@@ -175,19 +175,378 @@ namespace ThomasianMemoir.Controllers
             return Json(new { success = false, error = "Invalid model state" });
         }
 
+        [HttpGet]
         public IActionResult Sophomore()
         {
-            return View();
+            var currentUser = _userManager.GetUserAsync(User).Result;
+            var userProfile = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(currentUser.Id));
+
+            var freshmenPosts = _dbContext.UserPost
+                .Where(post => post.PostType == "Sophomore")
+                .OrderByDescending(post => post.PostDate)
+                .Include(post => post.User)
+                .Include(post => post.Likes)
+                .Include(post => post.Comments)
+                .Include(post => post.Media)
+                .ToList()
+                .Select(post =>
+                {
+                    var userInfo = _dbContext.UserInfo
+                        .Where(u => u.UserId == post.UserId)
+                        .FirstOrDefault();
+
+                    return new PostWithDetails
+                    {
+                        Post = post,
+                        UserId = post.UserId,
+                        Username = _userManager.FindByIdAsync(post.UserId).Result.UserName,
+                        UserMedia = post.Media,
+                        UserLikes = post.Likes,
+                        UserComments = post.Comments,
+                        ProfilePic = userInfo?.ProfilePic,
+                        DefaultAvatar = userInfo?.DefaultAvatar,
+                        Liked = HasUserLikedPost(currentUser.Id, post.PostId)
+                    };
+                })
+                .ToList();
+
+            var viewModel = new PostsViewModel
+            {
+                PostsWithDetails = freshmenPosts.ToList(),
+                UserProfile = userProfile?.ProfilePic,
+                DefaultAvatar = userProfile?.DefaultAvatar,
+                YearLevel = userProfile?.YearLevel
+            };
+            return View(viewModel);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Sophomore(PostsViewModel model)
+        {
+            ModelState.Remove("UserId");
+            ModelState.Remove("PostType");
+            ModelState.Remove("PostsWithDetails");
+            ModelState.Remove("UserProfile");
+            ModelState.Remove("DefaultAvatar");
+            ModelState.Remove("YearLevel");
+            if (ModelState.IsValid)
+            {
+                var allowedFileTypes = new List<string> { "image/jpe", "image/jpg", "image/jpeg", "image/gif", "image/png", "image/bmp", "image/ico", "image/svg", "image/tif", "image/tiff", "image/ai", "image/drw", "image/pct", "image/psp", "image/xcf", "image/psd", "image/raw", "image/webp", "video/avi", "video/divx", "video/flv", "video/m4v", "video/mkv", "video/mov", "video/mp4", "video/mpeg", "video/mpg", "video/ogm", "video/ogv", "video/ogx", "video/rm", "video/rmvb", "video/smil", "video/webm", "video/wmv", "video/xvid", "video/quicktime" };
+
+                var currentUser = await _userManager.GetUserAsync(User);
+                var userProfile = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(currentUser.Id));
+
+                if (currentUser != null)
+                {
+                    bool containsBadWords = profanityFilterService.ContainsBadWords(model.Content);
+
+                    if (containsBadWords)
+                    {
+                        ModelState.AddModelError("postContent", "The post contains inappropriate language.");
+                        return Json(new { success = false, error = "The post contains inappropriate language." });
+                    }
+
+                    var newPost = new UserPost
+                    {
+                        UserId = currentUser.Id,
+                        User = userProfile,
+                        PostDate = DateTime.Now,
+                        Content = model.Content,
+                        LikesCount = 0,
+                        CommentsCount = 0,
+                        PostType = "Sophomore",
+                        IsSensitiveInfo = model.IsSensitiveInfo,
+                        Media = new List<UserPostMedia>()
+                    };
+
+                    if (model.PostMedia != null)
+                    {
+                        for (int i = 0; i < model.PostMedia.Count; i++)
+                        {
+                            var file = model.PostMedia[i];
+
+                            if (!allowedFileTypes.Contains(file.ContentType))
+                            {
+                                ModelState.AddModelError($"PostMedia[{i}]", "Invalid file type.");
+                                return Json(new { success = false, error = "Invalid file type." });
+                            }
+
+                            var mediaType = GetMediaType(file.ContentType);
+
+                            var media = new UserPostMedia
+                            {
+                                MediaPath = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName),
+                                MediaType = mediaType
+                            };
+
+                            var filePath = Path.Combine(_environment.WebRootPath, "uploads", media.MediaPath.TrimStart('/'));
+                            using (var fileStream = new FileStream(filePath, FileMode.Create))
+                            {
+                                await file.CopyToAsync(fileStream);
+                            }
+
+                            newPost.Media.Add(media);
+                        }
+                    }
+
+                    _dbContext.UserPost.Add(newPost);
+                    await _dbContext.SaveChangesAsync();
+
+                    return Json(new { success = true });
+                }
+            }
+            return Json(new { success = false, error = "Invalid model state" });
+        }
+
+        [HttpGet]
         public IActionResult Junior()
         {
-            return View();
+            var currentUser = _userManager.GetUserAsync(User).Result;
+            var userProfile = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(currentUser.Id));
+
+            var freshmenPosts = _dbContext.UserPost
+                .Where(post => post.PostType == "Junior")
+                .OrderByDescending(post => post.PostDate)
+                .Include(post => post.User)
+                .Include(post => post.Likes)
+                .Include(post => post.Comments)
+                .Include(post => post.Media)
+                .ToList()
+                .Select(post =>
+                {
+                    var userInfo = _dbContext.UserInfo
+                        .Where(u => u.UserId == post.UserId)
+                        .FirstOrDefault();
+
+                    return new PostWithDetails
+                    {
+                        Post = post,
+                        UserId = post.UserId,
+                        Username = _userManager.FindByIdAsync(post.UserId).Result.UserName,
+                        UserMedia = post.Media,
+                        UserLikes = post.Likes,
+                        UserComments = post.Comments,
+                        ProfilePic = userInfo?.ProfilePic,
+                        DefaultAvatar = userInfo?.DefaultAvatar,
+                        Liked = HasUserLikedPost(currentUser.Id, post.PostId)
+                    };
+                })
+                .ToList();
+
+            var viewModel = new PostsViewModel
+            {
+                PostsWithDetails = freshmenPosts.ToList(),
+                UserProfile = userProfile?.ProfilePic,
+                DefaultAvatar = userProfile?.DefaultAvatar,
+                YearLevel = userProfile?.YearLevel
+            };
+            return View(viewModel);
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Junior(PostsViewModel model)
+        {
+            ModelState.Remove("UserId");
+            ModelState.Remove("PostType");
+            ModelState.Remove("PostsWithDetails");
+            ModelState.Remove("UserProfile");
+            ModelState.Remove("DefaultAvatar");
+            ModelState.Remove("YearLevel");
+            if (ModelState.IsValid)
+            {
+                var allowedFileTypes = new List<string> { "image/jpe", "image/jpg", "image/jpeg", "image/gif", "image/png", "image/bmp", "image/ico", "image/svg", "image/tif", "image/tiff", "image/ai", "image/drw", "image/pct", "image/psp", "image/xcf", "image/psd", "image/raw", "image/webp", "video/avi", "video/divx", "video/flv", "video/m4v", "video/mkv", "video/mov", "video/mp4", "video/mpeg", "video/mpg", "video/ogm", "video/ogv", "video/ogx", "video/rm", "video/rmvb", "video/smil", "video/webm", "video/wmv", "video/xvid", "video/quicktime" };
+
+                var currentUser = await _userManager.GetUserAsync(User);
+                var userProfile = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(currentUser.Id));
+
+                if (currentUser != null)
+                {
+                    bool containsBadWords = profanityFilterService.ContainsBadWords(model.Content);
+
+                    if (containsBadWords)
+                    {
+                        ModelState.AddModelError("postContent", "The post contains inappropriate language.");
+                        return Json(new { success = false, error = "The post contains inappropriate language." });
+                    }
+
+                    var newPost = new UserPost
+                    {
+                        UserId = currentUser.Id,
+                        User = userProfile,
+                        PostDate = DateTime.Now,
+                        Content = model.Content,
+                        LikesCount = 0,
+                        CommentsCount = 0,
+                        PostType = "Junior",
+                        IsSensitiveInfo = model.IsSensitiveInfo,
+                        Media = new List<UserPostMedia>()
+                    };
+
+                    if (model.PostMedia != null)
+                    {
+                        for (int i = 0; i < model.PostMedia.Count; i++)
+                        {
+                            var file = model.PostMedia[i];
+
+                            if (!allowedFileTypes.Contains(file.ContentType))
+                            {
+                                ModelState.AddModelError($"PostMedia[{i}]", "Invalid file type.");
+                                return Json(new { success = false, error = "Invalid file type." });
+                            }
+
+                            var mediaType = GetMediaType(file.ContentType);
+
+                            var media = new UserPostMedia
+                            {
+                                MediaPath = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName),
+                                MediaType = mediaType
+                            };
+
+                            var filePath = Path.Combine(_environment.WebRootPath, "uploads", media.MediaPath.TrimStart('/'));
+                            using (var fileStream = new FileStream(filePath, FileMode.Create))
+                            {
+                                await file.CopyToAsync(fileStream);
+                            }
+
+                            newPost.Media.Add(media);
+                        }
+                    }
+
+                    _dbContext.UserPost.Add(newPost);
+                    await _dbContext.SaveChangesAsync();
+
+                    return Json(new { success = true });
+                }
+            }
+            return Json(new { success = false, error = "Invalid model state" });
+        }
+
+        [HttpGet]
         public IActionResult Senior()
         {
-            return View();
+            var currentUser = _userManager.GetUserAsync(User).Result;
+            var userProfile = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(currentUser.Id));
+
+            var freshmenPosts = _dbContext.UserPost
+                .Where(post => post.PostType == "Senior")
+                .OrderByDescending(post => post.PostDate)
+                .Include(post => post.User)
+                .Include(post => post.Likes)
+                .Include(post => post.Comments)
+                .Include(post => post.Media)
+                .ToList()
+                .Select(post =>
+                {
+                    var userInfo = _dbContext.UserInfo
+                        .Where(u => u.UserId == post.UserId)
+                        .FirstOrDefault();
+
+                    return new PostWithDetails
+                    {
+                        Post = post,
+                        UserId = post.UserId,
+                        Username = _userManager.FindByIdAsync(post.UserId).Result.UserName,
+                        UserMedia = post.Media,
+                        UserLikes = post.Likes,
+                        UserComments = post.Comments,
+                        ProfilePic = userInfo?.ProfilePic,
+                        DefaultAvatar = userInfo?.DefaultAvatar,
+                        Liked = HasUserLikedPost(currentUser.Id, post.PostId)
+                    };
+                })
+                .ToList();
+
+            var viewModel = new PostsViewModel
+            {
+                PostsWithDetails = freshmenPosts.ToList(),
+                UserProfile = userProfile?.ProfilePic,
+                DefaultAvatar = userProfile?.DefaultAvatar,
+                YearLevel = userProfile?.YearLevel
+            };
+            return View(viewModel);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Senior(PostsViewModel model)
+        {
+            ModelState.Remove("UserId");
+            ModelState.Remove("PostType");
+            ModelState.Remove("PostsWithDetails");
+            ModelState.Remove("UserProfile");
+            ModelState.Remove("DefaultAvatar");
+            ModelState.Remove("YearLevel");
+            if (ModelState.IsValid)
+            {
+                var allowedFileTypes = new List<string> { "image/jpe", "image/jpg", "image/jpeg", "image/gif", "image/png", "image/bmp", "image/ico", "image/svg", "image/tif", "image/tiff", "image/ai", "image/drw", "image/pct", "image/psp", "image/xcf", "image/psd", "image/raw", "image/webp", "video/avi", "video/divx", "video/flv", "video/m4v", "video/mkv", "video/mov", "video/mp4", "video/mpeg", "video/mpg", "video/ogm", "video/ogv", "video/ogx", "video/rm", "video/rmvb", "video/smil", "video/webm", "video/wmv", "video/xvid", "video/quicktime" };
+
+                var currentUser = await _userManager.GetUserAsync(User);
+                var userProfile = _dbContext.UserInfo.FirstOrDefault(up => up.UserId.Equals(currentUser.Id));
+
+                if (currentUser != null)
+                {
+                    bool containsBadWords = profanityFilterService.ContainsBadWords(model.Content);
+
+                    if (containsBadWords)
+                    {
+                        ModelState.AddModelError("postContent", "The post contains inappropriate language.");
+                        return Json(new { success = false, error = "The post contains inappropriate language." });
+                    }
+
+                    var newPost = new UserPost
+                    {
+                        UserId = currentUser.Id,
+                        User = userProfile,
+                        PostDate = DateTime.Now,
+                        Content = model.Content,
+                        LikesCount = 0,
+                        CommentsCount = 0,
+                        PostType = "Senior",
+                        IsSensitiveInfo = model.IsSensitiveInfo,
+                        Media = new List<UserPostMedia>()
+                    };
+
+                    if (model.PostMedia != null)
+                    {
+                        for (int i = 0; i < model.PostMedia.Count; i++)
+                        {
+                            var file = model.PostMedia[i];
+
+                            if (!allowedFileTypes.Contains(file.ContentType))
+                            {
+                                ModelState.AddModelError($"PostMedia[{i}]", "Invalid file type.");
+                                return Json(new { success = false, error = "Invalid file type." });
+                            }
+
+                            var mediaType = GetMediaType(file.ContentType);
+
+                            var media = new UserPostMedia
+                            {
+                                MediaPath = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName),
+                                MediaType = mediaType
+                            };
+
+                            var filePath = Path.Combine(_environment.WebRootPath, "uploads", media.MediaPath.TrimStart('/'));
+                            using (var fileStream = new FileStream(filePath, FileMode.Create))
+                            {
+                                await file.CopyToAsync(fileStream);
+                            }
+
+                            newPost.Media.Add(media);
+                        }
+                    }
+
+                    _dbContext.UserPost.Add(newPost);
+                    await _dbContext.SaveChangesAsync();
+
+                    return Json(new { success = true });
+                }
+            }
+            return Json(new { success = false, error = "Invalid model state" });
         }
 
         [HttpGet]

@@ -1,12 +1,39 @@
 ﻿@{
-    ViewData["Title"] = "Junior";
+    var pageStudentClassification = "Junior";
+
+    ViewData["Title"] = pageStudentClassification;
     ViewData["CSSFile"] = "~/css/Dashboard.css";
     ViewData["JSFile"] = "~/js/Dashboard.js";
     ViewData["JSFile2"] = "~/js/ViewPost.js";
+    ViewData["JSFile3"] = "~/js/PreviewMediaDashboard.js";
+    @model ThomasianMemoir.ViewModels.PostsViewModel;
+
+    var studentClassification = "";
+    if (Model.YearLevel == "1st Year")
+    {
+        studentClassification = "Freshmen";
+    }
+    else if (Model.YearLevel == "2nd Year")
+    {
+        studentClassification = "Sophomore";
+    }
+    else if (Model.YearLevel == "3rd Year")
+    {
+        studentClassification = "Junior";
+    }
+    else if (Model.YearLevel == "4th Year")
+    {
+        studentClassification = "Senior";
+    }
+    else if (Model.YearLevel == "5th Year")
+    {
+        studentClassification = "Senior";
+    }
+
 }
 <!--BANNER-->
 <div class="banner">
-    <img src="~/img/Covers/Cover-Junior.png" alt="Junior Cover">
+    <img src="~/img/Covers/Cover-@(pageStudentClassification).png" alt="@(pageStudentClassification) Cover">
     <a asp-controller="Dashboard" asp-action="Homepage" target="_self" class="btn btn-info btn-md center blueButton btnHome">
         <i class="fa-solid fa-chevron-left" style="margin-right:10px;"></i>
         Back to Homepage
@@ -31,152 +58,163 @@
 
 <!--User Posts-->
 <div class="col-lg-5 userPosts">
-    <!--Create Post-->
-    <div class="card userPostsCard">
-        <div class="card-header createPostHeader" style="min-height:60px;">
-            <div class="createPost">
-                <div style="float:left; display:inline-block;">
-                    <div class="profilePicCreatePost">
-                        <img src="~/img/avatars/Avatar2.png" class="profileImage">
-                    </div>
-                </div>
-                <div class="btnCreatePost">
-                    <button type="button" class="btn btn-light btn-md whiteButton text-muted btnCreatePostLink" data-toggle="modal" data-target="#createPostModal">Share to Thomasians...</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <h5 class="text-muted subtitle">Popular Recently</h5>
-    <!--1st Post-->
-    <div class="card userPostsCard">
-        <div class="card-header" style="min-height:60px; position: relative;">
-            <a asp-controller="Dashboard" asp-action="Post" class="navbar-brand card-header-link"></a>
-            <div class="infoPost">
-                <div style="float:left; display:inline-block;">
-                    <a asp-controller="Profile" asp-action="Index" style="pointer-events:auto; position: relative;">
-                        <div class="profilePicPost">
-                            <img src="~/img/avatars/Avatar2.png" class="profileImage" id="uploadProfilePicture-previewImg">
-                        </div>
-                    </a>
-                </div>
-                <div class="userInfo">
-                    <span class="usernamePost btn"><a asp-controller="Profile" asp-action="Index" style="display:inline-block; pointer-events:auto; position: relative;">Username</a></span>
-                    <span class="datePost">Posted on 11/04/23</span>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="row cardInfo postCardInfo">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </div>
-            <div style="max-height:600px; overflow:hidden;vertical-align: middle;">
-                <div id="postCarousel" class="carousel" data-ride="carousel">
-                    <a asp-controller="Dashboard" asp-action="Post" class="carousel-indicators" style="top:20px; justify-content:end;">
-                        <div class="num indicatorBG"></div>
-                    </a>
-                    <div class="carousel-inner" style="max-height:600px; display:flex; align-items:center;">
-                        <div class="blurredBG"></div>
-
-                        <div class="carousel-item active">
-                            <img src="../img/Sample_Banner.jpg" alt="First slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="../img/BG/BG_Index.jpg" alt="Second slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="../img/BG/BG_Login.png" alt="Third slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="../img/Sample_Banner2.jpg" alt="Third slide">
+    @if (studentClassification == pageStudentClassification)
+    {
+        <!--Create Post-->
+        <div class="card userPostsCard">
+            <div class="card-header createPostHeader" style="min-height:60px;">
+                <div class="createPost">
+                    <div style="float:left; display:inline-block;">
+                        <div class="profilePicCreatePost">
+                            <a asp-controller="Profile" asp-action="Profile" style="pointer-events:auto; position: relative;">
+                                @if (Model.UserProfile != null)
+                                {
+                                    <img src="~/uploads/@Url.Content(Model.UserProfile)" class="profileImage" style="clip-path:circle(50%);">
+                                }
+                                else
+                                {
+                                    <img src="~/img/Avatars/@Model.DefaultAvatar" class="profileImage" style="clip-path:circle(50%);">
+                                }
+                            </a>
                         </div>
                     </div>
-                    <a class="carousel-control-prev" href="#postCarousel" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#postCarousel" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
+                    <div class="btnCreatePost">
+                        <button type="submit" class="btn btn-light btn-md whiteButton text-muted btnCreatePostLink" data-toggle="modal" data-target="#createPostModal">Share to Thomasians...</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="card-footer row">
-            <div class="col-6">
-                <button class="btn btnLike" for="like"><i class="fa-solid fa-thumbs-up" style="margin-right:10px;"></i>Like</button>
-            </div>
-            <div class="col-6">
-                <a asp-controller="Dashboard" asp-action="Post" class="btn btnComment" for="comment"><i class="fa-solid fa-comment" style="margin-right:10px;"></i>Comment</a>
-            </div>
-        </div>
-    </div>
-    <!--2nd Post-->
-    <div class="card userPostsCard">
-        <div class="card-header" style="min-height:60px; position: relative;">
-            <a asp-controller="Dashboard" asp-action="Post" class="navbar-brand card-header-link"></a>
-            <div class="infoPost">
-                <div style="float:left; display:inline-block;">
-                    <a asp-controller="Profile" asp-action="Index" style="pointer-events:auto; position: relative;">
-                        <div class="profilePicPost">
-                            <img src="~/img/avatars/Avatar2.png" class="profileImage" id="uploadProfilePicture-previewImg">
-                        </div>
-                    </a>
-                </div>
-                <div class="userInfo">
-                    <span class="usernamePost btn"><a asp-controller="Profile" asp-action="Index" style="display:inline-block; pointer-events:auto; position: relative;">Username</a></span>
-                    <span class="datePost">Posted on 11/04/23</span>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="row cardInfo postCardInfo">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </div>
-        </div>
-        <div class="card-footer row">
-            <div class="col-6">
-                <button class="btn btnLike" for="like"><i class="fa-solid fa-thumbs-up" style="margin-right:10px;"></i>Like</button>
-            </div>
-            <div class="col-6">
-                <a asp-controller="Dashboard" asp-action="Post" class="btn btnComment" for="comment"><i class="fa-solid fa-comment" style="margin-right:10px;"></i>Comment</a>
-            </div>
-        </div>
-    </div>
+    }
 
     <h5 class="text-muted subtitle" style="margin-top:40px;">Recently Posted</h5>
-    <!--3rd Post-->
-    <div class="card userPostsCard">
-        <div class="card-header" style="min-height:60px; position: relative;">
-            <a asp-controller="Dashboard" asp-action="Post" class="navbar-brand card-header-link"></a>
-            <div class="infoPost">
-                <div style="float:left; display:inline-block;">
-                    <a asp-controller="Profile" asp-action="Index" style="pointer-events:auto; position: relative;">
-                        <div class="profilePicPost">
-                            <img src="~/img/avatars/Avatar2.png" class="profileImage" id="uploadProfilePicture-previewImg">
+    @foreach (var post in Model.PostsWithDetails)
+    {
+        <!--1st Post-->
+        <div class="card userPostsCard">
+            <div class="card-header" style="min-height:60px; position: relative;">
+                <a asp-controller="Dashboard" asp-action="Post" asp-route-postId="@post.Post.PostId" class="navbar-brand card-header-link"></a>
+                <div class="infoPost">
+                    <div style="float:left; display:inline-block;">
+                        <a asp-controller="Profile" asp-action="PublicProfile" asp-route-userId="@post.Post.UserId" style="pointer-events:auto; position: relative;">
+                            <div class="profilePicPost">
+                                @if (post.ProfilePic != null)
+                                {
+                                    <img src="~/uploads/@Url.Content(post.ProfilePic)" class="profileImage" id="uploadProfilePicture-previewImg" style="clip-path:circle(50%);">
+                                }
+                                else
+                                {
+                                    <img src="~/img/Avatars/@post.DefaultAvatar" class="profileImage" style="clip-path:circle(50%);">
+                                }
+                            </div>
+                        </a>
+                    </div>
+                    <div class="userInfo">
+                        <span class="usernamePost btn"><a asp-controller="Profile" asp-action="PublicProfile" asp-route-userId="@post.Post.UserId" style="display:inline-block; pointer-events:auto; position: relative;">@post.Username</a></span>
+                        <span class="datePost">
+                            @{
+                                var timeDifference = DateTime.Now - post.Post.PostDate;
+
+                                if (timeDifference.TotalSeconds < 60)
+                                {
+                                    var seconds = (int)timeDifference.TotalSeconds;
+                                    <text>Posted @seconds second@(seconds != 1 ? "s" : "") ago</text>
+                                }
+                                else if (timeDifference.TotalMinutes < 60)
+                                {
+                                    var minutes = (int)timeDifference.TotalMinutes;
+                                    <text>Posted @timeDifference.Minutes minute@(minutes != 1 ? "s" : "") ago</text>
+                                }
+                                else if (timeDifference.TotalHours < 24)
+                                {
+                                    var hours = (int)timeDifference.TotalHours;
+                                    <text>Posted @timeDifference.Hours hour@(hours != 1 ? "s" : "") ago</text>
+                                }
+                                else
+                                {
+                                    <text>Posted on @post.Post.PostDate.ToString("MM/dd/yyyy hh:mm tt")</text>
+                                }
+                            }
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="row cardInfo postCardInfo @(post.Post.IsSensitiveInfo ? "spoiler" : "")">@post.Post.Content</div>
+                <div style="max-height:600px; overflow:hidden; vertical-align:middle; background-color:black;">
+                    <div id="postCarousel_@post.Post.PostId" class="carousel" data-ride="carousel">
+                        <a asp-controller="Dashboard" asp-action="Post" asp-route-postId="@post.Post.PostId" class="carousel-indicators" style="top:20px; justify-content:end;">
+                            <div class="num indicatorBG"></div>
+                        </a>
+                        <div class="carousel-inner" style="max-height:600px; display:flex; align-items:center;">
+                            <div class="blurredBG"></div>
+
+                            @foreach (var media in post.UserMedia)
+                            {
+                                <div class="carousel-item @if(media == post.UserMedia.First()) {
+                        <text>active</text>
+ }">
+                                    @if (media.MediaPath != null && media.MediaPath.Length > 0)
+                                    {
+                                        if (media.MediaType == "Image")
+                                        {
+                                                            <img src="@Url.Content("/uploads/" + media.MediaPath)" alt="Post Media">
+                                        }
+                                        else if (media.MediaType == "Video")
+                                        {
+                                                            <video controls data-touch="false" class="embed-responsive" autoplay muted>
+                                                                <source src="@Url.Content("/uploads/" + media.MediaPath)" alt="Post Media">
+                                                                Your browser does not support the video tag.
+                                                            </video>
+                                        }
+                                    }
+                                        </div>
+                            }
                         </div>
+                        <a class="carousel-control-prev" href="#postCarousel_@post.Post.PostId" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#postCarousel_@post.Post.PostId" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer row">
+                <div class="col-6">
+                    <button class="btn btnLike btnLike_@post.Post.PostId @(post.Liked ? "liked" : "")" for="like" onclick="handleLikeButtonClick(@post.Post.PostId)">
+                        <i class="fa-solid fa-thumbs-up" style="margin-right:10px;"></i>Like <span class="likesCount">
+                            @if (post.Post.LikesCount > 0)
+                            {
+                                @post.Post.LikesCount
+                            }
+                        </span>
+                    </button>
+                </div>
+
+                <div class="col-6">
+                    <a asp-controller="Dashboard" asp-action="Post" asp-route-postId="@post.Post.PostId" class="btn btnComment" for="comment">
+                        <i class="fa-solid fa-comment" style="margin-right:10px;"></i>Comment @if (post.Post.CommentsCount > 0)
+                        {
+                            @post.Post.CommentsCount
+                        }
                     </a>
                 </div>
-                <div class="userInfo">
-                    <span class="usernamePost btn"><a asp-controller="Profile" asp-action="Index" style="display:inline-block; pointer-events:auto; position: relative;">Username</a></span>
-                    <span class="datePost">Posted on 11/04/23</span>
-                </div>
             </div>
         </div>
-        <div>
-            <div class="row cardInfo postCardInfo">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </div>
-        </div>
-        <div class="card-footer row">
-            <div class="col-6">
-                <button class="btn btnLike" for="like"><i class="fa-solid fa-thumbs-up" style="margin-right:10px;"></i>Like</button>
-            </div>
-            <div class="col-6">
-                <a asp-controller="Dashboard" asp-action="Post" class="btn btnComment" for="comment"><i class="fa-solid fa-comment" style="margin-right:10px;"></i>Comment</a>
-            </div>
-        </div>
-    </div>
+    }
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const postIds = @Html.Raw(Json.Serialize(Model.PostsWithDetails.Select(p => p.Post.PostId).ToList()));
+
+        @foreach (var post in Model.PostsWithDetails)
+        {
+            <text>initializeCarousel(@post.Post.PostId, postIds); </text>
+        }
+                        });
+    </script>
 </div>
 
 <!--BOTTOM SPACE-->
@@ -186,22 +224,152 @@
 <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header" style="text-align:center; display:flex;">
-                <h5 class="modal-title" style="flex:1;">
-                    Write a post
-                    <span class="text-muted" style="font-size: 15px; display:block;">Junior</span>
-                </h5>
-                <button type="button" class="close fa-solid fa-xmark" data-dismiss="modal" aria-label="Close" style="font-size:1.5rem; padding-top:1.1rem;">
-                </button>
-            </div>
-            <div class="modal-body">
-                <textarea class="textbox createPostTextarea" rows="10" placeholder="Share to Thomasians..."></textarea>
-            </div>
-            <div class="modal-footer card-footer card-footer-createPost">
-                <button type="button" class="btn fa-regular fa-image btnPic"></button>
-                <button type="button" class="btn fa-solid fa-video btnVid"></button>
-                <button type="submit" class="btn btn-info btn-md center blueButton btnPost" data-dismiss="modal" id="btnPost">Post</button>
-            </div>
+            <form asp-action="@pageStudentClassification" method="POST" id="createPost" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                <div class="modal-header" style="text-align:center; display:flex;">
+                    <h5 class="modal-title" style="flex:1; margin-right:-35px;">
+                        Write a post
+                        <span class="text-muted" style="font-size: 15px; display:block;">@pageStudentClassification</span>
+                    </h5>
+                    <button type="button" class="close fa-solid fa-xmark" data-dismiss="modal" aria-label="Close" style="font-size:1.5rem; padding-top:1.1rem;">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span asp-validation-for="Content" class="text-danger" id="error" style="padding-left:20px; padding-top:20px; display:none;"></span>
+                    <textarea asp-for="Content" class="textbox createPostTextarea" rows="5" placeholder="Share to Thomasians..." id="content"></textarea>
+                    <div class="form-check" style="margin-left:20px; margin-bottom: 20px;">
+                        <input asp-for="IsSensitiveInfo" class="form-check-input" type="checkbox" id="isSensitiveInfo">
+                        <label class="form-check-label" asp-for="IsSensitiveInfo">This is a sensitive information</label>
+                    </div>
+                    <input asp-for="PostMedia" type="file" name="PostMedia" accept="image/*,video/*" multiple onchange="handleMediaChange(this)" id="filesInput" style="display:none;" />
+                    <div class="postMediaDiv" id="postMediaDiv"></div>
+                </div>
+                <div class="modal-footer card-footer card-footer-createPost">
+                    <label for="PostMedia" class="btn fa-regular fa-image btnPic" onclick="document.getElementById('filesInput').click()"></label>
+                    <label for="PostMedia" class="btn fa-solid fa-video btnVid" onclick="document.getElementById('filesInput').click()"></label>
+                    <label for="addMedia" class="btn fa-solid fa-plus btnAdd" onclick="addMedia()" id="addMedia" style="display:none;"></label>
+                    <button type="submit" class="btn btn-info btn-md center blueButton btnPost" id="btnPost" onclick="createPost()">Post</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        function handleLikeButtonClick(postId) {
+            if ($(`.btnLike_${postId}`).hasClass('liked')) {
+                unlikePost(postId);
+            } else {
+                likePost(postId);
+            }
+        }
+
+        function likePost(postId) {
+            $.ajax({
+                url: '/Dashboard/LikePost',
+                type: 'POST',
+                data: { postId: postId },
+                success: function (result) {
+                    if (result.success) {
+                        // Update UI based on the like status
+                        if (result.liked) {
+                            $(`.btnLike_${postId}`).addClass('liked');
+                        } else {
+                            $(`.btnLike_${postId}`).addClass('liked');
+                        }
+                        updateLikesCount(postId, result.likesCount);
+                    } else {
+                        alert('Failed to like post. ' + result.error);
+                    }
+                },
+                error: function (xhr, status, errorThrown) {
+                    console.error('Error occurred while liking the post:', status, errorThrown);
+                    alert('Error occurred while liking the post. Check the console for details.');
+                }
+            });
+        }
+
+        function unlikePost(postId) {
+            $.ajax({
+                url: '/Dashboard/UnlikePost',
+                type: 'POST',
+                data: { postId: postId },
+                success: function (result) {
+                    if (result.success) {
+                        $(`.btnLike_${postId}`).removeClass('liked');
+                        updateLikesCount(postId, result.likesCount);
+                    } else {
+                        alert('Failed to unlike post. ' + result.error);
+                    }
+                },
+                error: function (xhr, status, errorThrown) {
+                    console.error('Error occurred while unliking the post:', status, errorThrown);
+                    alert('Error occurred while unliking the post. Check the console for details.');
+                }
+            });
+        }
+
+        function updateLikesCount(postId, likesCount) {
+            if (likesCount == 0) {
+                $(`.btnLike_${postId} .likesCount`).text("");
+            } else {
+                $(`.btnLike_${postId} .likesCount`).text(likesCount);
+            }
+        }
+
+        //Submit createPost form
+        function createPost() {
+            var formData = new FormData(document.getElementById(`createPost`));
+            formData.forEach(function (value, key) {
+                console.log(key, value);
+            });
+
+            console.log($(`#content`).val());
+            console.log($(`#content`).val() != "" && $(`#content`).val() != null);
+            if ($(`#content`).val() != "" && $(`#content`).val() != null) {
+                $(`#createPost`).submit(function (e) {
+                    console.log('Form submitted');
+                    e.preventDefault();
+
+                    $.ajax({
+                        url: '/Dashboard/Junior',
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        headers: {
+                            'RequestVerificationToken': $('input[name=__RequestVerificationToken]').val()
+                        },
+                        success: function (data) {
+                            if (data.success) {
+                                location.reload();
+                            } else {
+                                console.log(data.error);
+                                $(`#error`).text(`${data.error}`).css('display', 'block');
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            if (xhr.responseJSON && xhr.responseJSON.errors) {
+                                var errorMessages = xhr.responseJSON.errors;
+                                for (var key in errorMessages) {
+                                    if (errorMessages.hasOwnProperty(key)) {
+                                        $(`#${key}`).text(errorMessages[key]).css('display', 'block');
+                                    }
+                                }
+                                console.error('Error creating post', status, error);
+                            }
+                        }
+                    });
+                });
+            } else {
+                $(`#error`).text("Caption is required.").css('display', 'block');
+            }
+        }
+
+        $(document).on('submit', '[id^=createPost]', function (e) {
+            e.preventDefault();
+            return false;
+        });
+    </script>
+}

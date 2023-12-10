@@ -9,7 +9,7 @@ namespace ThomasianMemoir.ViewModels
         public string Email { get; set; }
 
         [Required]
-        public string Token { get; set; }
+        public string VerificationCode { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

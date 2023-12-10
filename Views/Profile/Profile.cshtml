@@ -313,7 +313,7 @@
                                 <input asp-for="UserId" type="hidden" name="UserId" value="@Model.UserId" />
                                 <input asp-for="EditPost.PostId" type="hidden" name="EditPost.PostId" value="@post.Post.PostId" />
                                 <textarea class="textbox editPostTextarea" name="EditPost.Content" rows="5" placeholder="Share to Thomasians..." id="content_@post.Post.PostId">@post.Post.Content</textarea>
-                                <input asp-for="EditPost.PostMedia" type="file" name="EditPost.PostMedia" accept="image/*,video/*" multiple onchange="handleMediaChange(@post.Post.PostId, this, postIndex)" onclick="addMediaFromEmpty(@post.Post.PostId, postIndex)" id="filesInput_@post.Post.PostId" />
+                                <input asp-for="EditPost.PostMedia" type="file" name="EditPost.PostMedia" accept="image/*,video/*" multiple onchange="handleMediaChange(@post.Post.PostId, this, postIndex)" onclick="addMediaFromEmpty(@post.Post.PostId, postIndex)" id="filesInput_@post.Post.PostId" style="display:none;" />
                                 <input asp-for="EditPost.EditedMediaIds" type="hidden" name="EditPost.EditedMediaIds" id="editedMediaIds_@post.Post.PostId" />
                                 <input asp-for="EditPost.DeletedMediaIds" type="hidden" name="EditPost.DeletedMediaIds" id="deletedMediaIds_@post.Post.PostId" />
                                 <div class="form-check" style="margin-left:20px; margin-bottom: 20px;">

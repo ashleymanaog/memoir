@@ -60,6 +60,7 @@ namespace ThomasianMemoir.Controllers
             ModelState.Remove("ResetPassword.Token");
             ModelState.Remove("ResetPassword.Password");
             ModelState.Remove("ResetPassword.ConfirmPassword");
+            ModelState.Remove("ResetPassword.VerificationCode");
 
             if (ModelState.IsValid)
             {
@@ -86,7 +87,7 @@ namespace ThomasianMemoir.Controllers
             ModelState.Remove("Password");
             ModelState.Remove("RememberMe");
             ModelState.Remove("ResetPassword.Email");
-            ModelState.Remove("ResetPassword.Token");
+            ModelState.Remove("ResetPassword.VerificationCode");
             ModelState.Remove("ResetPassword.Password");
             ModelState.Remove("ResetPassword.ConfirmPassword");
 
@@ -96,15 +97,21 @@ namespace ThomasianMemoir.Controllers
                 if (user != null)
                 {
                     var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                    var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, token }, protocol: HttpContext.Request.Scheme);
-                    await _emailService.SendPasswordResetEmailAsync(model.Email, token, callbackUrl);
-                    // Now, send the email with the reset link containing the token
-                    // Use your email service or IdentityMessageService to send the email
-                    // (Implementation of email sending is not provided here)
+                    TempData["ResetToken"] = token;
+                    // Generate a random six-digit verification code
+                    var verificationCode = new Random().Next(100000, 999999).ToString();
+                    // Store the verification code
+                    user.VerificationCode = verificationCode;
+                    user.VerificationCodeExpiry = DateTime.UtcNow.AddMinutes(15);
+                    await _userManager.UpdateAsync(user);
+
+                    await _emailService.SendVerificationCodeAsync(model.Email, user.UserName, verificationCode);
+
+                    return Json(new { success = true, message = "Verification code sent." });
                 }
-                return RedirectToAction("Login");
+                return Json(new { success = false, error = "User not found." });
             }
-            return View(model);
+            return Json(new { success = false, error = "Email is invalid." });
         }
 
         [HttpPost]
@@ -119,27 +126,36 @@ namespace ThomasianMemoir.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
+                var user = await _userManager.FindByEmailAsync(model.ResetPassword.Email);
                 if (user != null)
                 {
-                    // Verify the reset token
-                    var result = await _userManager.ResetPasswordAsync(user, model.ResetPassword.Token, model.ResetPassword.Password);
-                    if (result.Succeeded)
+                    if (user.VerificationCode == model.ResetPassword.VerificationCode && DateTime.UtcNow <= user.VerificationCodeExpiry)
                     {
-                        // Password reset successful
-                        return RedirectToAction("ResetPasswordConfirmation");
-                    }
-                    else
-                    {
-                        foreach (var error in result.Errors)
+                        user.VerificationCode = null;
+                        await _userManager.UpdateAsync(user);
+                        var resetToken = TempData["ResetToken"] as string;
+                        // Reset user's password
+                        var result = await _userManager.ResetPasswordAsync(user, resetToken, model.ResetPassword.Password);
+
+                        if (result.Succeeded)
                         {
-                            ModelState.AddModelError(string.Empty, error.Description);
+                            // Password reset successful
+                            return Json(new { success = true, message = "Password reset successful. Please log in." });
+                        }
+                        else
+                        {
+                            foreach (var error in result.Errors)
+                            {
+                                ModelState.AddModelError(string.Empty, error.Description);
+                            }
+                            return Json(new { success = false, error = "Error resetting password." });
                         }
                     }
+                    return Json(new { success = false, error = "Verification code incorrect or expired." });
                 }
-                return RedirectToAction("Login");
+                return Json(new { success = false, error = "User not found." });
             }
-            return View(model);
+            return Json(new { success = false, error = "Invalid fields." });
         }
 
 

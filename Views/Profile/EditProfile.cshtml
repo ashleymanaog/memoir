@@ -91,7 +91,7 @@
         <!--<input type="file" id="uploadBannerPhoto" name="uploadBannerPhoto" onClick="reply_click(this.id)">-->
         <div style="display:none;">
             <input asp-for="BannerPic.DefaultBanner" type="text" id="defaultBanner" name="BannerPic.DefaultBanner" value="@Model.BannerPic.DefaultBanner">
-            <input asp-for="BannerPic.NewBannerPic" type="file" id="bannerPic" name="BannerPic.NewBannerPic">
+            <input asp-for="BannerPic.NewBannerPic" type="file" id="bannerPic" name="BannerPic.NewBannerPic" accept="image/*">
             <span asp-validation-for="BannerPic.NewBannerPic" class="editProfileSpan"></span>
             <input type="submit" id="btnEditBannerPic" name="btnEditBannerPic">
         </div>
@@ -124,7 +124,7 @@
         <!--<input type="file" id="uploadProfilePhoto" name="uploadProfilePhoto" onClick="reply_click(this.id)">-->
         <div style="display:none;">
             <input asp-for="ProfilePic.DefaultAvatar" type="text" id="defaultAvatar" name="ProfilePic.DefaultAvatar" value="@Model.ProfilePic.DefaultAvatar">
-            <input asp-for="ProfilePic.NewProfilePic" type="file" id="profilePic" name="ProfilePic.NewProfilePic">
+            <input asp-for="ProfilePic.NewProfilePic" type="file" id="profilePic" name="ProfilePic.NewProfilePic" accept="image/*">
             <span asp-validation-for="ProfilePic.NewProfilePic" class="editProfileSpan"></span>
             <input type="submit" id="btnEditProfilePic" name="btnEditProfilePic">
         </div>

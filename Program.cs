@@ -6,6 +6,7 @@ using ThomasianMemoir.Configuration;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Identity;
 using ThomasianMemoir.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,7 +49,15 @@ builder.Services.AddDefaultIdentity<User>(options =>
     options.Password.RequireLowercase = false;
     options.Password.RequiredLength = 8;
     options.User.RequireUniqueEmail = true;
-}).AddEntityFrameworkStores<AppDbContext>();
+}).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromDays(30); // expiration time
+    options.LoginPath = "/Home/Login";
+    options.SlidingExpiration = true;
+});
 
 builder.Services.AddCors(options =>
 {

@@ -1,5 +1,7 @@
 ﻿@{
-    ViewData["Title"] = "Freshmen";
+    var pageStudentClassification = "Freshmen";
+
+    ViewData["Title"] = pageStudentClassification;
     ViewData["CSSFile"] = "~/css/Dashboard.css";
     ViewData["JSFile"] = "~/js/Dashboard.js";
     ViewData["JSFile2"] = "~/js/ViewPost.js";
@@ -27,10 +29,11 @@
     {
         studentClassification = "Senior";
     }
+
 }
 <!--BANNER-->
 <div class="banner">
-    <img src="~/img/Covers/Cover-@(studentClassification).png" alt="@(studentClassification) Cover">
+    <img src="~/img/Covers/Cover-@(pageStudentClassification).png" alt="@(pageStudentClassification) Cover">
     <a asp-controller="Dashboard" asp-action="Homepage" target="_self" class="btn btn-info btn-md center blueButton btnHome">
         <i class="fa-solid fa-chevron-left" style="margin-right:10px;"></i>
         Back to Homepage
@@ -55,30 +58,34 @@
 
 <!--User Posts-->
 <div class="col-lg-5 userPosts">
-    <!--Create Post-->
-    <div class="card userPostsCard">
-        <div class="card-header createPostHeader" style="min-height:60px;">
-            <div class="createPost">
-                <div style="float:left; display:inline-block;">
-                    <div class="profilePicCreatePost">
-                        <a asp-controller="Profile" asp-action="Profile" style="pointer-events:auto; position: relative;">
-                            @if (Model.UserProfile != null) {
-                                <img src="~/uploads/@Url.Content(Model.UserProfile)" class="profileImage" style="clip-path:circle(50%);">
-                            } else {
-                                <img src="~/img/Avatars/@Model.DefaultAvatar" class="profileImage" style="clip-path:circle(50%);">
-                            }
-                        </a>
+    @if (studentClassification == pageStudentClassification)
+    {
+        <!--Create Post-->
+        <div class="card userPostsCard">
+            <div class="card-header createPostHeader" style="min-height:60px;">
+                <div class="createPost">
+                    <div style="float:left; display:inline-block;">
+                        <div class="profilePicCreatePost">
+                            <a asp-controller="Profile" asp-action="Profile" style="pointer-events:auto; position: relative;">
+                                @if (Model.UserProfile != null)
+                                {
+                                    <img src="~/uploads/@Url.Content(Model.UserProfile)" class="profileImage" style="clip-path:circle(50%);">
+                                }
+                                else
+                                {
+                                    <img src="~/img/Avatars/@Model.DefaultAvatar" class="profileImage" style="clip-path:circle(50%);">
+                                }
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="btnCreatePost">
-                    <button type="submit" class="btn btn-light btn-md whiteButton text-muted btnCreatePostLink" data-toggle="modal" data-target="#createPostModal">Share to Thomasians...</button>
+                    <div class="btnCreatePost">
+                        <button type="submit" class="btn btn-light btn-md whiteButton text-muted btnCreatePostLink" data-toggle="modal" data-target="#createPostModal">Share to Thomasians...</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <h5 class="text-muted subtitle">Popular Recently</h5>
-
+    }
+    
     <h5 class="text-muted subtitle" style="margin-top:40px;">Recently Posted</h5>
     @foreach (var post in Model.PostsWithDetails)
     {
@@ -192,11 +199,11 @@
 <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
-        <form asp-action="@studentClassification" method="POST" id="createPost" enctype="multipart/form-data">
+        <form asp-action="@pageStudentClassification" method="POST" id="createPost" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
                 <div class="modal-header" style="text-align:center; display:flex;">
                 <h5 class="modal-title" style="flex:1; margin-right:-35px;">Write a post
-                    <span class="text-muted" style="font-size: 15px; display:block;">@studentClassification</span>
+                    <span class="text-muted" style="font-size: 15px; display:block;">@pageStudentClassification</span>
                 </h5>
                 <button type="button" class="close fa-solid fa-xmark" data-dismiss="modal" aria-label="Close" style="font-size:1.5rem; padding-top:1.1rem;">
                 </button>
